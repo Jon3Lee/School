@@ -11,6 +11,8 @@
 #pragma config BOREN = OFF
 #pragma config CCP2MX = PORTBE
 
+char array[10] = (0x01, 0x4F, 0x12, 0x06, 0x4C, 0x24, 0x20, 0x0F, 0x00, 0x04);
+
 void Init_ADC(void) 
     {
         ADCON0 = 0x??; // select channel AN0, and turn on the ADC subsystem
@@ -34,4 +36,23 @@ void Display_Lower_Digit(char digit)
 void Display_Upper_Digit(char digit)
 {
     PORTC = array[digit];
+}
+
+void main(void)
+{
+    Init_ADC();
+    TRISA = 0X0F;
+    TRISB = 0X00;
+    TRISC = 0X00;
+    TRISD = 0X00;
+    TRISE = 0X00;
+
+    while (1)
+    {
+        for (int i=0; i<10; i++)
+        {
+            Display_Lower_Digit(i);
+            WAIT_1_SEC();
+        }
+    }
 }
