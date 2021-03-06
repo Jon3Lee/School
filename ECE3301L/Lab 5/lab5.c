@@ -43,9 +43,9 @@ void main(void)
     Init_ADC();
     TRISA = 0X0F;
     TRISB = 0X00;
-    TRISC = 0X00;
-    TRISD = 0X00;
-    TRISE = 0X00;
+    TRISC = 0X00;                               //Set TRISC to output because it goes to a 7-Segment LED, which is always output
+    TRISD = 0X00;                               //Set TRISD to output because it goes to a 7-Segment LED, which is always output
+    TRISE = 0X00;                               //Set TRISE to output because it goes to a 7-Segment LED, which is always output
 
     while (1)
     {
