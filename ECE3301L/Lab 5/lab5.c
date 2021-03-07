@@ -208,7 +208,7 @@ void main(void)
         float voltage_mv = num_step * 4.0;
         float temperature_C = (1035.0 - voltage_mv) / 5.50;
         float temperature_F = 1.80 * temperature_C + 32.0;
-        int tempF = (int) temperature_F;
+        int tempF = (int) temperature_F;                    //Convert tempF from float to integer
         char U = tempF / 10;
         char L = tempF % 10;
         Display_Upper_Digit(U);
@@ -274,15 +274,16 @@ void main(void)
 
 
 
-        Select_ADC_Channel(2);
-        float voltage_mv = num_step * 4.0;
+        Select_ADC_Channel (1);
+        int nstep = get_full_ADC();
+        float vmv = 4.0 * nstep;
 
         //BEGIN D3
-        if (voltage_mv < 2500)
+        if (vmv < 2500)
         {
             SD3_RED();
         }
-        else if (voltage_mv > 2499 && voltage_mv < 3400)
+        else if (vmv > 2499 && vmv < 3400)
         {
             SD3_GREEN();
         }
@@ -291,9 +292,8 @@ void main(void)
             SD3_YELLOW();
         }
         
-        int light_volt = (int) voltage_mv;
 
-        printf("Temperature = %dF    Light Volt = %dmV \r\n", tempF, light_volt);
+        printf("Temperature = %dF    Light Volt = %dmV \r\n", tempF, vmv;
         
     }
 
