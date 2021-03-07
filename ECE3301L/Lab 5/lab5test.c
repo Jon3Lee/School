@@ -37,6 +37,21 @@ void Do_Display_D3(float V);
 void putch (char c);
 void init_UART();
 void Delay_one_sec();
+
+void init_UART()
+{
+    OpenUSART (USART_TX_INT_OFF & USART_RX_INT_OFF &
+    USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_CONT_RX &
+    USART_BRGH_HIGH, 25);
+    OSCCON = 0x60;
+}
+
+void putch (char c)
+{
+    while (!TRMT);
+    TXREG = c;
+}
+
 void main(void)
 {
     float mvolt,Tc,Tf,volt;
@@ -101,17 +116,7 @@ void Do_Display_7Seg(int T)
     PORTC = Array[U];
     PORTD = Array[L];
 }
-void init_UART()
-{
-//OpenUSART (USART_TX_INT_OFF & USART_RX_INT_OFF & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_CONT_RX & USART_BRGH_HIGH, 25);
-OSCCON = 0x60;
 
-}
-void putch (char c)
-{
-while (!TRMT);
-TXREG = c;
-}
 void Do_Display_D1(int T)
 {
     char array[8] = {0,1,2,3,4,5,6,7};
