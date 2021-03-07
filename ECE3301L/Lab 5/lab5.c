@@ -274,10 +274,10 @@ void main(void)
 
 
 
-        Select_ADC_Channel (1);
+        Select_ADC_Channel (2);
         int nstep = get_full_ADC();
         float vmv = 4.0 * nstep;
-
+        int lightvolt = (int) vmv;
         //BEGIN D3
         if (vmv < 2500)
         {
@@ -293,7 +293,7 @@ void main(void)
         }
         
 
-        printf("Temperature = %dF    Light Volt = %dmV \r\n", tempF, vmv;
+        printf("Temperature = %dF    Light Volt = %dmV \r\n", tempF, lightvolt);
         
     }
 
