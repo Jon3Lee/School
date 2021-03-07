@@ -80,13 +80,13 @@ void Display_Lower_Digit(char digit)
 void Display_Upper_Digit(char digit)
 {
     PORTC = array[digit];
-    if (digit == 0 || digit == 2 || digit == 3 || digit == 5 || digit == 6 || digit == 7 || digit == 8 || digit == 9)
+    if (digit == 1 || digit == 4)
     {
-        PORTE = 0x00;
+        PORTE = 0x02;
     }
     else 
     {
-        PORTE = 0x02;
+        PORTE = 0x00;
     }
 }
 
