@@ -11,6 +11,17 @@
 #pragma config BOREN = OFF
 #pragma config CCP2MX = PORTBE
 
+#define D1_RED PORTBbits.RB0
+#define D1_GREEN PORTBbits.RB1
+#define D1_BLUE PORTBbits.RB2
+
+#define D2_RED PORTBbits.RB3
+#define D2_GREEN PORTBbits.RB4
+#define D2_BLUE PORTBbits.RB5
+
+#define D1_RED PORTEbits.RE1
+#define D1_GREEN PORTEbits.RE2
+
 char array[10] = (0x01, 0x4F, 0x12, 0x06, 0x4C, 0x24, 0x20, 0x0F, 0x00, 0x04);
 
 void putch (char c)
@@ -87,4 +98,50 @@ void main(void)
             WAIT_1_SEC();
         }
     }
+
+    Select_ADC_Channel (0);
+    int num_step = get_full_ADC();
+    float voltage_mv = num_step * 4.0;
+    float temperature_C = (1035.0 - voltage_mv_) / 5.50;
+    float temperature_F = 1.80 * temperature_C + 32.0;
+    int tempF = (int) temperature_F;
+    char U = tempF / 10;
+    char L = tempF % 10;
+    Display_Upper_Digit(U);
+    Display_Lower_Digit(L);
+
+    printf("Temperature = %d F \r\n", tempF);
+
+    Select_ADC_Channel(1);
+}
+
+void SET_D2_OFF()
+{
+D2_RED = 0;
+D2_GREEN = 0;
+D2_BLUE = 0;
+}
+void SET_D2_RED()
+{
+D2_RED = 1;
+D2_GREEN = 0;
+D2_BLUE = 0;
+}
+void SET_D2_GREEN()
+{
+D2_RED = 0;
+D2_GREEN =1;
+D2_BLUE = 0;
+}
+void SET_D2_BLUE()
+{
+D2_RED = 0;
+D2_GREEN =0;
+D2_BLUE = 1;
+}
+void SET_D2_WHITE()
+{
+D2_RED = 1;
+D2_GREEN =1;
+D2_BLUE = 1;
 }
