@@ -22,6 +22,19 @@
 #define D1_RED PORTEbits.RE1
 #define D1_GREEN PORTEbits.RE2
 
+unsigned int get_full_ADC(void);
+void Init_ADC(void);
+void SET_D1_RED();
+void SET_D1_GREEN();
+void SET_D1_BLUE();
+void SET_D2_OFF();
+void SET_D2_RED();
+void SET_D2_GREEN();
+void SET_D2_BLUE();
+void SET_D2_WHITE();
+
+
+
 char array[10] = (0x01, 0x4F, 0x12, 0x06, 0x4C, 0x24, 0x20, 0x0F, 0x00, 0x04);
 
 void putch (char c)
@@ -32,7 +45,6 @@ void putch (char c)
 
 void Init_ADC(void) 
 {
-    ADCON0 = 0x00;                          // select channel AN0, and turn on the ADC subsystem
     ADCON1 = 0x1B;                          // select pins AN0 through AN3 as analog signal, VDD-VSS as
                                             // reference voltage
     ADCON2 = 0xA9;                          // right justify the result. Set the bit conversion time (TAD) and
@@ -130,18 +142,18 @@ D2_BLUE = 0;
 void SET_D2_GREEN()
 {
 D2_RED = 0;
-D2_GREEN =1;
+D2_GREEN = 1;
 D2_BLUE = 0;
 }
 void SET_D2_BLUE()
 {
 D2_RED = 0;
-D2_GREEN =0;
+D2_GREEN = 0;
 D2_BLUE = 1;
 }
 void SET_D2_WHITE()
 {
 D2_RED = 1;
-D2_GREEN =1;
+D2_GREEN = 1;
 D2_BLUE = 1;
 }
