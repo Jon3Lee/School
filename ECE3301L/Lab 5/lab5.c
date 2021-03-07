@@ -272,6 +272,11 @@ void main(void)
             SD2_WHITE();
         }
 
+
+
+        Select_ADC_Channel(2);
+        float voltage_mv = num_step * 4.0;
+
         //BEGIN D3
         if (voltage_mv < 2500)
         {
@@ -285,9 +290,11 @@ void main(void)
         {
             SD3_YELLOW();
         }
+        
+        int light_volt = (int) voltage_mv;
 
-        printf("Temperature = %d F \r\n", tempF);
-        Select_ADC_Channel(2);
+        printf("Temperature = %dF    Light Volt = %dmV \r\n", tempF, light_volt);
+        
     }
 
 }
