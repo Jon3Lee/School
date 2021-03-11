@@ -206,12 +206,12 @@ void main(void)
     {
         Select_ADC_Channel (0);                                                                 //Set ADCON0 to 1
     int num_step = get_full_ADC();                                                          
-    float voltage_mv = num_step * 4.0;                                                      //Set voltage_mv to the voltage in millivolts
-    float temperature_C = (1035.0 - voltage_mv) / 5.50;                                     //Celcius is calculted
-    float temperature_F = 1.80 * temperature_C + 32.0;                                      //Convert the celcius into fahrenheit
-    int tempF = (int) temperature_F;                                                        //Convert the temperature_F from float to integer
-    char U = tempF / 10;                                                                    //The upper digit of the Fahrenheit is the Fahrenheit divided by 10, since it only returns the upper digit.
-    char L = tempF % 10;                                                                    //The lower digit is the modulus of Fahrenheit divided by 10, since it only returns the remainder.
+    float voltage_mv = num_step * 4.0;                                                          //Set voltage_mv to the voltage in millivolts
+    float temperature_C = (1035.0 - voltage_mv) / 5.50;                                         //Celcius is calculted
+    float temperature_F = 1.80 * temperature_C + 32.0;                                          //Convert the celcius into fahrenheit
+    int tempF = (int) temperature_F;                                                            //Convert the temperature_F from float to integer
+    char U = tempF / 10;                                                                        //The upper digit of the Fahrenheit is the Fahrenheit divided by 10, since it only returns the upper digit.
+    char L = tempF % 10;                                                                        //The lower digit is the modulus of Fahrenheit divided by 10, since it only returns the remainder.
         Display_Upper_Digit(U);                                                                 //Display the upper digit onto the display.
         Display_Lower_Digit(L);                                                                 //Display the lower digit onto the display.
         
@@ -257,7 +257,7 @@ void main(void)
         Select_ADC_Channel (2);                                                                 
     int nstep = get_full_ADC();
     float vmv = 4.0 * nstep;
-    int light_volt = (int) vmv;                                                                //Change vmv from a float to integer, it will now display voltage in millivolts.
+    int light_volt = (int) vmv;                                                                     //Change vmv from a float to integer, it will now display voltage in millivolts.
         
         //BEGIN D3
         if (vmv < 2500)                                                                             //D3 will change colors as the voltage changes.
