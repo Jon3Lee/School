@@ -197,8 +197,8 @@ void main(void)
     PORTA = 0x00;                                                                               //Set PORTA to 0x00, making PORTA all inputs. 
     PORTB = 0x00;                                                                               //Set PORTB to 0x00, making PORTB all inputs.
     PORTC = 0xFF;                                                                               //Set PORTC to 0xFF, making PORTC all outputs.
-    PORTD = 0xFF;                                                                               //Set PORTC to 0xFF, making PORTC all outputs.
-    PORTE = 0xFF;                                                                               //Set PORTC to 0xFF, making PORTC all outputs.
+    PORTD = 0xFF;                                                                               //Set PORTD to 0xFF, making PORTD all outputs.
+    PORTE = 0xFF;                                                                               //Set PORTE to 0xFF, making PORTE all outputs.
 
 
 

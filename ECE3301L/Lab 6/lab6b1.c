@@ -22,10 +22,6 @@
 #define D2_GREEN PORTBbits.RB5
 #define D2_BLUE PORTAbits.RA4
 
-unsigned int nstep;
-float volt;
-float R;
-
 void init_UART();
 void putch(char);
 unsigned int get_full_ADC(void);
@@ -68,8 +64,8 @@ int result;
 
 void Init_ADC(void) 
 {
-    ADCON1 = 0x19;                                                                          // select pins AN0 through AN3 as analog signal, VDD-VSS as
-                                                                                            // reference voltage
+    ADCON1 = 0x19;                                                                          // Since we're using up to AN5, we use 1001 for bits 3-0, and 1 for bit 4,
+                                                                                            // which is the VREF+ AN3 and 0 for bit 5, coming out to 011001
     ADCON2 = 0xA9;                                                                          // right justify the result. Set the bit conversion time (TAD) and
                                                                                             // acquisition time
 }
@@ -94,5 +90,27 @@ void Display_Upper_Digit(char digit)
     else                                                                                    
     {
         E1 = 0;                                                                       
+    }
+}
+
+void main(void)
+{
+    
+    E2 = 1;
+
+    while(1)
+    {
+        Select_ADC_Channel(0);
+    int nstep = get_full_ADC();
+    float voltage_mv = nstep * 4.0;
+    float volt = voltage_mv/1000;
+    char U = (int) volt;
+    float LC = (volt - U);
+    char L = (int) LC;
+        Display_Upper_Digit(U);                                                                 //Display the upper digit onto the display.
+        Display_Lower_Digit(L); 
+
+        printf("Volt = %f \r\n", volt);
+        WAIT_1_SEC();
     }
 }

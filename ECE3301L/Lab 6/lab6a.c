@@ -95,8 +95,20 @@ void Display_Upper_Digit(char digit)
 
 void main(void)
 {
-    
+    TRISA = 0X3F;
+    TRISB = 0X00;                                                                               //TRISB leads to a RGB LED so set to output
+    TRISC = 0X00;                                                                               //Set TRISC to output because it goes to a 7-Segment LED, which is always output
+    TRISD = 0X00;                                                                               //Set TRISD to output because it goes to a 7-Segment LED, which is always output
+    TRISE = 0X00; 
+
+    PORTA = 0x00;                                                                               //Set PORTA to 0x00, making PORTA all inputs. 
+    PORTB = 0xFF;                                                                               //Set PORTB to 0xFF, making PORTB all outputs.
+    PORTC = 0xFF;                                                                               //Set PORTC to 0xFF, making PORTC all outputs.
+    PORTD = 0xFF;                                                                               //Set PORTD to 0xFF, making PORTD all outputs.
+    PORTE = 0xFF;                                                                               //Set PORTE to 0xFF, making PORTE all outputs.
+
     E2 = 1;
+
 
     while(1)
     {
