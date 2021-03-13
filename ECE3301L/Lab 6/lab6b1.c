@@ -68,8 +68,8 @@ int result;
 
 void Init_ADC(void) 
 {
-    ADCON1 = 0x19;                                                                          // Since we're using up to AN5, we use 1001 for bits 3-0, and 1 for bit 4,
-                                                                                            // which is the VREF+ AN3 and 0 for bit 5, coming out to 011001
+    ADCON1 = 0x19;                                                                          // select pins AN0 through AN3 as analog signal, VDD-VSS as
+                                                                                            // reference voltage
     ADCON2 = 0xA9;                                                                          // right justify the result. Set the bit conversion time (TAD) and
                                                                                             // acquisition time
 }
@@ -95,9 +95,4 @@ void Display_Upper_Digit(char digit)
     {
         E1 = 0;                                                                       
     }
-}
-
-void main(void)
-{
-
 }
