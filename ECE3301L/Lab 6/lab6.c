@@ -14,6 +14,29 @@
 #define E1 PORTEbits.RE1
 #define E2 PORTEbits.RE2
 
+#define D1_RED PORTBbits.RB0
+#define D1_GREEN PORTBbits.RB1
+#define D1_BLUE PORTBbits.RB2
+
+#define D2_RED PORTBbits.RB4
+#define D2_GREEN PORTBbits.RB5
+#define D2_BLUE PORTAbits.RA4
+
+unsigned int nstep;
+float volt;
+float R;
+
+void init_UART();
+void putch(char);
+unsigned int get_full_ADC(void);
+void Init_ADC(void);
+void select_ADC_Channel(char);
+void Display_Lower_Digit(char);
+void Display_Upper_Digit(char);
+
+char array[10] = {0x01, 0x4F, 0x12, 0x06, 0x4C, 0x24, 0x20, 0x0F, 0x00, 0x04};             //This array dictates which digits display on the 7 segment display
+
+
 void init_UART()
 {
     OpenUSART (USART_TX_INT_OFF & USART_RX_INT_OFF &
@@ -45,7 +68,7 @@ int result;
 
 void Init_ADC(void) 
 {
-    ADCON1 = 0x1B;                                                                          // select pins AN0 through AN3 as analog signal, VDD-VSS as
+    ADCON1 = 0x19;                                                                          // select pins AN0 through AN3 as analog signal, VDD-VSS as
                                                                                             // reference voltage
     ADCON2 = 0xA9;                                                                          // right justify the result. Set the bit conversion time (TAD) and
                                                                                             // acquisition time
@@ -63,14 +86,13 @@ void Display_Lower_Digit(char digit)
 
 void Display_Upper_Digit(char digit)
 {
-    PORTC = array[digit];                                                                   //PORTC goes to the upper digit of the 7 segment display, but segment A
-                                                                                            //on the display goes to PORTE.
-    if (array[digit] & 0x40)                                                                //Mask off the 6th bit 
-    {                                                                                       //If the 6th bit is there
-        PORTE = 0x02;                                                                       //PORTE is off 
+    PORTC = array[digit] & 0x3F;                                                                                                                                    
+    if ((array[digit] & 0x40) == 0x40)                                                                 
+    {                                                                                       
+        E1 = 1;                                                                       
     }
-    else                                                                                    //else
+    else                                                                                    
     {
-        PORTE = 0x00;                                                                       //PORTE is on
+        E1 = 0;                                                                       
     }
 }
