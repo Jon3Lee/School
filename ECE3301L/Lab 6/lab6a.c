@@ -22,10 +22,6 @@
 #define D2_GREEN PORTBbits.RB5
 #define D2_BLUE PORTAbits.RA4
 
-unsigned int nstep;
-float volt;
-float R;
-
 void init_UART();
 void putch(char);
 unsigned int get_full_ADC(void);
@@ -99,5 +95,22 @@ void Display_Upper_Digit(char digit)
 
 void main(void)
 {
+    
+    E2 = 1;
 
+    while(1)
+    {
+        Select_ADC_Channel(0);
+    int nstep = get_full_ADC();
+    float voltage_mv = nstep * 4.0;
+    float volt = voltage_mv/1000;
+    char U = (int) volt;
+    float LC = (volt - U);
+    char L = (int) LC;
+        Display_Upper_Digit(U);                                                                 //Display the upper digit onto the display.
+        Display_Lower_Digit(L); 
+
+        printf("Volt = %f \r\n", volt);
+        WAIT_1_SEC();
+    }
 }
