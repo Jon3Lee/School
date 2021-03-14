@@ -128,9 +128,9 @@ void SD2_OFF()
 
 void SD2_CYAN()
 {
-    D1_RED = 0;
-    D1_BLUE = 1;
-    D1_GREEN = 1;
+    D2_RED = 0;
+    D2_BLUE = 1;
+    D2_GREEN = 1;
 }
 void main(void)
 {
@@ -150,8 +150,19 @@ void main(void)
     int nstep = get_full_ADC();
     float voltage_mv = nstep * 4.0;
     float volt = voltage_mv/1000;
-    float RL = (volt / (4.096 - volt)) * (RREF/1000)
-        if (RL > 10)
+    float RL = (volt / (4.096 - volt)) * (RREF/1000);
+        if (RL < 10)
+        {
+            DP = 0;
+        char U = (int) RL;
+        char L = (int) ((RL - U) * 10);
+            Display_Upper_Digit(U);
+            Display_Lower_Digit(L);
+            SD1_OFF();
+
+            WAIT_1_SEC();
+        }
+        else
         {
             DP = 1;
         int R = (int) RL;
@@ -170,17 +181,6 @@ void main(void)
                 PORTB = U;
             }
         }
-        else
-        {
-            DP = 0;
-        char U = (int) RL;
-        char L = (int) ((RL - U) * 10);
-            Display_Upper_Digit(U);
-            Display_Lower_Digit(L);
-            SD1_OFF();
-
-            WAIT_1_SEC();
-        }
         if (RL < .07)
         {
             SD2_CYAN();
@@ -192,6 +192,6 @@ void main(void)
             Deactivate_Buzzer();
         }
 
-        printf("r = %f \r\n", RL)
+        printf("RL = %f \r\n", RL);
     }
 }
