@@ -93,6 +93,7 @@ void Display_Upper_Digit(char digit)
 
 void main(void)
 {
+    
     Init_ADC();
     init_UART();
     TRISA = 0X3F;
