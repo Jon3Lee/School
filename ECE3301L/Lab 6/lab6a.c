@@ -11,16 +11,16 @@
 #pragma config BOREN = OFF
 #pragma config CCP2MX = PORTBE
 
-#define E1 PORTEbits.RE1
-#define E2 PORTEbits.RE2
+#define E1          PORTEbits.RE1
+#define E2          PORTEbits.RE2
 
-#define D1_RED PORTBbits.RB0
-#define D1_GREEN PORTBbits.RB1
-#define D1_BLUE PORTBbits.RB2
+#define D1_RED      PORTBbits.RB0
+#define D1_GREEN    PORTBbits.RB1
+#define D1_BLUE     PORTBbits.RB2
 
-#define D2_RED PORTBbits.RB4
-#define D2_GREEN PORTBbits.RB5
-#define D2_BLUE PORTAbits.RA4
+#define D2_RED      PORTBbits.RB4
+#define D2_GREEN    PORTBbits.RB5
+#define D2_BLUE     PORTAbits.RA4
 
 void init_UART();
 void putch(char);
@@ -93,24 +93,20 @@ void Display_Upper_Digit(char digit)
 
 void main(void)
 {
+    Init_ADC();
+    init_UART();
     TRISA = 0X3F;
     TRISB = 0X00;                                                                               //TRISB leads to a RGB LED so set to output
     TRISC = 0X00;                                                                               //Set TRISC to output because it goes to a 7-Segment LED, which is always output
     TRISD = 0X00;                                                                               //Set TRISD to output because it goes to a 7-Segment LED, which is always output
     TRISE = 0X01;                                                                               //Set TRISD to output because it goes to part of a 7-segment LED.
 
-    PORTA = 0x00;                                                                               //Set PORTA to 0x00, making PORTA all inputs. 
-    PORTB = 0xFF;                                                                               //Set PORTB to 0xFF, making PORTB all outputs.
-    PORTC = 0xFF;                                                                               //Set PORTC to 0xFF, making PORTC all outputs.
-    PORTD = 0xFF;                                                                           //Set PORTD to 0xFF, making PORTD all outputs.
-    PORTE = 0xFF;                                                                               //Set PORTE to 0xFF, making PORTE all outputs.
-
     E2 = 1;
 
 
     while(1)
     {
-        Select_ADC_Channel(0);
+        Select_ADC_Channel(1);
     int nstep = get_full_ADC();
     float voltage_mv = nstep * 4.0;
     float volt = voltage_mv/1000;
