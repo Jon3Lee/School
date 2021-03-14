@@ -12,7 +12,7 @@
 #pragma config CCP2MX = PORTBE
 
 #define E1          PORTEbits.RE1
-#define E2          PORTEbits.RE2
+#define DP          PORTEbits.RE2
 
 #define D1_RED      PORTBbits.RB0
 #define D1_GREEN    PORTBbits.RB1
@@ -62,7 +62,7 @@ int result;
 
 void Init_ADC(void) 
 {
-    ADCON1 = 0x19;                                                                          // Since we're using up to AN5, we use 1001 for bits 3-0, and 1 for bit 4,
+    ADCON1 = 0x19;                                                                          // Since we're using up to AN5, we use 1001 for bits 3-0 to set them as analog, and 1 for bit 4,
                                                                                             // which is the VREF+ AN3 and 0 for bit 5, coming out to 011001
     ADCON2 = 0xA9;                                                                          // right justify the result. Set the bit conversion time (TAD) and
                                                                                             // acquisition time
@@ -101,12 +101,12 @@ void main(void)
     TRISD = 0X00;                                                                               //Set TRISD to output because it goes to a 7-Segment LED, which is always output
     TRISE = 0X01;                                                                               //Set TRISD to output because it goes to part of a 7-segment LED.
 
-    E2 = 1;
+    
 
 
     while(1)
     {
-        Select_ADC_Channel(1);
+        Select_ADC_Channel(0);
     int nstep = get_full_ADC();
     float voltage_mv = nstep * 4.0;
     float volt = voltage_mv/1000;
@@ -116,6 +116,8 @@ void main(void)
         Display_Upper_Digit(U);                                                                 //Display the upper digit onto the display.
         Display_Lower_Digit(L); 
 
+        DP = 1;
+        
         printf("Volt = %f \r\n", volt);
         WAIT_1_SEC();
     }
