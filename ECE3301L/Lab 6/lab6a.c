@@ -26,9 +26,7 @@ void init_UART();
 void putch(char);
 unsigned int get_full_ADC(void);
 void Init_ADC(void);
-void select_ADC_Channel(char);
-void Display_Lower_Digit(char);
-void Display_Upper_Digit(char);
+void Select_ADC_Channel(char channel);
 
 char array[10] = {0x01, 0x4F, 0x12, 0x06, 0x4C, 0x24, 0x20, 0x0F, 0x00, 0x04};             //This array dictates which digits display on the 7 segment display
 
@@ -99,7 +97,7 @@ void main(void)
     TRISB = 0X00;                                                                               //TRISB leads to a RGB LED so set to output
     TRISC = 0X00;                                                                               //Set TRISC to output because it goes to a 7-Segment LED, which is always output
     TRISD = 0X00;                                                                               //Set TRISD to output because it goes to a 7-Segment LED, which is always output
-    TRISE = 0X00; 
+    TRISE = 0X01;                                                                               //Set TRISD to output because it goes to part of a 7-segment LED.
 
     PORTA = 0x00;                                                                               //Set PORTA to 0x00, making PORTA all inputs. 
     PORTB = 0xFF;                                                                               //Set PORTB to 0xFF, making PORTB all outputs.
