@@ -102,7 +102,7 @@ void main(void)
     PORTA = 0x00;                                                                               //Set PORTA to 0x00, making PORTA all inputs. 
     PORTB = 0xFF;                                                                               //Set PORTB to 0xFF, making PORTB all outputs.
     PORTC = 0xFF;                                                                               //Set PORTC to 0xFF, making PORTC all outputs.
-    PORTD = 0xFF;                                                                               //Set PORTD to 0xFF, making PORTD all outputs.
+    PORTD = 0xFF;                                                                           //Set PORTD to 0xFF, making PORTD all outputs.
     PORTE = 0xFF;                                                                               //Set PORTE to 0xFF, making PORTE all outputs.
 
     E2 = 1;
@@ -115,7 +115,7 @@ void main(void)
     float voltage_mv = nstep * 4.0;
     float volt = voltage_mv/1000;
     char U = (int) volt;
-    float LC = (volt - U);
+    float LC = (volt - U) * 10;
     char L = (int) LC;
         Display_Upper_Digit(U);                                                                 //Display the upper digit onto the display.
         Display_Lower_Digit(L); 
