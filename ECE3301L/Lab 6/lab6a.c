@@ -102,7 +102,7 @@ void main(void)
     TRISD = 0X00;                                                                               //Set TRISD to output because it goes to a 7-Segment LED, which is always output
     TRISE = 0X01;                                                                               //Set TRISD to output because it goes to part of a 7-segment LED.
 
-    
+    PORTB = 0X00;
 
 
     while(1)
