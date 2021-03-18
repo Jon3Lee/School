@@ -11,7 +11,7 @@
 #pragma config BOREN = OFF
 #pragma config CCP2MX = PORTBE
 
-#define E1          PORTEbits.RE1
+#define E1          PORTEbits.RE1                                                           
 #define DP          PORTEbits.RE2
 
 #define D1_RED      PORTBbits.RB0
@@ -81,13 +81,13 @@ void Display_Lower_Digit(char digit)
 void Display_Upper_Digit(char digit)
 {
     PORTC = array[digit] & 0x3F;                                                                                                                                    
-    if ((array[digit] & 0x40) == 0x40)                                                                 
-    {                                                                                       
-        E1 = 1;                                                                       
+    if ((array[digit] & 0x40) == 0x40)                                                      //Mask 6th bit for 7 segment display                     
+    {                                                                                       //If it exists
+        E1 = 1;                                                                             //Isolated bit RE1 turn on
     }
-    else                                                                                    
+    else                                                                                    //else
     {
-        E1 = 0;                                                                       
+        E1 = 0;                                                                             //Isolated bit RE1 turn off
     }
 }
 
@@ -96,30 +96,30 @@ void main(void)
     
     Init_ADC();
     init_UART();
-    TRISA = 0X3F;
+    TRISA = 0X2F;                                                                               //Set TRISA to 2F since RA4 is an output, binary value 00101111
     TRISB = 0X00;                                                                               //TRISB leads to a RGB LED so set to output
     TRISC = 0X00;                                                                               //Set TRISC to output because it goes to a 7-Segment LED, which is always output
     TRISD = 0X00;                                                                               //Set TRISD to output because it goes to a 7-Segment LED, which is always output
-    TRISE = 0X01;                                                                               //Set TRISD to output because it goes to part of a 7-segment LED.
+    TRISE = 0X01;                                                                               ///Set TRISE to 0x01 since RE0 is an input from RREF4
 
     PORTB = 0X00;
 
 
     while(1)
     {
-        Select_ADC_Channel(0);
+        Select_ADC_Channel(0);                                                                  //Select channel 0 in ADCON0 since the potientiometer leads to AN0
     int nstep = get_full_ADC();
-    float voltage_mv = nstep * 4.0;
-    float volt = voltage_mv/1000;
-    char U = (int) volt;
-    float LC = (volt - U) * 10;
-    char L = (int) LC;
+    float voltage_mv = nstep * 4.0;                                                             //Calculate the voltage in millivolts
+    float volt = voltage_mv/1000;                                                               //convert millivolts to voltage
+    char U = (int) volt;                                                                        //convert float of voltage to integer, getting rid of the decimal and leaving only the upper digit
+    float LC = (volt - U) * 10;                                                                 //using the float volt, subtract the calculated upper digit and multiply by 10 to get the lower digit
+    char L = (int) LC;                                                                          //convert to integer
         Display_Upper_Digit(U);                                                                 //Display the upper digit onto the display.
         Display_Lower_Digit(L); 
 
-        DP = 1;
+        DP = 1;                                                                                 //turn on DP
         
-        printf("Volt = %f \r\n", volt);
+        printf("Volt = %f \r\n", volt);                                                         //Print output to TeraTerm
         WAIT_1_SEC();
     }
 }

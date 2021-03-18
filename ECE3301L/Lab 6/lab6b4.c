@@ -68,7 +68,7 @@ void Init_ADC(void)
                                                                                             // acquisition time
 }
 
-void Select_ADC_Channel(char channel)
+void Select_ADC_Channel(char channel)                                                       
 {
     ADCON0 = channel * 4 + 1;
 }
@@ -81,13 +81,13 @@ void Display_Lower_Digit(char digit)
 void Display_Upper_Digit(char digit)
 {
     PORTC = array[digit] & 0x3F;                                                                                                                                    
-    if ((array[digit] & 0x40) == 0x40)                                                                 
-    {                                                                                       
-        E1 = 1;                                                                       
+    if ((array[digit] & 0x40) == 0x40)                                                      //Mask 6th bit for 7 segment display                     
+    {                                                                                       //If it exists
+        E1 = 1;                                                                             //Isolated bit RE1 turn on
     }
-    else                                                                                    
+    else                                                                                    //else
     {
-        E1 = 0;                                                                       
+        E1 = 0;                                                                             //Isolated bit RE1 turn off
     }
 }
 
@@ -136,62 +136,62 @@ void main(void)
 {
     Init_ADC();
     init_UART();
-    TRISA = 0X3F;
+    TRISA = 0X2F;                                                                               //Set TRISA to 2F since RA4 is an output, binary value 00101111
     TRISB = 0X00;                                                                               //TRISB leads to a RGB LED so set to output
     TRISC = 0X00;                                                                               //Set TRISC to output because it goes to a 7-Segment LED, which is always output
     TRISD = 0X00;                                                                               //Set TRISD to output because it goes to a 7-Segment LED, which is always output
-    TRISE = 0X01;                                                                               //Set TRISD to output because it goes to part of a 7-segment LED.
+    TRISE = 0X01;                                                                               //Set TRISE to 0x01 since RE0 is an input from RREF4
 
-    float RREF = 100000;
+    float RREF = 100000;                                                                        //Set the value of RREF, the reference resistor with known value
 
     while(1)
     {
-        Select_ADC_Channel(5);
-    int nstep = get_full_ADC();
-    float voltage_mv = nstep * 4.0;
-    float volt = voltage_mv/1000;
-    float RL = (volt / (4.096 - volt)) * (RREF/1000);
-        if (RL > 10)
+        Select_ADC_Channel(5);                                                                  //Selects ADCON0 channel 5 since RREF1 leads to AN5
+    int nstep = get_full_ADC();                                                                 
+    float voltage_mv = nstep * 4.0;                                                             //Calculate the voltage in millivolts
+    float volt = voltage_mv/1000;                                                               //Convert millivolts calculated to volts
+    float RL = (volt / (4.096 - volt)) * (RREF/1000);                                           //Calculate the value of the unknown load resistor
+        if (RL < 10)                                                                            //If the load is less than 10k 
         {
-            DP = 1;
-        int R = (int) RL;
+            DP = 0;                                                                             //Turn off DP
+        char U = (int) RL;
+        char L = (int) ((RL - U) * 10);
+            Display_Upper_Digit(U);
+            Display_Lower_Digit(L);
+            SD1_OFF();                                                                          //Turn off D1 light
+
+            WAIT_1_SEC();
+        }
+        else                                                                                    //Else
+        {
+            DP = 1;                                                                             //Turn on DP
+        int R = (int) RL;                                                                       //Convert float RL to int
         char U = R / 10;
         char L = R % 10;
             Display_Upper_Digit(U);
             Display_Lower_Digit(L);
 
-            WAIT_1_SEC();
-            if (RL > 69)
+            WAIT_1_SEC();                                                               
+            if (RL > 69)                                                                        //if load resistance is 70k or greater
             {
-                SD1_WHITE();
+                SD1_WHITE();                                                                    //turn LED D1 to white
             }
-            else
+            else                                                                                //Else
             {
-                PORTB = U;
-            }
+                PORTB = U;                                                                      //Since the LED at D1 changes color every 10k and so does the
+            }                                                                                   //upper dight, PORTB = U
         }
-        else
+        if (RL < .07)                                                                           //If load resistance is less than 70 ohms
         {
-            DP = 0;
-        char U = (int) RL;
-        char L = (int) ((RL - U) * 10);
-            Display_Upper_Digit(U);
-            Display_Lower_Digit(L);
-            SD1_OFF();
-
-            WAIT_1_SEC();
+            SD2_CYAN();                                                                         //LED D2 will light up cyan
+            Activate_Buzzer();                                                                  //The buzzer will activate
         }
-        if (RL < .07)
+        else                                                                                    //Else
         {
-            SD2_CYAN();
-            Activate_Buzzer();
-        }
-        else
-        {
-            SD2_OFF();
-            Deactivate_Buzzer();
+            SD2_OFF();                                                                          //turn off LED D2
+            Deactivate_Buzzer();                                                                //turn off buzzer
         }
 
-        printf("r = %f \r\n", RL);
+        printf("RL = %f \r\n", RL);
     }
 }
