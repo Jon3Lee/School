@@ -182,10 +182,13 @@ void PED_Control(char Direction, char Num_Sec)
         }
         else
         {
-            DO_DISPLAY_7SEG_Upper(i);
+            DO_DISPLAY_7SEG_Lower(i);
         }
         Wait_One_Second_With_Beep();
     }
+    DO_DISPLAY_7SEG_Upper(0x00);
+    DO_DISPLAY_7SEG_Lower(0x00);
+    Wait_One_Second_With_Beep();
 }
 
 unsigned int get_full_ADC(void)
@@ -232,8 +235,8 @@ void main(void)
             Set_EWLT(i); // Set color for East-West Left-Turn direction
             Wait_N_Seconds(1); // call Wait-N-Second routine to wait for 1 second
         }
-        PED_Control (0, 8) // Set direction 0 and do for 8 seconds
-        PED_Control(1, 6) // Set direction 1 for 6 seconds
+        PED_Control (0, 8); // Set direction 0 and do for 8 seconds
+        PED_Control(1, 6); // Set direction 1 for 6 seconds
     }
 
 }
