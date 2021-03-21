@@ -101,10 +101,10 @@ void Set_NSLT(char color)
 {
     switch (color)
     {
-        case OFF: NSLT_RED =0;NS_GREEN=0;break;       // Turns off the NS LED
-        case RED: NSLT_RED =1;NS_GREEN=0;break;       // Sets NS LED RED
-        case GREEN: NSLT_RED =0;NS_GREEN=1;break;     // sets NS LED GREEN
-        case YELLOW: NSLT_RED =1;NS_GREEN=1;break;    // sets NS LED YELLOW
+        case OFF: NSLT_RED =0;NS_GREEN=0;break;       // Turns off the NSLT LED
+        case RED: NSLT_RED =1;NS_GREEN=0;break;       // Sets NSLT LED RED
+        case GREEN: NSLT_RED =0;NS_GREEN=1;break;     // sets NSLT LED GREEN
+        case YELLOW: NSLT_RED =1;NS_GREEN=1;break;    // sets NSLT LED YELLOW
     }
 }
 
@@ -112,10 +112,10 @@ void Set_EW(char color)
 {
     switch (color)
     {
-        case OFF: EW_RED =0;NS_GREEN=0;break;       // Turns off the NS LED
-        case RED: EW_RED =1;NS_GREEN=0;break;       // Sets NS LED RED
-        case GREEN: EW_RED =0;NS_GREEN=1;break;     // sets NS LED GREEN
-        case YELLOW: EW_RED =1;NS_GREEN=1;break;    // sets NS LED YELLOW
+        case OFF: EW_RED =0;NS_GREEN=0;break;         // Turns off the EW LED
+        case RED: EW_RED =1;NS_GREEN=0;break;         // Sets EW LED RED
+        case GREEN: EW_RED =0;NS_GREEN=1;break;       // sets EW LED GREEN
+        case YELLOW: EW_RED =1;NS_GREEN=1;break;      // sets EW LED YELLOW
     }
 }
 
@@ -123,10 +123,10 @@ void Set_EWLT(char color)
 {
     switch (color)
     {
-        case OFF: EWLT_RED =0;NS_GREEN=0;break;       // Turns off the NS LED
-        case RED: EWLT_RED =1;NS_GREEN=0;break;       // Sets NS LED RED
-        case GREEN: EWLT_RED =0;NS_GREEN=1;break;     // sets NS LED GREEN
-        case YELLOW: EWLT_RED =1;NS_GREEN=1;break;    // sets NS LED YELLOW
+        case OFF: EWLT_RED =0;NS_GREEN=0;break;       // Turns off the EWLT LED
+        case RED: EWLT_RED =1;NS_GREEN=0;break;       // Sets EWLT LED RED
+        case GREEN: EWLT_RED =0;NS_GREEN=1;break;     // sets EWLT LED GREEN
+        case YELLOW: EWLT_RED =1;NS_GREEN=1;break;    // sets EWLT LED YELLOW
     }
 }
 
