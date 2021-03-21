@@ -334,15 +334,12 @@ void main(void)
     TRISD = 0X00;                                                                               
     TRISE = 0X00;  
 
-    Select_ADC_Channel(0);
-                                    /*
-                                    Find out how to work MODE = light sensor input
-                                    */
     while (1)
     {
-        int num_step = get_full_ADC();
-        float MODE = 4.0 * num_step;
-        if (MODE < 2500) //Daytime mode below 2.5v
+        Select_ADC_Channel(0);
+    int num_step = get_full_ADC();
+    float MODE = 4.0 * num_step;
+        if (MODE < 2500)                            //Daytime mode below 2.5v
         {
             MODE_LED = 1;
             Day_Mode();
