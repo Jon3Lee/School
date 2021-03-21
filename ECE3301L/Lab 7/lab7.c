@@ -11,7 +11,7 @@
 #pragma config BOREN = OFF
 #pragma config CCP2MX = PORTBE
 
-#define SEC_LED PORTDbits.RD7
+#define SEC_LED PORTDbits.RD7               //Define SEC_LED as Port D bit 7
 
 #define NS_RED PORTAbits.RA5
 #define NS_GREEN PORTBbits.RB0
@@ -97,14 +97,47 @@ void Set_NS(char color)
     }
 }
 
+void Set_NSLT(char color)
+{
+    switch (color)
+    {
+        case OFF: NSLT_RED =0;NS_GREEN=0;break;       // Turns off the NS LED
+        case RED: NSLT_RED =1;NS_GREEN=0;break;       // Sets NS LED RED
+        case GREEN: NSLT_RED =0;NS_GREEN=1;break;     // sets NS LED GREEN
+        case YELLOW: NSLT_RED =1;NS_GREEN=1;break;    // sets NS LED YELLOW
+    }
+}
+
+void Set_EW(char color)
+{
+    switch (color)
+    {
+        case OFF: EW_RED =0;NS_GREEN=0;break;       // Turns off the NS LED
+        case RED: EW_RED =1;NS_GREEN=0;break;       // Sets NS LED RED
+        case GREEN: EW_RED =0;NS_GREEN=1;break;     // sets NS LED GREEN
+        case YELLOW: EW_RED =1;NS_GREEN=1;break;    // sets NS LED YELLOW
+    }
+}
+
+void Set_EWLT(char color)
+{
+    switch (color)
+    {
+        case OFF: EWLT_RED =0;NS_GREEN=0;break;       // Turns off the NS LED
+        case RED: EWLT_RED =1;NS_GREEN=0;break;       // Sets NS LED RED
+        case GREEN: EWLT_RED =0;NS_GREEN=1;break;     // sets NS LED GREEN
+        case YELLOW: EWLT_RED =1;NS_GREEN=1;break;    // sets NS LED YELLOW
+    }
+}
+
 void main(void)
 {
     init_UART();
-    TRISA = 0X2F;                                                                               //Set TRISA to 2F since RA4 is an output, binary value 00101111
-    TRISB = 0X00;                                                                               //TRISB leads to a RGB LED so set to output
-    TRISC = 0X00;                                                                               //Set TRISC to output because it goes to a 7-Segment LED, which is always output
-    TRISD = 0X00;                                                                               //Set TRISD to output because it goes to a 7-Segment LED, which is always output
-    TRISE = 0X01;  
+    TRISA = 0X1F;                                   //Set TRISA to 
+    TRISB = 0X00;                                                                      
+    TRISC = 0X00;                                                                               
+    TRISD = 0X00;                                                                               
+    TRISE = 0X00;  
 
     while (1)
     {
