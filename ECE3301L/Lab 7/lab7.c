@@ -347,8 +347,6 @@ void main(void)
     Select_ADC_Channel(0);
                                     /*
                                     Find out how to work MODE = light sensor input
-                                    MODE_LED is off at night time, on day time
-                                    
                                     */
     while (1)
     {
