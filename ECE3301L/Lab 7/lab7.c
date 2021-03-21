@@ -250,7 +250,7 @@ void Night_Mode()
     Set_EW(YELLOW);
     Wait_N_Seconds(3);
 
-    SET_EW(RED);
+    Set_EW(RED);
     
 
     if (NSLT_SW == 1)
@@ -328,7 +328,7 @@ void main(void)
     init_UART();
     Init_ADC();
     
-    TRISA = 0X1F;                                   //Set TRISA to 
+    TRISA = 0X1F;                                   //Set TRISA to 0x1F since bits 7 and 
     TRISB = 0X00;                                                                      
     TRISC = 0X00;                                                                               
     TRISD = 0X00;                                                                               
