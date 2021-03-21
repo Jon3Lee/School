@@ -44,7 +44,7 @@ void Wait_Half_Second();
 void Activate_Buzzer();
 void Deactivate_Buzzer();
 
-char array[10] = {0x01, 0x4F, 0x12, 0x06, 0x4C, 0x24, 0x20, 0x0F, 0x00, 0x04};
+char array[10] = {0x7F, 0x4F, 0x12, 0x06, 0x4C, 0x24, 0x20, 0x0F, 0x00, 0x04};
 
 void init_UART()
 {
@@ -157,7 +157,7 @@ void Set_EWLT(char color)                           //This is the D4 LED
     }
 }
 
-void DO_DISPLAY_7SEG_Upper(char digit)
+void Display_Upper_Digit(char digit)
 {
     PORTC = array[digit] & 0x3F;
     if ((array[digit] & 0x40) == 0x40)
@@ -168,41 +168,31 @@ void DO_DISPLAY_7SEG_Upper(char digit)
     {
         SEG_A = 0;
     }
-
-    if (digit == 0)
-    {
-        SEG_A = 0;
-        PORTC = 0;
-    }
 }
 
-void DO_DISPLAY_7SEG_Lower(char digit)
+void Display_Lower_Digit(char digit)
 {
     PORTD = (PORTD & 0x80) | array[digit];
-    if (digit == 0)
-    {
-        PORTD = 0x00;
-    }
 }
 
 void PED_Control(char Direction, char Num_Sec)
 {
-    DO_DISPLAY_7SEG_Upper(0x00);
-    DO_DISPLAY_7SEG_Lower(0x00);
+    Display_Upper_Digit(0x00);
+    Display_Lower_Digit(0x00);
     for(char i = Num_Sec - 1; i>0; i--)
     {
-        if(Direction == 0)
+        if(Direction == 1)
         {
-            DO_DISPLAY_7SEG_Upper(i);
+            Display_Lower_Digit(i);
         }
         else
         {
-            DO_DISPLAY_7SEG_Lower(i);
+            Display_Upper_Digit(i);
         }
         Wait_One_Second_With_Beep();
     }
-    DO_DISPLAY_7SEG_Upper(0x00);
-    DO_DISPLAY_7SEG_Lower(0x00);
+    Display_Upper_Digit(0x00);
+    Display_Lower_Digit(0x00);
     Wait_One_Second_With_Beep();
 }
 

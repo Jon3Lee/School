@@ -152,7 +152,7 @@ void Set_EWLT(char color)                           //This is the D4 LED
     }
 }
 
-void DO_DISPLAY_7SEG_Upper(char digit)
+void Display_Upper_Digit(char digit)
 {
     PORTC = array[digit] & 0x3F;
     if ((array[digit] & 0x40) == 0x40)
@@ -165,29 +165,29 @@ void DO_DISPLAY_7SEG_Upper(char digit)
     }
 }
 
-void DO_DISPLAY_7SEG_Lower(char digit)
+void Display_Lower_Digit(char digit)
 {
     PORTD = (PORTD & 0x80) | array[digit];
 }
 
 void PED_Control(char Direction, char Num_Sec)
 {
-    DO_DISPLAY_7SEG_Upper(0x00);
-    DO_DISPLAY_7SEG_Lower(0x00);
+    Display_Upper_Digit(0x00);
+    Display_Lower_Digit(0x00);
     for(char i = Num_Sec - 1; i>0; i--)
     {
         if(Direction == 0)
         {
-            DO_DISPLAY_7SEG_Upper(i);
+            Display_Upper_Digit(i);
         }
         else
         {
-            DO_DISPLAY_7SEG_Lower(i);
+            Display_Lower_Digit(i);
         }
         Wait_One_Second_With_Beep();
     }
-    DO_DISPLAY_7SEG_Upper(0x00);
-    DO_DISPLAY_7SEG_Lower(0x00);
+    Display_Upper_Digit(0x00);
+    Display_Lower_Digit(0x00);
     Wait_One_Second_With_Beep();
 }
 
