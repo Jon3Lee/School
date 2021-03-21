@@ -32,6 +32,9 @@
 
 void init_UART();
 void putch(char);
+void Wait_One_Second();
+void Wait_Half_Second();
+
 
 void init_UART()
 {
@@ -79,10 +82,10 @@ char I;
 void Wait_One_Second_With_Beep()
 {
     SEC_LED = 1;                                    // First, turn on the SEC LED
-    Activate_Buzzer()                               // Activate the buzzer
+    //Activate_Buzzer();                               // Activate the buzzer
     Wait_Half_Second();                             // Wait for half second (or 500 msec)
     SEC_LED = 0;                                    // then turn off the SEC LED
-    Deactivate_ Buzzer ();                          // Deactivate the buzzer
+    //Deactivate_ Buzzer ();                          // Deactivate the buzzer
     Wait_Half_Second();                             // Wait for half second (or 500 msec)
 }
 
@@ -130,6 +133,11 @@ void Set_EWLT(char color)
     }
 }
 
+void PED_Control( char Direction, char Num_Sec)
+{
+
+}
+
 void main(void)
 {
     init_UART();
@@ -141,13 +149,13 @@ void main(void)
 
     while (1)
     {
-        for (int i=0;i i<4;i++)
+        for (int i=0;i<4;i++)
         {
-            SET_NS(i); // Set color for North-South direction
-            SET_NSLT(i); // Set color for North-South Left-Turn direction
-            SET_EW(i); // Set color for East-West direction
-            SET_EWLT(i); // Set color for East-West Left-Turn direction
-            Wait_N_Second(1); // call Wait-N-Second routine to wait for 1 second
+            Set_NS(i); // Set color for North-South direction
+            Set_NSLT(i); // Set color for North-South Left-Turn direction
+            Set_EW(i); // Set color for East-West direction
+            Set_EWLT(i); // Set color for East-West Left-Turn direction
+            Wait_N_Seconds(1); // call Wait-N-Second routine to wait for 1 second
         }
     }
 }
