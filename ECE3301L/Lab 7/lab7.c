@@ -172,12 +172,50 @@ void DO_DISPLAY_7SEG_Lower(char digit)
 
 void PED_Control(char Direction, char Num_Sec)
 {
-    
+    DO_DISPLAY_7SEG_Upper(0x00);
+    DO_DISPLAY_7SEG_Lower(0x00);
+    for(char i = Num_Sec - 1; i>0; i--)
+    {
+        if(Direction == 0)
+        {
+            DO_DISPLAY_7SEG_Upper(i);
+        }
+        else
+        {
+            DO_DISPLAY_7SEG_Upper(i);
+        }
+        Wait_One_Second_With_Beep();
+    }
+}
+
+unsigned int get_full_ADC(void)
+{
+int result;
+    ADCON0bits.GO=1;                                                                        // Start Conversion
+    while(ADCON0bits.DONE==1);                                                              // wait for conversion to be completed
+    result = (ADRESH * 0x100) + ADRESL;                                                     // combine result of upper byte and
+                                                                                            // lower byte into result
+    return result;                                                                          // return the result.
+}
+
+void Select_ADC_Channel(char channel)                                                       
+{
+    ADCON0 = channel * 4 + 1;
+}
+
+void Init_ADC(void) 
+{
+    ADCON1 = 0x0E;                                                                          // Since we're using up to AN5, we use 1001 for bits 3-0 to set them as analog, and 1 for bit 4,
+                                                                                            // which is the VREF+ AN3 and 0 for bit 5, coming out to 011001
+    ADCON2 = 0xA9;                                                                          // right justify the result. Set the bit conversion time (TAD) and
+                                                                                            // acquisition time
 }
 
 void main(void)
 {
+    Select_ADC_Channel(0);
     init_UART();
+    Init_ADC();
     TRISA = 0X1F;                                   //Set TRISA to 
     TRISB = 0X00;                                                                      
     TRISC = 0X00;                                                                               
