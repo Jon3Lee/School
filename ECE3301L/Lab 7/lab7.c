@@ -29,3 +29,4 @@ void Wait_Half_Second()
     while (INTCONbits.TMR0IF == 0); // wait for the Timer Flag to be 1 for done
     T0CONbits.TMR0ON = 0; // turn off the Timer 0
 }
+
