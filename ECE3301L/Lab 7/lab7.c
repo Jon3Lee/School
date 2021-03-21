@@ -25,6 +25,8 @@
 #define EWLT_RED PORTEbits.RE0
 #define EWLT_GREEN PORTEbits.RE2
 
+#define SEG_A PORTEbits.RE1
+
 #define OFF 0
 #define RED 1
 #define GREEN 2
@@ -36,6 +38,8 @@ void Wait_One_Second();
 void Wait_Half_Second();
 void Activate_Buzzer();
 void Deactivate_Buzzer();
+
+char array[10] = {0x01, 0x4F, 0x12, 0x06, 0x4C, 0x24, 0x20, 0x0F, 0x00, 0x04};
 
 void init_UART()
 {
@@ -85,7 +89,7 @@ void Deactivate_Buzzer()
     PORTBbits.RB3 = 0;
 }
 
-void Wait_N_Seconds (char seconds)
+void Wait_N_Seconds(char seconds)
 {
 char I;
     for (I = 0; I< seconds; I++)
@@ -104,7 +108,7 @@ void Wait_One_Second_With_Beep()
     Wait_Half_Second();                             // Wait for half second (or 500 msec)
 }
 
-void Set_NS(char color)
+void Set_NS(char color)                             //This is the D1 LED
 {
     switch (color)
     {
@@ -115,42 +119,60 @@ void Set_NS(char color)
     }
 }
 
-void Set_NSLT(char color)
+void Set_NSLT(char color)                           //This is the D3 LED
 {
     switch (color)
     {
-        case OFF: NSLT_RED =0;NSLT_GREEN=0;break;       // Turns off the NSLT LED
-        case RED: NSLT_RED =1;NSLT_GREEN=0;break;       // Sets NSLT LED RED
-        case GREEN: NSLT_RED =0;NSLT_GREEN=1;break;     // sets NSLT LED GREEN
-        case YELLOW: NSLT_RED =1;NSLT_GREEN=1;break;    // sets NSLT LED YELLOW
+        case OFF: NSLT_RED =0;NSLT_GREEN=0;break;    // Turns off the NSLT LED
+        case RED: NSLT_RED =1;NSLT_GREEN=0;break;    // Sets NSLT LED RED
+        case GREEN: NSLT_RED =0;NSLT_GREEN=1;break;  // sets NSLT LED GREEN
+        case YELLOW: NSLT_RED =1;NSLT_GREEN=1;break; // sets NSLT LED YELLOW
     }
 }
 
-void Set_EW(char color)
+void Set_EW(char color)                             //This is the D2 LED
 {
     switch (color)
     {
-        case OFF: EW_RED =0;EW_GREEN=0;break;         // Turns off the EW LED
-        case RED: EW_RED =1;EW_GREEN=0;break;         // Sets EW LED RED
-        case GREEN: EW_RED =0;EW_GREEN=1;break;       // sets EW LED GREEN
-        case YELLOW: EW_RED =1;EW_GREEN=1;break;      // sets EW LED YELLOW
+        case OFF: EW_RED =0;EW_GREEN=0;break;       // Turns off the EW LED
+        case RED: EW_RED =1;EW_GREEN=0;break;       // Sets EW LED RED
+        case GREEN: EW_RED =0;EW_GREEN=1;break;     // sets EW LED GREEN
+        case YELLOW: EW_RED =1;EW_GREEN=1;break;    // sets EW LED YELLOW
     }
 }
 
-void Set_EWLT(char color)
+void Set_EWLT(char color)                           //This is the D4 LED
 {
     switch (color)
     {
-        case OFF: EWLT_RED =0;EWLT_GREEN=0;break;       // Turns off the EWLT LED
-        case RED: EWLT_RED =1;EWLT_GREEN=0;break;       // Sets EWLT LED RED
-        case GREEN: EWLT_RED =0;EWLT_GREEN=1;break;     // sets EWLT LED GREEN
-        case YELLOW: EWLT_RED =1;EWLT_GREEN=1;break;    // sets EWLT LED YELLOW
+        case OFF: EWLT_RED =0;EWLT_GREEN=0;break;   // Turns off the EWLT LED
+        case RED: EWLT_RED =1;EWLT_GREEN=0;break;   // Sets EWLT LED RED
+        case GREEN: EWLT_RED =0;EWLT_GREEN=1;break; // sets EWLT LED GREEN
+        case YELLOW: EWLT_RED =1;EWLT_GREEN=1;break;// sets EWLT LED YELLOW
     }
 }
 
-void PED_Control( char Direction, char Num_Sec)
+void DO_DISPLAY_7SEG_Upper(char digit)
 {
+    PORTC = array[digit] & 0x3F;
+    if ((array[digit] & 0x40) == 0x40)
+    {
+        SEG_A = 1;
+    }
+    else
+    {
+        SEG_A = 0;
+    }
+}
 
+void DO_DISPLAY_7SEG_Lower(char digit)
+{
+    PORTD = (PORTD & 0x80) | array[digit];
+}
+
+void PED_Control(char Direction, char Num_Sec)
+{
+    
 }
 
 void main(void)
