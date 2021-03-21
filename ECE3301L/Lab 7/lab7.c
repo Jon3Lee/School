@@ -232,6 +232,9 @@ void main(void)
             Set_EWLT(i); // Set color for East-West Left-Turn direction
             Wait_N_Seconds(1); // call Wait-N-Second routine to wait for 1 second
         }
+        PED_Control (0, 8) // Set direction 0 and do for 8 seconds
+        PED_Control(1, 6) // Set direction 1 for 6 seconds
     }
+
 }
 
