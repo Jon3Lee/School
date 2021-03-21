@@ -12,6 +12,8 @@
 #pragma config CCP2MX = PORTBE
 
 #define SEC_LED PORTDbits.RD7               //Define SEC_LED as Port D bit 7
+#define SEG_A PORTEbits.RE1
+#define MODE_LED PORTBbits.RB7
 
 #define NS_RED PORTAbits.RA5
 #define NS_GREEN PORTBbits.RB0
@@ -25,7 +27,10 @@
 #define EWLT_RED PORTEbits.RE0
 #define EWLT_GREEN PORTEbits.RE2
 
-#define SEG_A PORTEbits.RE1
+#define NSPED_SW PORTAbits.RA1
+#define NSLT_SW PORTAbits.RA2
+#define EWPED_SW PORTAbits.RA3
+#define EWLT_SW PORTAbits.RA4
 
 #define OFF 0
 #define RED 1
@@ -163,11 +168,21 @@ void DO_DISPLAY_7SEG_Upper(char digit)
     {
         SEG_A = 0;
     }
+
+    if (digit == 0)
+    {
+        SEG_A = 0;
+        PORTC = 0;
+    }
 }
 
 void DO_DISPLAY_7SEG_Lower(char digit)
 {
     PORTD = (PORTD & 0x80) | array[digit];
+    if (digit == 0)
+    {
+        PORTD = 0x00;
+    }
 }
 
 void PED_Control(char Direction, char Num_Sec)
@@ -214,31 +229,141 @@ void Init_ADC(void)
                                                       // acquisition time
 }
 
+void Night_Mode()
+{
+    Set_NSLT(RED);
+    Set_EW(RED);
+    Set_EWLT(RED);
+    Set_NS(GREEN);
 
+    Wait_N_Seconds(6);
+
+    Set_NS(YELLOW);
+    Wait_N_Seconds(3);
+
+    Set_NS(RED);
+
+    if (EWLT_SW == 1)
+    {
+        Set_EWLT(GREEN);
+        Wait_N_Seconds(6);
+
+        Set_EWLT(YELLOW);
+        Wait_N_Seconds(3);
+
+        Set_EWLT(RED);
+    }
+    
+    Set_EW(GREEN);
+    Wait_N_Seconds(6);
+
+    Set_EW(YELLOW);
+    Wait_N_Seconds(3);
+
+    SET_EW(RED);
+    
+
+    if (NSLT_SW == 1)
+    {
+        Set_NSLT(GREEN);
+        Wait_N_Seconds(8);
+
+        Set_NSLT(YELLOW);
+        Wait_N_Seconds(3);
+
+        Set_NSLT(RED);
+    }
+    
+}
+
+void Day_Mode()
+{
+    Set_NS(GREEN);
+    Set_EW(RED);
+    Set_EWLT(RED);
+    Set_NSLT(RED);
+
+    if (NSPED_SW == 1)
+    {
+        PED_Control(0, 8);
+    }
+
+    Wait_N_Seconds(7);
+
+    Set_NS(YELLOW);
+    Wait_N_Seconds(3);
+
+    Set_NS(RED);
+
+    if (EWLT_SW == 1)
+    {
+        Set_EWLT(GREEN);
+        Wait_N_Seconds(8);
+
+        Set_EWLT(YELLOW);
+        Wait_N_Seconds(3);
+
+        Set_EWLT(RED);
+    }
+
+    Set_EW(GREEN);
+
+    if (EWPED_SW == 1)
+    {
+        PED_Control(1, 9);
+    }
+
+    Wait_N_Seconds(9);
+
+    Set_EW(YELLOW);
+    Wait_N_Seconds(3);
+
+    Set_EW(RED);
+
+    if (NSLT_SW == 1)
+    {
+        Set_NSLT(GREEN);
+        Wait_N_Seconds(8);
+        
+        Set_NSLT(YELLOW);
+        Wait_N_Seconds(3);
+
+        Set_NSLT(RED);
+    }
+
+}
 
 void main(void)
 {
-    Select_ADC_Channel(0);
     init_UART();
     Init_ADC();
+    
     TRISA = 0X1F;                                   //Set TRISA to 
     TRISB = 0X00;                                                                      
     TRISC = 0X00;                                                                               
     TRISD = 0X00;                                                                               
     TRISE = 0X00;  
 
+    Select_ADC_Channel(0);
+                                    /*
+                                    Find out how to work MODE = light sensor input
+                                    MODE_LED is off at night time, on day time
+                                    
+                                    */
     while (1)
     {
-        for (int i=0;i<4;i++)
+        int num_step = get_full_ADC();
+        float MODE = 4.0 * num_step;
+        if (MODE < 2500) //Daytime mode below 2.5v
         {
-            Set_NS(i); // Set color for North-South direction
-            Set_NSLT(i); // Set color for North-South Left-Turn direction
-            Set_EW(i); // Set color for East-West direction
-            Set_EWLT(i); // Set color for East-West Left-Turn direction
-            Wait_N_Seconds(1); // call Wait-N-Second routine to wait for 1 second
+            MODE_LED = 1;
+            Day_Mode();
         }
-        PED_Control (0, 8); // Set direction 0 and do for 8 seconds
-        PED_Control(1, 6); // Set direction 1 for 6 seconds
+        else
+        {
+            MODE_LED = 0;
+            Night_Mode();
+        }
     }
 
 }
