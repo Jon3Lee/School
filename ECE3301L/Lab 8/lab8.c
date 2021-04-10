@@ -291,18 +291,18 @@ void main(void)
 
 void init_IO()
 {
-    TRISA = 0x??;                               //
-    TRISB = 0x??;                               // 
-    TRISC = 0x??;                               // 
-    TRISD = 0x??;                               // 
-    TRISE = 0x??;                               // 
+    TRISA = 0x1F;                               //
+    TRISB = 0x07;                               // 
+    TRISC = 0x00;                               // 
+    TRISD = 0x00;                               // 
+    TRISE = 0x00;                               // 
 }
 
 void Init_ADC()
 {
-    ADCON0 = 0x??;
-    ADCON1= 0x??; 
-    ADCON2= 0x??;
+    ADCON0 = 0x00;
+    ADCON1= 0x0E; 
+    ADCON2= 0xA9;
 }
 
 unsigned int get_full_ADC()
@@ -331,27 +331,55 @@ void Set_NS(char color)
 
 void Set_NS_LT(char color)
 {
-    // put code here
+    direction = NSLT;			// Add these two lines here
+    update_LCD_color(direction, color);
+    switch (color)
+    {
+        case OFF: NSLT_RED =0;NSLT_GREEN=0;break;    // Turns off the NSLT LED
+        case RED: NSLT_RED =1;NSLT_GREEN=0;break;    // Sets NSLT LED RED
+        case GREEN: NSLT_RED =0;NSLT_GREEN=1;break;  // sets NSLT LED GREEN
+        case YELLOW: NSLT_RED =1;NSLT_GREEN=1;break; // sets NSLT LED YELLOW
+    }
 }
 
 void Set_EW(char color)
 {
-    // put code here
+    direction = EW;			// Add these two lines here
+    update_LCD_color(direction, color);
+   switch (color)
+    {
+        case OFF: EW_RED =0;EW_GREEN=0;break;       // Turns off the EW LED
+        case RED: EW_RED =1;EW_GREEN=0;break;       // Sets EW LED RED
+        case GREEN: EW_RED =0;EW_GREEN=1;break;     // sets EW LED GREEN
+        case YELLOW: EW_RED =1;EW_GREEN=1;break;    // sets EW LED YELLOW
+    } 
 }
 
 void Set_EW_LT(char color)
 {
-    // put code here 
+    direction = EWLT;			// Add these two lines here
+    update_LCD_color(direction, color);
+    switch (color)
+    {
+        case OFF: EWLT_RED =0;EWLT_GREEN=0;break;   // Turns off the EWLT LED
+        case RED: EWLT_RED =1;EWLT_GREEN=0;break;   // Sets EWLT LED RED
+        case GREEN: EWLT_RED =0;EWLT_GREEN=1;break; // sets EWLT LED GREEN
+        case YELLOW: EWLT_RED =1;EWLT_GREEN=1;break;// sets EWLT LED YELLOW
+    }
 }
 
 void Activate_Buzzer()
 {
-    // put code here 
+    PR2 = 0b11111001 ;
+    T2CON = 0b00000101 ;
+    CCPR2L = 0b01001010 ;
+    CCP2CON = 0b00111100 ;
 }
 
 void Deactivate_Buzzer()
 {
-    // put code here 
+    CCP2CON = 0x0;
+    PORTBbits.RB3 = 0;
 }
 
 void PED_Control( char direction, char Num_Sec)
@@ -372,7 +400,59 @@ void Day_Mode()
     MODE_LED = 1;
     Act_Mode_Txt[0] = 'D';
     
-    // put code here 
+    Set_NS(GREEN);                                  //Set North-South LED to green            
+    Set_EW(RED);                                    //Set East-West LED to red
+    Set_EWLT(RED);                                  //Set East-West left turn LED to red
+    Set_NSLT(RED);                                  //Set North-south left turn LED to red
+
+    if (NSPED_SW == 1)                              
+    {
+        PED_Control(0, 8);                          //Part 1a
+    }
+
+    Wait_N_Seconds(7);                              //Part 2
+
+    Set_NS(YELLOW);                                 //Part 3
+    Wait_N_Seconds(3);
+
+    Set_NS(RED);                                    //Part 4
+
+    if (EWLT_SW == 1)                               //Part 5
+    {
+        Set_EWLT(GREEN);                            //Part 6
+        Wait_N_Seconds(8);                          
+
+        Set_EWLT(YELLOW);                           //Part 7
+        Wait_N_Seconds(3);
+
+        Set_EWLT(RED);                              //Part 8
+    }
+
+    Set_EW(GREEN);                                  //Part 9
+
+    if (EWPED_SW == 1)
+    {
+        PED_Control(1, 9);                          //Part 9a
+    }
+
+    Wait_N_Seconds(9);                              //Part 10
+
+    Set_EW(YELLOW);                                 //Part 11
+    Wait_N_Seconds(3);
+
+    Set_EW(RED);                                    //Part 12
+
+    if (NSLT_SW == 1)                               //Part 13
+    {
+        Set_NSLT(GREEN);                            //Part 14
+        Wait_N_Seconds(8);
+        
+        Set_NSLT(YELLOW);                           //Part 15
+        Wait_N_Seconds(3);
+
+        Set_NSLT(RED);                              //Part 16
+    }
+                                                    //Day_Mode() Finished
 }
 void Night_Mode()
 { 
@@ -380,7 +460,49 @@ void Night_Mode()
     MODE_LED = 0;
     Act_Mode_Txt[0] = 'N';
     
-    // put code here
+    Set_NSLT(RED);                                  //Set North-south left turn LED to red
+    Set_EW(RED);                                    //Set East-West LED to red
+    Set_EWLT(RED);                                  //Set East-west left turn LED to red  
+    Set_NS(GREEN);                                  //Set North-South LED to green  
+
+    Wait_N_Seconds(6);                              //Part 2
+
+    Set_NS(YELLOW);                                 //Part 3
+    Wait_N_Seconds(3);
+
+    Set_NS(RED);                                    //Part 4
+
+    if (EWLT_SW == 1)                               //Part 5
+    {
+        Set_EWLT(GREEN);                            //Part 6
+        Wait_N_Seconds(6);
+
+        Set_EWLT(YELLOW);                           //Part 7
+        Wait_N_Seconds(3);
+
+        Set_EWLT(RED);                              //Part 8
+    }
+    
+    Set_EW(GREEN);                                  //Part 9
+    Wait_N_Seconds(6);  
+
+    Set_EW(YELLOW);                                 //Part 10
+    Wait_N_Seconds(3);
+
+    Set_EW(RED);                                    //Part 11
+    
+
+    if (NSLT_SW == 1)                               //Part 12
+    {
+        Set_NSLT(GREEN);                            //Part 13
+        Wait_N_Seconds(8);
+
+        Set_NSLT(YELLOW);                           //Part 14
+        Wait_N_Seconds(3);
+
+        Set_NSLT(RED);                              //Part 15
+    }
+                                                    //End Night_Mode()
 
 }
 
@@ -409,7 +531,18 @@ void Wait_One_Second()							//creates one second delay and blinking asterisk
 
 void Wait_One_Second_With_Beep()				// creates one second delay as well as sound buzzer
 {
-    // put code here
+    SEC_LED = 1;
+    strcpy(txt,"*");
+    drawtext(120,10,txt,ST7735_WHITE,ST7735_BLACK,TS_1);                                    // First, turn on the SEC LED
+    Activate_Buzzer();                              // Activate the buzzer
+    Wait_Half_Second();                             // Wait for half second (or 500 msec)
+
+    SEC_LED = 0;
+    strcpy(txt," ");
+    drawtext(120,10,txt,ST7735_WHITE,ST7735_BLACK,TS_1);                                    // then turn off the SEC LED
+    Deactivate_Buzzer();                            // Deactivate the buzzer
+    Wait_Half_Second();
+    update_LCD_misc();   
 }
     
 void Wait_Half_Second()
