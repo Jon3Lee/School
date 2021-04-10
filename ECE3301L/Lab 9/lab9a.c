@@ -158,6 +158,11 @@ void update_LCD_PED_Count(char direction, char count);
 void update_LCD_misc(void);
 void update_LCD_count(char, char);
 
+void interrupt high_priority chkisr(void);
+void INT0_ISR(void);
+void INT1_ISR(void);
+void INT2_ISR(void);
+
 void Initialize_Screen()
 {
   LCD_Reset();
@@ -261,6 +266,7 @@ void putch (char c)
 }
 
 int INT0_flag, INT1_flag, INT2_flag = 0;
+
 void interrupt high_priority chkisr()
 {
     if (INTCONbits.INT0IF == 1) INT0_ISR(); // check if INT0
@@ -308,32 +314,42 @@ int nStep = get_full_ADC();         // calculates the # of steps for analog conv
     volt = nStep * 5 /1024.0;       // gets the voltage in Volts, using 5V as reference s instead of 4, also divide by 1024 
     SW_MODE = volt < 2.5 ? 1:0;        // Mode = 1, Day_mode, Mode = 0 Night_mode
 
-    Do_Init(); // Initialization
+    //Do_Init(); // Initialization
     while (1)
     { // Do nothing,
         if (INT0_flag == 1)
         {
             INT0_flag = 0; // clear the flag
-            printf (“INT0 interrupt pin detected \r\n”);
+            printf ("INT0 interrupt pin detected \r\n");
             // print a message that INT0 has
             // occurred
         }
         if (INT1_flag == 1)
         {
             INT1_flag = 0; // clear the flag
-            printf (“INT1 interrupt pin detected \r\n”);
+            printf ("INT1 interrupt pin detected \r\n");
             // print a message that INT1 has
             // occurred
         }
         if (INT2_flag == 1)
         {
             INT2_flag = 0; // clear the flag
-            printf (“INT2 interrupt pin detected \r\n”);
+            printf ("INT2 interrupt pin detected \r\n");
             // print a message that INT2 has
             // occurred
         }
+        if (SW_MODE)    
+        {
+            Day_Mode();                         // calls Day_Mode() function
+        }
+        else
+        {
+            Night_Mode();                       // calls Night_Mode() function
+        }
+    }
 }
-}
+
+
 
 void init_IO()
 {
