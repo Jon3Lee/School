@@ -629,13 +629,13 @@ void update_LCD_count(char direction, char count)
         drawtext(XCNT, EWLT_Count_Y, EWLT_Count, EWLT_Color, ST7735_BLACK, TS_2);                
         break;
     case NS:        
-        EW_Count[0] = count/10  + '0';
-        EW_Count[1] = count%10  + '0';
+        NS_Count[0] = count/10  + '0';
+        NS_Count[1] = count%10  + '0';
         drawtext(XCNT, NS_Count_Y, NS_Count, NS_Color, ST7735_BLACK, TS_2);                
         break;
     case NSLT:        
-        EW_Count[0] = count/10  + '0';
-        EW_Count[1] = count%10  + '0';
+        NSLT_Count[0] = count/10  + '0';
+        NSLT_Count[1] = count%10  + '0';
         drawtext(XCNT, NSLT_Count_Y, NSLT_Count, NSLT_Color, ST7735_BLACK, TS_2);                
         break;
     }  
