@@ -266,7 +266,7 @@ void main(void)
     Init_ADC();
     init_UART();
     OSCCON = 0x70; 
-    RBPU = 0;    
+    //RBPU = 0;    
     // set the system clock to be 1MHz 1/4 of the 4MHz
     Initialize_Screen();                        // Initialize the TFT screen
 
@@ -300,7 +300,7 @@ void init_IO()
 
 void Init_ADC()
 {
-    ADCON0 = 0x00;
+    ADCON0 = 0x01;
     ADCON1= 0x0E; 
     ADCON2= 0xA9;
 }
@@ -390,7 +390,7 @@ void PED_Control( char direction, char Num_Sec)
         Wait_One_Second_With_Beep();            // hold the number on 7-Segment for 1 second
     }
     
-    update_LCD_PED_Count(direction, 0);         //                            //
+    update_LCD_PED_Count(direction, 0);         //                  
     Wait_One_Second_With_Beep();                // leaves the 7-Segment off for 1 second
 }
 
@@ -407,7 +407,7 @@ void Day_Mode()
 
     if (NS_PED_SW == 1)                              
     {
-        PED_Control(0, 8);                          //Part 1a
+        PED_Control(NS, 8);                          //Part 1a
     }
 
     Wait_N_Seconds(7);                              //Part 2
@@ -432,7 +432,7 @@ void Day_Mode()
 
     if (EW_PED_SW == 1)
     {
-        PED_Control(1, 9);                          //Part 9a
+        PED_Control(EW, 9);                          //Part 9a
     }
 
     Wait_N_Seconds(9);                              //Part 10
