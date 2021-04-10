@@ -651,8 +651,8 @@ void update_LCD_PED_Count(char direction, char count)
         drawtext(PED_Count_X, PED_EW_Count_Y, PED_EW_Count, EW_Color, ST7735_BLACK, TS_2);        
         break;
     case NS:       
-        PED_EW_Count[0] = count/10  + '0';          // PED count upper digit
-        PED_EW_Count[1] = count%10  + '0';          // PED Lower
+        PED_NS_Count[0] = count/10  + '0';          // PNS count upper digit
+        PED_NS_Count[1] = count%10  + '0';          // PNS Lower
         drawtext(PED_Count_X, PED_NS_Count_Y, PED_NS_Count, NS_Color, ST7735_BLACK, TS_2);        
         break;
    }
