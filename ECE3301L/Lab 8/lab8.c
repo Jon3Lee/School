@@ -402,10 +402,10 @@ void Day_Mode()
     
     Set_NS(GREEN);                                  //Set North-South LED to green            
     Set_EW(RED);                                    //Set East-West LED to red
-    Set_EWLT(RED);                                  //Set East-West left turn LED to red
-    Set_NSLT(RED);                                  //Set North-south left turn LED to red
+    Set_EW_LT(RED);                                  //Set East-West left turn LED to red
+    Set_NS_LT(RED);                                  //Set North-south left turn LED to red
 
-    if (NSPED_SW == 1)                              
+    if (NS_PED_SW == 1)                              
     {
         PED_Control(0, 8);                          //Part 1a
     }
@@ -417,20 +417,20 @@ void Day_Mode()
 
     Set_NS(RED);                                    //Part 4
 
-    if (EWLT_SW == 1)                               //Part 5
+    if (EW_LT_SW == 1)                               //Part 5
     {
-        Set_EWLT(GREEN);                            //Part 6
+        Set_EW_LT(GREEN);                            //Part 6
         Wait_N_Seconds(8);                          
 
-        Set_EWLT(YELLOW);                           //Part 7
+        Set_EW_LT(YELLOW);                           //Part 7
         Wait_N_Seconds(3);
 
-        Set_EWLT(RED);                              //Part 8
+        Set_EW_LT(RED);                              //Part 8
     }
 
     Set_EW(GREEN);                                  //Part 9
 
-    if (EWPED_SW == 1)
+    if (EW_PED_SW == 1)
     {
         PED_Control(1, 9);                          //Part 9a
     }
@@ -442,15 +442,15 @@ void Day_Mode()
 
     Set_EW(RED);                                    //Part 12
 
-    if (NSLT_SW == 1)                               //Part 13
+    if (NS_LT_SW == 1)                               //Part 13
     {
-        Set_NSLT(GREEN);                            //Part 14
+        Set_NS_LT(GREEN);                            //Part 14
         Wait_N_Seconds(8);
         
-        Set_NSLT(YELLOW);                           //Part 15
+        Set_NS_LT(YELLOW);                           //Part 15
         Wait_N_Seconds(3);
 
-        Set_NSLT(RED);                              //Part 16
+        Set_NS_LT(RED);                              //Part 16
     }
                                                     //Day_Mode() Finished
 }
@@ -460,9 +460,9 @@ void Night_Mode()
     MODE_LED = 0;
     Act_Mode_Txt[0] = 'N';
     
-    Set_NSLT(RED);                                  //Set North-south left turn LED to red
+    Set_NS_LT(RED);                                  //Set North-south left turn LED to red
     Set_EW(RED);                                    //Set East-West LED to red
-    Set_EWLT(RED);                                  //Set East-west left turn LED to red  
+    Set_EW_LT(RED);                                  //Set East-west left turn LED to red  
     Set_NS(GREEN);                                  //Set North-South LED to green  
 
     Wait_N_Seconds(6);                              //Part 2
@@ -472,15 +472,15 @@ void Night_Mode()
 
     Set_NS(RED);                                    //Part 4
 
-    if (EWLT_SW == 1)                               //Part 5
+    if (EW_LT_SW == 1)                               //Part 5
     {
-        Set_EWLT(GREEN);                            //Part 6
+        Set_EW_LT(GREEN);                            //Part 6
         Wait_N_Seconds(6);
 
-        Set_EWLT(YELLOW);                           //Part 7
+        Set_EW_LT(YELLOW);                           //Part 7
         Wait_N_Seconds(3);
 
-        Set_EWLT(RED);                              //Part 8
+        Set_EW_LT(RED);                              //Part 8
     }
     
     Set_EW(GREEN);                                  //Part 9
@@ -492,15 +492,15 @@ void Night_Mode()
     Set_EW(RED);                                    //Part 11
     
 
-    if (NSLT_SW == 1)                               //Part 12
+    if (NS_LT_SW == 1)                               //Part 12
     {
-        Set_NSLT(GREEN);                            //Part 13
+        Set_NS_LT(GREEN);                            //Part 13
         Wait_N_Seconds(8);
 
-        Set_NSLT(YELLOW);                           //Part 14
+        Set_NS_LT(YELLOW);                           //Part 14
         Wait_N_Seconds(3);
 
-        Set_NSLT(RED);                              //Part 15
+        Set_NS_LT(RED);                              //Part 15
     }
                                                     //End Night_Mode()
 
