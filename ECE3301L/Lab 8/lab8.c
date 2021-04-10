@@ -142,7 +142,7 @@ void Set_NS_LT(char color);
 void Set_EW(char color);
 void Set_EW_LT(char color);
 
-void PED_Control( char Direction, char Num_Sec);
+void PED_Control(char Direction, char Num_Sec);
 void Day_Mode(void);
 void Night_Mode(void);
 
@@ -273,7 +273,7 @@ void main(void)
 
     int nStep = get_full_ADC();         // calculates the # of steps for analog conversion
     volt = nStep * 5 /1024.0;       // gets the voltage in Volts, using 5V as reference s instead of 4, also divide by 1024 
-    SW_MODE = volt < 3.5 ? 1:0;        // Mode = 1, Day_mode, Mode = 0 Night_mode
+    SW_MODE = volt < 2.5 ? 1:0;        // Mode = 1, Day_mode, Mode = 0 Night_mode
 
     while(1)                                    // forever loop
     {
