@@ -399,11 +399,11 @@ void Day_Mode()
     MODE = 1;                                   // turns on the MODE_LED
     MODE_LED = 1;
     Act_Mode_Txt[0] = 'D';
-    
-    Set_NS(GREEN);                                  //Set North-South LED to green            
+            
     Set_EW(RED);                                    //Set East-West LED to red
     Set_EW_LT(RED);                                  //Set East-West left turn LED to red
     Set_NS_LT(RED);                                  //Set North-south left turn LED to red
+    Set_NS(GREEN);                                  //Set North-South LED to green    
 
     if (NS_PED_SW == 1)                              
     {
