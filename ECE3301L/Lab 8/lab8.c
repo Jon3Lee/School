@@ -14,30 +14,30 @@
 #define _XTAL_FREQ      8000000         // Set operation for 8 Mhz
 #define TMR_CLOCK       _XTAL_FREQ/4    // Timer Clock 2 Mhz
 
-#define TFT_DC             		// Location of TFT D/C
-#define TFT_CS             		// Location of TFT Chip Select
-#define TFT_RST            		// Location of TFT Reset
-#define SEC_LED  
+#define TFT_DC          PORTDbits.RD0   		// Location of TFT D/C
+#define TFT_CS          PORTDbits.RD1   		// Location of TFT Chip Select
+#define TFT_RST         PORTDbits.RD2   		// Location of TFT Reset
+#define SEC_LED         PORTDbits.RD7
 
-#define NS_RED              
-#define NS_GREEN 
+#define NS_RED          PORTAbits.RA5           
+#define NS_GREEN        PORTBbits.RB4
 
-#define NSLT_RED 
-#define NSLT_GREEN 
+#define NSLT_RED        PORTBbits.RB5
+#define NSLT_GREEN      PORTCbits.RC0
 
-#define EW_RED   
-#define EW_GREEN 
+#define EW_RED          PORTDbits.RD5
+#define EW_GREEN        PORTDbits.RD6
 
-#define EWLT_RED 
-#define EWLT_GREEN 
+#define EWLT_RED        PORTEbits.RE0
+#define EWLT_GREEN      PORTEbits.RE2
 
-#define NS_LT_SW 
-#define NS_PED_SW 
+#define NS_LT_SW        PORTAbits.RA2
+#define NS_PED_SW       PORTAbits.RA1
 
-#define EW_PED_SW 
-#define EW_LT_SW 
+#define EW_PED_SW       PORTAbits.RA3
+#define EW_LT_SW        PORTAbits.RA4
 
-#define MODE_LED 
+#define MODE_LED        PORTEbits.RE1
 //colors
 #define OFF 		0               // Defines OFF as decimal value 0
 #define RED 		1               // Defines RED as decimal value 1
@@ -211,7 +211,7 @@ void Initialize_Screen()
   strcpy(txt, "NORTH/SOUTH");
   drawtext  (XTXT, NS_Txt_Y  , txt, NS_Color, ST7735_BLACK, TS_1);
   drawRect  (XTXT, NS_Cir_Y-8, 60, 18, NS_Color);
-  drawCircle(XRED, NS_Cir_Y  , Circle_Size, ST7735_RED);
+  fillCircle(XRED, NS_Cir_Y  , Circle_Size, ST7735_RED);
   drawCircle(XYEL, NS_Cir_Y  , Circle_Size, ST7735_YELLOW);
   fillCircle(XGRN, NS_Cir_Y  , Circle_Size, ST7735_GREEN);
   drawtext  (XCNT, NS_Count_Y, NS_Count, NS_Color, ST7735_BLACK, TS_2);
@@ -460,20 +460,51 @@ void update_LCD_color(char direction, char color)
         drawCircle(XGRN, Circle_Y, Circle_Size, ST7735_GREEN);  
     }
           
-    // put code here
+    if (color == Color_Green)     //if the color is green only fill the green circle with green
+    {
+        fillCircle(XRED, Circle_Y, Circle_Size, ST7735_BLACK);
+        fillCircle(XYEL, Circle_Y, Circle_Size, ST7735_BLACK);
+        fillCircle(XGRN, Circle_Y, Circle_Size, ST7735_GREEN); 
+        drawCircle(XRED, Circle_Y, Circle_Size, ST7735_RED);            
+        drawCircle(XYEL, Circle_Y, Circle_Size, ST7735_YELLOW);
+        drawCircle(XGRN, Circle_Y, Circle_Size, ST7735_GREEN);  
+    }
+
+    if (color == Color_Yellow)     //if the color is yellow only fill the yellow circle with yellow
+    {
+        fillCircle(XRED, Circle_Y, Circle_Size, ST7735_BLACK);
+        fillCircle(XYEL, Circle_Y, Circle_Size, ST7735_YELLOW);
+        fillCircle(XGRN, Circle_Y, Circle_Size, ST7735_BLACK); 
+        drawCircle(XRED, Circle_Y, Circle_Size, ST7735_RED);            
+        drawCircle(XYEL, Circle_Y, Circle_Size, ST7735_YELLOW);
+        drawCircle(XGRN, Circle_Y, Circle_Size, ST7735_GREEN);  
+    }
 }
 
 void update_LCD_count(char direction, char count)
 {
    switch (direction)                   //update traffic light no ped time
    {
-      case EW:        
+    case EW:        
         EW_Count[0] = count/10  + '0';
         EW_Count[1] = count%10  + '0';
         drawtext(XCNT, EW_Count_Y, EW_Count, EW_Color, ST7735_BLACK, TS_2);                
         break;
-      
-    // put code here
+    case EWLT:        
+        EWLT_Count[0] = count/10  + '0';
+        EWLT_Count[1] = count%10  + '0';
+        drawtext(XCNT, EWLT_Count_Y, EWLT_Count, EWLT_Color, ST7735_BLACK, TS_2);                
+        break;
+    case NS:        
+        EW_Count[0] = count/10  + '0';
+        EW_Count[1] = count%10  + '0';
+        drawtext(XCNT, NS_Count_Y, NS_Count, NS_Color, ST7735_BLACK, TS_2);                
+        break;
+    case NSLT:        
+        EW_Count[0] = count/10  + '0';
+        EW_Count[1] = count%10  + '0';
+        drawtext(XCNT, NSLT_Count_Y, NSLT_Count, NSLT_Color, ST7735_BLACK, TS_2);                
+        break;
     }  
 }
 
@@ -481,13 +512,16 @@ void update_LCD_PED_Count(char direction, char count)
 {
    switch (direction)
    {
-      case EW:       
+    case EW:       
         PED_EW_Count[0] = count/10  + '0';          // PED count upper digit
         PED_EW_Count[1] = count%10  + '0';          // PED Lower
         drawtext(PED_Count_X, PED_EW_Count_Y, PED_EW_Count, EW_Color, ST7735_BLACK, TS_2);        
         break;
-      // put code here  
-
+    case NS:       
+        PED_EW_Count[0] = count/10  + '0';          // PED count upper digit
+        PED_EW_Count[1] = count%10  + '0';          // PED Lower
+        drawtext(PED_Count_X, PED_NS_Count_Y, PED_NS_Count, NS_Color, ST7735_BLACK, TS_2);        
+        break;
    }
    
 }
@@ -496,7 +530,7 @@ void update_LCD_misc()
 {
     int nStep = get_full_ADC();         // calculates the # of steps for analog conversion
     volt = nStep * 5 /1024.0;           // gets the voltage in Volts, using 5V as reference s instead of 4, also divide by 1024 
-    SW_MODE = volt < 3.5 ? 1:0;         // Mode = 1, Day_mode, Mode = 0 Night_mode
+    SW_MODE = volt < 2.5 ? 1:0;         // Mode = 1, Day_mode, Mode = 0 Night_mode
     
     SW_EWPED = EW_PED_SW;
     SW_EWLT = EW_LT_SW;    
@@ -504,7 +538,9 @@ void update_LCD_misc()
     SW_NSLT = NS_LT_SW;
 
     if (SW_EWPED == 0) SW_EWPED_Txt[0] = '0'; else SW_EWPED_Txt[0] = '1';      // Set Text at bottom of screen to switch states
-    // put code here  
+    if (SW_EWLT == 0) SW_EWLT_Txt[0] = '0'; else SW_EWLT_Txt[0] = '1';
+    if (SW_NSPED == 0) SW_NSPED_Txt[0] = '0'; else SW_NSPED_Txt[0] = '1';
+    if (SW_NSLT == 0) SW_NSLT_Txt[0] = '0'; else SW_NSLT_Txt[0] = '1';
    
     drawtext(35,10, Act_Mode_Txt, ST7735_WHITE, ST7735_BLACK, TS_1);    
     drawtext(6,   Switch_Txt_Y+9, SW_EWPED_Txt, ST7735_WHITE, ST7735_BLACK, TS_1);
