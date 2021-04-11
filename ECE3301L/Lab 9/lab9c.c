@@ -310,17 +310,17 @@ void Do_Flashing()
         }
         else if (FLASHING_REQUEST == 0)
         {
-            SET_EW(RED);
-            SET_EW_LT(RED);
-            SET_NS(RED);
-            SET_NS_LT(RED);
+            Set_EW(RED);
+            Set_EW_LT(RED);
+            Set_NS(RED);
+            Set_NS_LT(RED);
 
             Wait_One_Second();
 
-            SET_EW(OFF);
-            SET_EW_LT(OFF);
-            SET_NS(OFF);
-            SET_NS_LT(OFF);
+            Set_EW(OFF);
+            Set_EW_LT(OFF);
+            Set_NS(OFF);
+            Set_NS_LT(OFF);
 
             Wait_One_Second();
         }
