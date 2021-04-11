@@ -166,6 +166,8 @@ void INT0_ISR(void);
 void INT1_ISR(void);
 void INT2_ISR(void);
 
+void Do_Flashing();
+
 void Initialize_Screen()
 {
   LCD_Reset();
@@ -292,8 +294,37 @@ void INT1_ISR()
 void INT2_ISR()
 {
     INTCON3bits.INT2IF=0; // Clear the interrupt flag
-    INT2_flag = 1; // set software INT2_flag
+    FLASHING_REQUEST = 1; // set software INT2_flag
 }
+
+void Do_Flashing()
+{
+    FLASHING = 1;
+
+    while(FLASHING == 1)
+    {
+        if (FLASHING_REQUEST == 1)
+        {
+            FLASHING_REQUEST = 0;
+            FLASHING = 0;
+        }
+        else if (FLASHING_REQUEST == 0)
+        {
+            update_LCD_color(EW, Color_Red);
+            update_LCD_color(EWLT, Color_Red);
+            update_LCD_color(NS, Color_Red);
+            update_LCD_color(NSLT, Color_Red);
+
+            Wait_One_Second();
+
+            update_LCD_color(EW, Color_Off);
+            update_LCD_color(EWLT, Color_Off);
+            update_LCD_color(NS, Color_Off);
+            update_LCD_color(NSLT, Color_Off);
+        }
+    }
+}
+
 void main(void)
 {
     init_IO();
@@ -330,6 +361,12 @@ void main(void)
             EW_PED_SW = 0;
             NS_PED_SW = 0;
             Night_Mode();                       // calls Night_Mode() function
+        }
+
+        if (FLASHING_REQUEST == 1)
+        {
+            FLASHING_REQUEST = 0;
+            Do_Flashing();
         }
      
     } 
