@@ -289,32 +289,40 @@ void INT2_ISR()
     INTCON3bits.INT2IF=0; // Clear the interrupt flag
     INT2_flag = 1; // set software INT2_flag
 }
+void Do_Init() // Initialize the ports
+{
+    init_UART(); // Initialize the uart
+    Init_ADC(); // Initiailize the ADC with the
+    // programming of ADCON1
+    OSCCON=0x70; // Set oscillator to 8 MHz
+    TRISB = 0x07; // Configure the PORTB to make sure
+    // that all the INTx pins are
+    // inputs
+    INTCONbits.INT0IF = 0 ; // Clear INT0IF
+    INTCON3bits.INT1IF = 0; // Clear INT1IF
+    INTCON3bits.INT2IF =0; // Clear INT2IF
+    INTCON2bits.INTEDG0=0 ; // INT0 EDGE falling
+    INTCON2bits.INTEDG1=0; // INT1 EDGE falling
+    INTCON2bits.INTEDG2=1; // INT2 EDGE rising
+    INTCONbits.INT0IE =1; // Set INT0 IE
+    INTCON3bits.INT1IE=1; // Set INT1 IE
+    INTCON3bits.INT2IE=1; // Set INT2 IE
+    INTCONbits.GIE=1; // Set the Global Interrupt Enable
+}
 void main(void)
 {
     init_IO();
-    Init_ADC();
-    init_UART();
-    OSCCON = 0x70;
-    INTCONbits.INT0IF = 0;       // Clear INT0IF
-    INTCON3bits.INT1IF = 0;      // Clear INT1IF
-    INTCON3bits.INT2IF =0;       // Clear INT2IF
-    INTCON2bits.INTEDG0=0 ;      // INT0 EDGE falling
-    INTCON2bits.INTEDG1=0;       // INT1 EDGE falling
-    INTCON2bits.INTEDG2=1;       // INT2 EDGE rising
-    INTCONbits.INT0IE =1;        // Set INT0 IE
-    INTCON3bits.INT1IE=1;        // Set INT1 IE
-    INTCON3bits.INT2IE=1;        // Set INT2 IE
-    INTCONbits.GIE=1;            // Set the Global Interrupt Enable
+    //Init_ADC();
+    //init_UART();
+    //OSCCON = 0x70;
     //RBPU = 0;    
     // set the system clock to be 1MHz 1/4 of the 4MHz
-    Initialize_Screen();                        // Initialize the TFT screen
+    //Initialize_Screen();                        // Initialize the TFT screen
+//int nStep = get_full_ADC();         // calculates the # of steps for analog conversion
+    //volt = nStep * 5 /1024.0;       // gets the voltage in Volts, using 5V as reference s instead of 4, also divide by 1024 
+    //SW_MODE = volt < 2.5 ? 1:0;        // Mode = 1, Day_mode, Mode = 0 Night_mode
 
-
-int nStep = get_full_ADC();         // calculates the # of steps for analog conversion
-    volt = nStep * 5 /1024.0;       // gets the voltage in Volts, using 5V as reference s instead of 4, also divide by 1024 
-    SW_MODE = volt < 2.5 ? 1:0;        // Mode = 1, Day_mode, Mode = 0 Night_mode
-
-    //Do_Init(); // Initialization
+    Do_Init(); // Initialization
     while (1)
     { // Do nothing,
         if (INT0_flag == 1)
@@ -337,14 +345,6 @@ int nStep = get_full_ADC();         // calculates the # of steps for analog conv
             printf ("INT2 interrupt pin detected \r\n");
             // print a message that INT2 has
             // occurred
-        }
-        if (SW_MODE)    
-        {
-            Day_Mode();                         // calls Day_Mode() function
-        }
-        else
-        {
-            Night_Mode();                       // calls Night_Mode() function
         }
     }
 }
