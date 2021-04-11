@@ -776,7 +776,7 @@ void update_LCD_misc()
     drawtext(87,  Switch_Txt_Y+9, SW_NSLT_Txt, ST7735_WHITE, ST7735_BLACK, TS_1);
     drawtext(112,  Switch_Txt_Y+9, SW_MODE_Txt, ST7735_WHITE, ST7735_BLACK, TS_1);
 
-    if (FLASHING _REQUEST == 0) FlashingR_Txt[0] = '0'; else FlashingR_Txt[0] = '1';
+    if (FLASHING_REQUEST == 0) FlashingR_Txt[0] = '0'; else FlashingR_Txt[0] = '1';
     if (FLASHING == 0) FlashingS_Txt[0] = '0'; else FlashingS_Txt[0] = '1';
                   
 }
