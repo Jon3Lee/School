@@ -310,17 +310,17 @@ void Do_Flashing()
         }
         else if (FLASHING_REQUEST == 0)
         {
-            update_LCD_color(EW, Color_Red);
-            update_LCD_color(EWLT, Color_Red);
-            update_LCD_color(NS, Color_Red);
-            update_LCD_color(NSLT, Color_Red);
+            SET_EW(RED);
+            SET_EW_LT(RED);
+            SET_NS(RED);
+            SET_NS_LT(RED);
 
             Wait_One_Second();
 
-            update_LCD_color(EW, Color_Off);
-            update_LCD_color(EWLT, Color_Off);
-            update_LCD_color(NS, Color_Off);
-            update_LCD_color(NSLT, Color_Off);
+            SET_EW(OFF);
+            SET_EW_LT(OFF);
+            SET_NS(OFF);
+            SET_NS_LT(OFF);
 
             Wait_One_Second();
         }
