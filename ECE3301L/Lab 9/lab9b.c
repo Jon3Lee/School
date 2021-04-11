@@ -32,9 +32,9 @@
 #define EWLT_GREEN      PORTEbits.RE2
 
 #define NS_LT_SW        PORTAbits.RA2
-#define NS_PED_SW       PORTAbits.RA1
+//#define NS_PED_SW       PORTAbits.RA1
 
-#define EW_PED_SW       PORTAbits.RA3
+//#define EW_PED_SW       PORTAbits.RA3
 #define EW_LT_SW        PORTAbits.RA4
 
 #define MODE_LED        PORTEbits.RE1
@@ -131,7 +131,10 @@ char SW_MODE;                           // RAM variable for Mode Light Sensor
 int MODE;
 char direction;
 float volt;
-    
+
+char NS_PED_SW;
+char EW_PED_SW;
+
 unsigned int get_full_ADC(void);
 void Init_ADC(void);
 void init_IO(void);
@@ -157,6 +160,11 @@ void update_LCD_color(char , char );
 void update_LCD_PED_Count(char direction, char count);
 void update_LCD_misc(void);
 void update_LCD_count(char, char);
+
+void interrupt high_priority chkisr(void);
+void INT0_ISR(void);
+void INT1_ISR(void);
+void INT2_ISR(void);
 
 void Initialize_Screen()
 {
@@ -260,13 +268,49 @@ void putch (char c)
     TXREG = c;
 }
 
+int INT0_flag, INT1_flag, INT2_flag = 0;
+
+void interrupt high_priority chkisr()
+{
+    if (INTCONbits.INT0IF == 1) INT0_ISR(); // check if INT0
+    // has occured
+    if (INTCON3bits.INT1IF == 1) INT1_ISR();
+    if (INTCON3bits.INT2IF == 1) INT2_ISR();
+}
+void INT0_ISR()
+{
+    INTCONbits.INT0IF=0; // Clear the interrupt flag
+    if (MODE) {NS_PED_SW = 1;}
+    else {NS_PED_SW = 0;} // set software INT0_flag
+}
+void INT1_ISR()
+{
+    INTCON3bits.INT1IF=0; // Clear the interrupt flag
+    if (MODE) {EW_PED_SW = 1;}
+    else {EW_PED_SW = 0;} // set software INT1_flag
+}
+void INT2_ISR()
+{
+    INTCON3bits.INT2IF=0; // Clear the interrupt flag
+    INT2_flag = 1; // set software INT2_flag
+}
 void main(void)
 {
     init_IO();
     Init_ADC();
     init_UART();
-    OSCCON = 0x70; 
-    //RBPU = 0;    
+    OSCCON = 0x70;
+    INTCONbits.INT0IF = 0 ; // Clear INT0IF
+    INTCON3bits.INT1IF = 0; // Clear INT1IF
+    INTCON3bits.INT2IF =0; // Clear INT2IF
+    INTCON2bits.INTEDG0=0 ; // INT0 EDGE falling
+    INTCON2bits.INTEDG1=0; // INT1 EDGE falling
+    INTCON2bits.INTEDG2=1; // INT2 EDGE rising
+    INTCONbits.INT0IE =1; // Set INT0 IE
+    INTCON3bits.INT1IE=1; // Set INT1 IE
+    INTCON3bits.INT2IE=1; // Set INT2 IE
+    INTCONbits.GIE=1; // Set the Global Interrupt Enable 
+    RBPU = 0;    
     // set the system clock to be 1MHz 1/4 of the 4MHz
     Initialize_Screen();                        // Initialize the TFT screen
 
@@ -283,11 +327,15 @@ void main(void)
         }
         else
         {
+            EW_PED_SW = 0;
+            NS_PED_SW = 0;
             Night_Mode();                       // calls Night_Mode() function
         }
      
     } 
 }
+
+
 
 void init_IO()
 {
@@ -392,6 +440,15 @@ void PED_Control( char direction, char Num_Sec)
     
     update_LCD_PED_Count(direction, 0);         //                  
     Wait_One_Second_With_Beep();                // leaves the 7-Segment off for 1 second
+
+    if (direction == EW)
+    {
+        NS_PED_SW = 0;
+    }
+    if (direction == NS)
+    {
+        EW_PED_SW = 0;
+    }
 }
 
 void Day_Mode()
