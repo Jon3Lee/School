@@ -321,6 +321,8 @@ void Do_Flashing()
             update_LCD_color(EWLT, Color_Off);
             update_LCD_color(NS, Color_Off);
             update_LCD_color(NSLT, Color_Off);
+
+            Wait_One_Second();
         }
     }
 }
