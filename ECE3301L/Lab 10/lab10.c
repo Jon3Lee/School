@@ -89,7 +89,7 @@ void INT0_isr(void)
     INTCONbits.INT0IF = 0;                  // Clear external interrupt
     if (Nec_state != 0)
     {
-        Time_Elapsed = (TMR1H << 8) | TMR1L;       // Store Timer1 value
+        Time_Elapsed = (TMR1H << 8) | TMR1L; // Store Timer1 value
         TMR1H = 0;                          // Reset Timer1
         TMR1L = 0;
     }
@@ -113,22 +113,71 @@ void INT0_isr(void)
         
         case 1 :
         {
+            if (Time_Elapsed > 8499 && Time_Elapsed < 9501)
+            {
+                Nec_state = 2;
+            }
+            else
+            {
+                force_nec_state0();
+            }
+            INTCON2bits.INTEDG0 = 0;
+            return;
 
         }
         
-        case 2 :                            // Add your code here
+        case 2 :                            
         {
-
+            if (Time_Elapsed > 3499 && Time_Elapsed < 5001)
+            {
+                Nec_state = 3;
+            }
+            else
+            {
+                force_nec_state0();
+            }
+            INTCON2bits.INTEDG0 = 1;
+            return;
         }
         
-        case 3 :                            // Add your code here
+        case 3 :                            
         {
-
+            if (Time_Elapsed > 399 && Time_Elapsed < 701)
+            {
+                Nec_state = 4;
+            }
+            else
+            {
+                force_nec_state0();
+            }
+            INTCON2bits.INTEDG0 = 0;
+            return;
         }
         
-        case 4 :                            // Add your code here
+        case 4 :                            
         {
-
+            if (Time_Elapsed > 399 && Time_Elapsed < 1801)
+            {
+                Nec_code << 1;
+                if (Time_Elapsed > 1000)
+                {
+                    Nec_code = Nec_code + 1;
+                }
+                bit_count = bit_count + 1;
+                if (bit_count > 31)
+                {
+                    nec_ok = 1;
+                    INTCONbits.INT0IE = 0;
+                    Nec_state = 0;
+                }
+                Nec_state = 3;
+            }
+            else
+            {
+                force_nec_state0();
+            }
+            INTCON2bits.INTEDG0 = 1;
+            return;
         }
     }
 }
