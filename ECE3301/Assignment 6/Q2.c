@@ -1,0 +1,13 @@
+#include <p18f4620.h>
+
+ADCON1 = 0x0F;
+INTCONbits.INT0IF = 0;
+INTCONbits.INT0IE = 1;
+
+INTCON3bits.INT2IF = 0;
+INTCON3bits.INT2IE = 1;
+
+RCONbits.IPEN = 1;
+INTCONbits.GIEH = 1;
+INTCONbits.GIEL = 1;
+INTCON3bits.INT2IP = 0;
