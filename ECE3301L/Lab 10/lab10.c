@@ -170,7 +170,10 @@ void INT0_isr(void)
                     INTCONbits.INT0IE = 0;
                     Nec_state = 0;
                 }
+                else 
+                {
                 Nec_state = 3;
+                }
             }
             else
             {
