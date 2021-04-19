@@ -187,7 +187,7 @@ void INT0_isr(void)
         {
             if (Time_Elapsed > 399 && Time_Elapsed < 1801)
             {
-                Nec_code << 1;
+                Nec_code = Nec_code*2;
                 if (Time_Elapsed > 1000)
                 {
                     Nec_code = Nec_code + 1;
@@ -251,13 +251,13 @@ void main()
             char found = 0xff;
             
             // add code here to look for code
-            for (i=0, i<21, i++)
-            {
-                if (array1[i] == Nec_code1)
-                {
-                    found = i;
-                }
-            }
+            //for (i=0, i<21, i++)
+            //{
+            //    if (array1[i] == Nec_code1)
+           //     {
+           //         found = i;
+            //    }
+           // }
             
             if (found != 0xff) 
             {
