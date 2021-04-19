@@ -19,9 +19,9 @@
 void TIMER1_isr(void);
 void INT0_isr(void);
 void Initialize_Screen();
+void Wait_Half_Second();
 void Activate_Buzzer();
 void Deactivate_Buzzer();
-void Wait_Half_Second();
 
 unsigned char Nec_state = 0;
 unsigned char i,bit_count;
@@ -50,9 +50,13 @@ char buffer[31];                        // general buffer for display purpose
 char *nbr;                              // general pointer used for buffer
 char *txt;
 
-char array1[21]={0xa2};
-char txt1[21][4] ={"CH-\0", "CH+\0", ""};
-int color[21]={RD};
+char array1[21]={0xa2, 0x22, 0xe0, 0x68, 0x30, 0x10, 0x42, 0x62, 0x02, 0xa8, 0x98, 0x18, 0x38, 0x4a, 0xe2, 0xc2, 0x90, 0xb0, 0x7a, 0x5a, 0x52};
+char txt1[21][4] ={"CH-\0", "PRV\0","VL-\0", " 0 \0"," 1 \0"," 4 \0"," 7 \0", "CH\0", "NXT\0", "VL+\0", "100\0"," 2 \0"," 5 \0"," 8 \0","CH+\0","PLY\0","EQ\0", "200\0"," 3 \0"," 6 \0"," 9 \0"};
+int color[21]={RD, BU, MA, BK, BK, BK, BK, RD, BU, MA, BK, BK, BK, BK, RD, GR, MA, BK, BK, BK, BK};
+int btncolor[21] = {1, 4, 5, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int btncolor1[21] = {0, 0, 0, 0, 0, 0, 0, 1, 4, 5, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0};
+int btncolor2[21] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 5, 7, 7, 7, 7};
+
 
 void putch (char c)
 {
@@ -87,38 +91,12 @@ void force_nec_state0()
     T1CONbits.TMR1ON = 0;
 }
 
-void Wait_Half_Second()
-{
-    T0CON = 0x02;                               // Timer 0, 16-bit mode, prescaler 1:8
-                                                // Subtract F424 from FFFF = 0x0BDB
-    TMR0L = 0xDB;                               // set the lower byte of TMR to 0xDB
-    TMR0H = 0x0B;                               // set the upper byte of TMR to 0x0B
-    INTCONbits.TMR0IF = 0;                      // clear the Timer 0 flag
-    T0CONbits.TMR0ON = 1;                       // Turn on the Timer 0
-    while (INTCONbits.TMR0IF == 0);             // wait for the Timer Flag to be 1 for done
-    T0CONbits.TMR0ON = 0;                       // turn off the Timer 0
-}
-
-void Activate_Buzzer()
-{
-    PR2 = 0b11111001 ;
-    T2CON = 0b00000101 ;
-    CCPR2L = 0b01001010 ;
-    CCP2CON = 0b00111100 ;
-}
-
-void Deactivate_Buzzer()
-{
-    CCP2CON = 0x0;
-    PORTBbits.RB3 = 0;
-}
-
 void INT0_isr(void)
 {
     INTCONbits.INT0IF = 0;                  // Clear external interrupt
     if (Nec_state != 0)
     {
-        Time_Elapsed = (TMR1H << 8) | TMR1L; // Store Timer1 value
+        Time_Elapsed = (TMR1H << 8) | TMR1L;       // Store Timer1 value
         TMR1H = 0;                          // Reset Timer1
         TMR1L = 0;
     }
@@ -142,73 +120,52 @@ void INT0_isr(void)
         
         case 1 :
         {
-            if (Time_Elapsed > 8499 && Time_Elapsed < 9501)
-            {
-                Nec_state = 2;
-            }
-            else
-            {
-                force_nec_state0();
-            }
+            if (Time_Elapsed > 8500 && Time_Elapsed < 9500) {Nec_state = 2;}
+            else {force_nec_state0();}
+            
             INTCON2bits.INTEDG0 = 0;
+            
             return;
-
         }
         
-        case 2 :                            
+        case 2 :                            // Add your code here
         {
-            if (Time_Elapsed > 3499 && Time_Elapsed < 5001)
-            {
-                Nec_state = 3;
-            }
-            else
-            {
-                force_nec_state0();
-            }
+            if (Time_Elapsed > 4000 && Time_Elapsed < 5000) {Nec_state = 3;}
+            else {force_nec_state0();}
+            
             INTCON2bits.INTEDG0 = 1;
+            
             return;
         }
         
-        case 3 :                            
+        case 3 :                            // Add your code here
         {
-            if (Time_Elapsed > 399 && Time_Elapsed < 701)
-            {
-                Nec_state = 4;
-            }
-            else
-            {
-                force_nec_state0();
-            }
+            if (Time_Elapsed > 400 && Time_Elapsed < 700) {Nec_state = 4;}
+            else {force_nec_state0();}
+            
             INTCON2bits.INTEDG0 = 0;
+            
             return;
         }
         
-        case 4 :                            
+        case 4 :                            // Add your code here
         {
-            if (Time_Elapsed > 399 && Time_Elapsed < 1801)
+            if (Time_Elapsed > 400 && Time_Elapsed < 1800) 
             {
-                Nec_code << 1;
-                if (Time_Elapsed > 1000)
-                {
-                    Nec_code = Nec_code + 1;
-                }
-                bit_count = bit_count + 1;
+                Nec_code = Nec_code*2;      // shift nec_code to left by 1
+                if (Time_Elapsed > 1000) {Nec_code = Nec_code + 1;}
+                bit_count++;                // increment bit_count
+                
                 if (bit_count > 31)
                 {
                     nec_ok = 1;
                     INTCONbits.INT0IE = 0;
                     Nec_state = 0;
-                }
-                else 
-                {
-                Nec_state = 3;
-                }
-            }
-            else
-            {
-                force_nec_state0();
-            }
+                } else {Nec_state = 3;}
+            } else {force_nec_state0();}
+            
             INTCON2bits.INTEDG0 = 1;
+            
             return;
         }
     }
@@ -219,6 +176,7 @@ void main()
     init_UART();
     OSCCON = 0x70;                          // 8 Mhz
     nRBPU = 0;                              // Enable PORTB internal pull up resistor
+    TRISA = 0x00;
     TRISB = 0x01;
     TRISC = 0x00;                           // PORTC as output
     TRISD = 0x00;
@@ -250,8 +208,7 @@ void main()
             
             char found = 0xff;
             
-            // add code here to look for code
-            for (i=0, i<21, i++)
+            for (i = 0; i < 21; i++)
             {
                 if (array1[i] == Nec_code1)
                 {
@@ -264,13 +221,14 @@ void main()
                 fillCircle(Circle_X, Circle_Y, Circle_Size, color[found]); 
                 drawCircle(Circle_X, Circle_Y, Circle_Size, ST7735_WHITE);  
                 drawtext(Text_X, Text_Y, txt1[found], ST7735_WHITE, ST7735_BLACK,TS_1); 
-
+                
                 Activate_Buzzer();
-                Wait_Half_Second();
+                Wait_Half_Second();            
                 Deactivate_Buzzer();
-
-
-                //Need to add buzzer, rgb led, 
+                
+                PORTA = btncolor[found];
+                PORTE = btncolor1[found];
+                PORTD = btncolor2[found];
             }
         }
     }
@@ -292,3 +250,27 @@ void Initialize_Screen()
     drawtext(50, 10, txt, ST7735_WHITE, ST7735_BLACK, TS_1);
 }
 
+void Wait_Half_Second()
+{
+    T0CON = 0x03;                               // Timer 0, 16-bit mode, prescaler 1:16
+    TMR0L = 0xDB;                               // set the lower byte of TMR
+    TMR0H = 0x0B;                               // set the upper byte of TMR
+    INTCONbits.TMR0IF = 0;                      // clear the Timer 0 flag
+    T0CONbits.TMR0ON = 1;                       // Turn on the Timer 0
+    while (INTCONbits.TMR0IF == 0);             // wait for the Timer Flag to be 1 for done
+    T0CONbits.TMR0ON = 0;                       // turn off the Timer 0
+}
+
+void Activate_Buzzer()
+{
+    PR2 = 0b11111001 ;
+    T2CON = 0b00000101 ;
+    CCPR2L = 0b01001010 ;
+    CCP2CON = 0b00111100 ;
+}
+
+void Deactivate_Buzzer()
+{
+    CCP2CON = 0x0;
+    PORTBbits.RB3 = 0;
+}
