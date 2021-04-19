@@ -250,7 +250,7 @@ void main()
             
             char found = 0xff;
             
-            for (i=0, i<21, i++)
+            for (i=0; i<21; i++)
             {
                 if (array1[i] == Nec_code1)
                 {
