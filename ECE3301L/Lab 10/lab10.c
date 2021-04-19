@@ -50,9 +50,9 @@ char buffer[31];                        // general buffer for display purpose
 char *nbr;                              // general pointer used for buffer
 char *txt;
 
-char array1[21]={0xa2};
-char txt1[21][4] ={"CH-\0", "CH+\0", ""};
-int color[21]={RD};
+char array1[21]={0xa2, 0x62, 0xe2, 0x22, 0x02, 0xc2, 0xe0, 0xa8, 0x90, 0x68, 0x98, 0xb0, 0x30, 0x18, 0x7a, 0x10, 0x38, 0x5a, 0x42, 0x4a, 0x52};
+char txt1[21][4] ={"CH-\0", " CH\0", "CH+\0", "VL-\0", "VL+\0", " EQ\0," " 0 \0", "100\0", "200\0", " 1 \0", " 2 \0", " 3 \0", " 4 \0", " 5 \0", " 6 \0", " 7 \0", " 8 \0", " 9 \0"};
+int color[21]={RD, RD, RD, BU, BU, GR, MA, MA, MA, BK, BK, BK, BK, BK, BK, BK, BK, BK, BK, BK, BK, BK, BK, BK};
 
 void putch (char c)
 {
@@ -250,14 +250,13 @@ void main()
             
             char found = 0xff;
             
-            // add code here to look for code
-            //for (i=0, i<21, i++)
-            //{
-            //    if (array1[i] == Nec_code1)
-           //     {
-           //         found = i;
-            //    }
-           // }
+            for (i=0, i<21, i++)
+            {
+                if (array1[i] == Nec_code1)
+                {
+                    found = i;
+                }
+            }
             
             if (found != 0xff) 
             {
@@ -285,7 +284,7 @@ void Initialize_Screen()
   
     /* TOP HEADER FIELD */
     txt = buffer;
-    strcpy(txt, "ECE3301L Spring 21-S4");  
+    strcpy(txt, "ECE3301L Spring 21-S3");  
     drawtext(2, 2, txt, ST7735_WHITE, ST7735_BLACK, TS_1);
 
     strcpy(txt, "LAB 10 ");  
