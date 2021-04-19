@@ -53,6 +53,9 @@ char *txt;
 char array1[21]={0xa2, 0x62, 0xe2, 0x22, 0x02, 0xc2, 0xe0, 0xa8, 0x90, 0x68, 0x98, 0xb0, 0x30, 0x18, 0x7a, 0x10, 0x38, 0x5a, 0x42, 0x4a, 0x52};
 char txt1[21][4] ={"CH-\0", " CH\0", "CH+\0","PRV\0", "NXT\0", "P/P\0", "VL-\0", "VL+\0", " EQ\0", " 0 \0", "100\0", "200\0", " 1 \0", " 2 \0", " 3 \0", " 4 \0", " 5 \0", " 6 \0", " 7 \0", " 8 \0", " 9 \0"};
 int color[21]={RD, RD, RD, BU, BU, GR, MA, MA, MA, BK, BK, BK, BK, BK, BK, BK, BK, BK, BK, BK, BK};
+int d1[21] = {1, 1, 1, 4, 4, 2, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+int d23[21] = {0, 0, 0, 0, 0, 0, 0, 160, 160, 224, 224, 224, 224, 224, 7, 7, 7, 7, 7, 7, 7}
+
 
 void putch (char c)
 {
@@ -267,9 +270,8 @@ void main()
                 Activate_Buzzer();
                 Wait_Half_Second();
                 Deactivate_Buzzer();
-
-
-                //Need to add buzzer, rgb led, 
+                PORTE = d1[found];
+                PORTD = d23[found]
             }
         }
     }
