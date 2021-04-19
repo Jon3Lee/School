@@ -271,7 +271,7 @@ void main()
                 Wait_Half_Second();
                 Deactivate_Buzzer();
                 PORTE = d1[found];
-                PORTD = d23[found]
+                PORTD = d23[found];
             }
         }
     }
