@@ -5,6 +5,7 @@
 extern unsigned char Nec_state;
 extern short nec_ok;
 extern unsigned long long Nec_code;
+
 unsigned int Time_Elapsed;
 unsigned char bit_count;
 
@@ -67,7 +68,6 @@ void INT0_isr()
             }
             INTCON2bits.INTEDG0 = 0;
             return;
-
         }
         
         case 2 :                            
