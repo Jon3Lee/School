@@ -20,7 +20,7 @@ extern unsigned char setup_alarm_second, setup_alarm_minute, setup_alarm_hour;
 
 void DS1621_Init()
 {
-    char Device = 0x48;
+char Device = 0x48;
     I2C_Write_Cmd_Write_Data (Device, ACCESS_CFG, CONT_CONV);
     I2C_Write_Cmd_Only(Device, START_CONV);
 }
@@ -43,22 +43,7 @@ char Data_Ret;
 
 void DS3231_Read_Time()
 {
-char Device = 0x68;
-char Address = 0x00;
-char Data_Ret;    
-  I2C_Start();                      // Start I2C protocol
-  I2C_Write((Device << 1) | 0);     // DS3231 address Write mode
-  I2C_Write(Address);               // Send register address
-  I2C_ReStart();                    // Restart I2C
-  I2C_Write((Device << 1) | 1);     // Initialize data read
-  second = I2C_Read(ACK);         //
-  minute = I2C_Read(ACK);
-  hour = I2C_Read(ACK);
-  dow = I2C_Read(ACK);
-  day = I2C_Read(ACK);
-  month = I2C_Read(ACK);
-  year = I2C_Read(NAK);
-  I2C_Stop(); 
+  
 }
 
 void DS3231_Setup_Time()
