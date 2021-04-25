@@ -74,28 +74,28 @@ void Wait_One_Sec()
 
 void main() 
 { 
-    Do_Init();                                                  // Initialization  
-    while (1)
-    {
-        char tempC = DS1621_Read_Temp();
-        char tempF = (tempC * 9 / 5) + 32;
-        printf (" Temperature = %d degreesC = %d degreesF\r\n", tempC, tempF);
-        Wait_One_Sec();
-    }
+    // Do_Init();                                                  // Initialization  
+    // while (1)
+    // {
+    //     char tempC = DS1621_Read_Temp();
+    //     char tempF = (tempC * 9 / 5) + 32;
+    //     printf (" Temperature = %d degreesC = %d degreesF\r\n", tempC, tempF);
+    //     Wait_One_Sec();
+    // }
     
-//    while (1)
-//    {
-
-//        DS3231_Read_Time();
-//        if(tempSecond != second)
-//        {
-//            tempSecond = second;
-//            char tempC = DS1621_Read_Temp();
-//            char tempF = (tempC * 9 / 5) + 32;
-//            printf ("%02x:%02x:%02x %02x/%02x/%02x",hour,minute,second,month,day,year);
-//            printf (" Temperature = %d degreesC = %d degreesF\r\n", tempC, tempF);
-//        }
-//    }
+   while (1)
+   {
+       Do_Init();
+       DS3231_Read_Time();
+       if(tempSecond != second)
+       {
+           tempSecond = second;
+           char tempC = DS1621_Read_Temp();
+           char tempF = (tempC * 9 / 5) + 32;
+           printf ("%02x:%02x:%02x %02x/%02x/%02x",hour,minute,second,month,day,year);
+           printf (" Temperature = %d degreesC = %d degreesF\r\n", tempC, tempF);
+       }
+   }
 }
 
 
