@@ -16,8 +16,8 @@
 
 char tempSecond = 0xff; 
 char second = 0x00;
-char minute = 0x00;
-char hour = 0x00;
+char minute = 0x30;
+char hour = 0x07;
 char dow = 0x00;
 char day = 0x25;
 char month = 0x04;
