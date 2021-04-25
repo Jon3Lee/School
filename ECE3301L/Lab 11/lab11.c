@@ -83,19 +83,19 @@ void main()
         Wait_One_Sec();
     }
     
-   while (1)
-   {
+//    while (1)
+//    {
 
-       DS3231_Read_Time();
-       if(tempSecond != second)
-       {
-           tempSecond = second;
-           char tempC = DS1621_Read_Temp();
-           char tempF = (tempC * 9 / 5) + 32;
-           printf ("%02x:%02x:%02x %02x/%02x/%02x",hour,minute,second,month,day,year);
-           printf (" Temperature = %d degreesC = %d degreesF\r\n", tempC, tempF);
-       }
-   }
+//        DS3231_Read_Time();
+//        if(tempSecond != second)
+//        {
+//            tempSecond = second;
+//            char tempC = DS1621_Read_Temp();
+//            char tempF = (tempC * 9 / 5) + 32;
+//            printf ("%02x:%02x:%02x %02x/%02x/%02x",hour,minute,second,month,day,year);
+//            printf (" Temperature = %d degreesC = %d degreesF\r\n", tempC, tempF);
+//        }
+//    }
 }
 
 
