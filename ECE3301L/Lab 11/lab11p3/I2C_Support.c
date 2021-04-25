@@ -68,13 +68,6 @@ char Address = 0x00;
   I2C_Start();                      // Start I2C protocol
   I2C_Write((Device << 1) | 0);     // Device address Write mode
   I2C_Write(Address);               // Send register address
-  // second = 0x00;
-  // minute = 0x20;
-  // hour = 0x00;
-  // dow = 0x00;
-  // day = 0x25;
-  // month = 0x04;
-  // year = 0x21;
   I2C_Write(second);
   I2C_Write(minute);
   I2C_Write(hour);
