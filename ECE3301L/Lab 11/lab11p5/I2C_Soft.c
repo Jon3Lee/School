@@ -6,10 +6,10 @@
 
 #define _XTAL_FREQ      8000000
 
-#define SCL_PIN PORTDbits.RD6
-#define SCL_DIR TRISDbits.RD6
-#define SDA_PIN PORTDbits.RD7
-#define SDA_DIR TRISDbits.RD7
+#define SCL_PIN PORTDbits.RC0
+#define SCL_DIR TRISDbits.RC0
+#define SDA_PIN PORTDbits.RC1
+#define SDA_DIR TRISDbits.RC1
 
 void I2C_Init(unsigned long c)
 {

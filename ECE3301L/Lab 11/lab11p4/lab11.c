@@ -45,7 +45,17 @@ void init_UART()
 
 void init_INTERRUPT()
 {
-
+    INTCONbits.INT0IF = 0;                  // Clear external interrupt
+    INTCON2bits.INTEDG0 = 0;                // Edge programming for INT0 falling edge H to L
+    INTCONbits.INT0IE = 1;                  // Enable external interrupt
+    TMR1H = 0;                              // Reset Timer1
+    TMR1L = 0;                              //
+    PIR1bits.TMR1IF = 0;                    // Clear timer 1 interrupt flag
+    PIE1bits.TMR1IE = 1;                    // Enable Timer 1 interrupt
+    INTCONbits.PEIE = 1;                    // Enable Peripheral interrupt
+    INTCONbits.GIE = 1;                     // Enable global interrupts
+    nec_ok = 0;                             // Clear flag
+    Nec_code = 0x0;                         // Clear code
 }
 
 void Do_Init()                      // Initialize the ports 
@@ -78,6 +88,11 @@ void main()
    DS3231_Setup_Time();
    while (1)
    {
+       if (nec_ok == 1)
+       {
+           nec_ok = 0;
+           DS3231_Setup_Time();
+       }
        DS3231_Read_Time();
        if(tempSecond != second)
        {
