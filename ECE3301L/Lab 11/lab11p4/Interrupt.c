@@ -2,9 +2,9 @@
 #include <p18f4620.h>
 #include "Interrupt.h"
 
-extern unsigned char Nec_state = 0;
-extern short nec_ok = 0;
-extern unsigned long long Nec_code = 0;
+extern unsigned char Nec_state;
+extern short nec_ok;
+extern unsigned long long Nec_code;
 unsigned int Time_Elapsed;
 unsigned char bit_count;
 
@@ -28,7 +28,7 @@ void force_nec_state0()
     T1CONbits.TMR1ON = 0;
 }
 
-void INT0_ISR() 
+void INT0_isr() 
 {    
     INTCONbits.INT0IF = 0;                  // Clear external interrupt
     if (Nec_state != 0)

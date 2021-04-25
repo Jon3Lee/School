@@ -28,7 +28,7 @@ char setup_alarm_second, setup_alarm_minute, setup_alarm_hour;
 
 char TempSecond;
 
-void INT0_ISR();
+void INT0_isr();
 
 
 void putch (char c)
