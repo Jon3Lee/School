@@ -16,12 +16,12 @@
 
 char tempSecond = 0xff; 
 char second = 0x00;
-char minute = 0x00;
-char hour = 0x00;
+char minute = 0x30;
+char hour = 0x07;
 char dow = 0x00;
-char day = 0x00;
-char month = 0x00;
-char year = 0x00;
+char day = 0x25;
+char month = 0x04;
+char year = 0x21;
 char setup_second, setup_minute, setup_hour, setup_day, setup_month, setup_year;
 char alarm_second, alarm_minute, alarm_hour, alarm_date;
 char setup_alarm_second, setup_alarm_minute, setup_alarm_hour;
