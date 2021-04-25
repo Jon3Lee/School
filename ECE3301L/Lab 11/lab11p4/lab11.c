@@ -28,6 +28,10 @@ char setup_alarm_second, setup_alarm_minute, setup_alarm_hour;
 
 char TempSecond;
 
+unsigned char Nec_state;
+short nec_ok;
+unsigned long long Nec_code;
+
 void INT0_ISR();
 
 
