@@ -2,11 +2,11 @@
 #include <p18f4620.h>
 #include "Interrupt.h"
 
-extern unsigned char Nec_state;
-extern short nec_ok;
-extern unsigned long long Nec_code;
+extern unsigned char Nec_state = 0;
+extern short nec_ok = 0;
+extern unsigned long long Nec_code = 0;
 unsigned int Time_Elapsed;
-unsigned char i,bit_count;
+unsigned char bit_count;
 
 void interrupt high_priority chkisr()
 {
