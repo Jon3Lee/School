@@ -112,7 +112,7 @@ void main()
    {
        if (nec_ok == 1)
        {
-           DS3231_Setup_Time();
+           
            nec_ok = 0;
            Nec_code1 = (char) ((Nec_code >> 8));
            printf ("NEC_Code = %08lx %x\r\n", Nec_code, Nec_code1);
@@ -123,6 +123,7 @@ void main()
            Wait_One_Sec();
            Deactivate_Buzzer();
 
+           DS3231_Setup_Time();
        }
 
        DS3231_Read_Time();
