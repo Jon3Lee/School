@@ -13,6 +13,7 @@
 #pragma config BOREN =OFF
 #pragma config WDT=OFF
 #pragma config LVP=OFF
+#pragma config CCP2MX = PORTBE
 
 char tempSecond = 0xff; 
 char second = 0x00;
