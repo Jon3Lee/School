@@ -17,12 +17,12 @@
 
 char tempSecond = 0xff; 
 char second = 0x00;
-char minute = 0x30;
-char hour = 0x07;
+char minute = 0x00;
+char hour = 0x00;
 char dow = 0x00;
-char day = 0x25;
-char month = 0x04;
-char year = 0x21;
+char day = 0x00;
+char month = 0x00;
+char year = 0x00;
 
 short nec_ok = 0;
 unsigned char Nec_state = 0;
