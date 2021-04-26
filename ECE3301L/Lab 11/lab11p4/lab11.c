@@ -40,7 +40,7 @@ void INT0_isr();
 
 void putch (char c)
 {   
-    while (!TRMT);       
+    while (!TRMT);
     TXREG = c;
 }
 
