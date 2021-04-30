@@ -65,18 +65,18 @@ void init_INTERRUPT()
     Nec_code = 0x0;                         // Clear code
 }
 
-void Do_Init()                      // Initialize the ports 
+void Do_Init()                              // Initialize the ports 
 { 
-    init_UART();                    // Initialize the uart
-    OSCCON=0x70;                    // Set oscillator to 8 MHz 
+    init_UART();                            // Initialize the uart
+    OSCCON=0x70;                            // Set oscillator to 8 MHz 
     
     ADCON1=0x0F;
 
-    TRISB = 0x01;
-    TRISC = 0xFF;
-    TRISD = 0xFF;
+    TRISB = 0x01;                           //Port RB0 is input and the rest is output
+    TRISC = 0xFF;                           //Port C is all inputs
+    TRISD = 0xFF;                           //Port D is not used in this lab
 
-    RBPU=0;
+    RBPU=0;                                 // Enable PORTB internal pull up resistor
     
     I2C_Init(100000); 
     DS1621_Init();
@@ -86,7 +86,7 @@ void Do_Init()                      // Initialize the ports
 
 void Wait_One_Sec()
 {
-    for (int j=0; j<0xffff; j++);
+    for (int j=0; j<0xffff; j++);           //Delay 1 second
 }
 
 void Activate_Buzzer()
@@ -105,33 +105,35 @@ void Deactivate_Buzzer()
 
 void main() 
 { 
-   Do_Init();
-   DS3231_Setup_Time();
+   Do_Init();                               //Initialize everything
+   DS3231_Setup_Time();                     //Setup time to 7h30m
 
    while (1)
    {
-       if (nec_ok == 1)
+       if (nec_ok == 1)                     //If a button is pressed
        {
            
-           nec_ok = 0;
+           nec_ok = 0;                      //Reset nec_ok to 0
            Nec_code1 = (char) ((Nec_code >> 8));
            printf ("NEC_Code = %08lx %x\r\n", Nec_code, Nec_code1);
            INTCONbits.INT0IE = 1;          // Enable external interrupt
            INTCON2bits.INTEDG0 = 0;        // Edge programming for INT0 falling edge
 
-           Activate_Buzzer();
-           Wait_One_Sec();
-           Deactivate_Buzzer();
+            DS3231_Setup_Time();           //Reset time to 7h30m
 
-           DS3231_Setup_Time();
+           Activate_Buzzer();              //Turns on buzzer
+           Wait_One_Sec();                 //Wait one sec before
+           Deactivate_Buzzer();            //Turn off buzzer
+
+           
        }
 
-       DS3231_Read_Time();
-       if(tempSecond != second)
+       DS3231_Read_Time();               //Reads the time
+       if(tempSecond != second)         //If the tempSecond doesnt equal second
        {
-           tempSecond = second;
-           char tempC = DS1621_Read_Temp();
-           char tempF = (tempC * 9 / 5) + 32;
+           tempSecond = second;         //Change tempSecond to equal second
+           char tempC = DS1621_Read_Temp(); //Read temperature in celcius
+           char tempF = (tempC * 9 / 5) + 32; //Convert temperature to Faerenheight
            printf ("%02x:%02x:%02x %02x/%02x/%02x",hour,minute,second,month,day,year);
            printf (" Temperature = %d degreesC = %d degreesF\r\n", tempC, tempF);
        }

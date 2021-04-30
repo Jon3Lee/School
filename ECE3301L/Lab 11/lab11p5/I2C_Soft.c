@@ -6,8 +6,8 @@
 
 #define _XTAL_FREQ      8000000
 
-#define SCL_PIN PORTCbits.RC0
-#define SCL_DIR TRISCbits.RC0
+#define SCL_PIN PORTCbits.RC0             
+#define SCL_DIR TRISCbits.RC0             
 #define SDA_PIN PORTCbits.RC1
 #define SDA_DIR TRISCbits.RC1
 
