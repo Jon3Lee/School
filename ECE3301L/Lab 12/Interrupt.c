@@ -26,7 +26,7 @@ void init_INTERRUPT()
     Nec_code = 0x0;                         // Clear code
 }
 
-void interrupt  high_priority chkisr() 
+void interrupt high_priority chkisr() 
 {    
     if (PIR1bits.TMR1IF == 1) TIMER1_isr();
     if (INTCONbits.INT0IF == 1) INT0_isr();
@@ -48,10 +48,10 @@ void force_nec_state0()
 
 void INT0_isr() 
 {    
-INTCONbits.INT0IF = 0;                  // Clear external interrupt
+INTCONbits.INT0IF = 0;                      // Clear external interrupt
     if (Nec_state != 0)
     {
-        Time_Elapsed = (TMR1H << 8) | TMR1L; // Store Timer1 value
+        Time_Elapsed = (TMR1H << 8) | TMR1L;// Store Timer1 value
         TMR1H = 0;                          // Reset Timer1
         TMR1L = 0;
     }
@@ -115,7 +115,7 @@ INTCONbits.INT0IF = 0;                  // Clear external interrupt
             return;
         }
         
-        case 4 :                            
+        case 4 :
         {
             if (Time_Elapsed > 399 && Time_Elapsed < 1801)
             {
