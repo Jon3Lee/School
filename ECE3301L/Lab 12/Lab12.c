@@ -128,21 +128,21 @@ void main()
        }
    }
     
-//    FAN_EN = 1;
-//    duty_cycle = 50;
-//    do_update_pwm(duty_cycle);
-//        DS3231_Read_Time();
-//
-//        if(tempSecond != second)
-//        {
-//            tempSecond = second;
-//            DS1621_tempC = DS1621_Read_Temp();
-//            DS1621_tempF = (DS1621_tempC * 9 / 5) + 32;
-//            rpm = get_RPM();
-//            printf ("%02x:%02x:%02x %02x/%02x/%02x",hour,minute,second,month,day,year);
-//            printf (" Temp = %d C = %d F ", DS1621_tempC, DS1621_tempF);
-//            printf ("RPM = %d  dc = %d\r\n", rpm, duty_cycle);
-//        }    
+    // FAN_EN = 1;
+    // duty_cycle = 50;
+    // do_update_pwm(duty_cycle);
+    // DS3231_Read_Time();
+
+    // if(tempSecond != second)
+    // {
+    //     tempSecond = second;
+    //     DS1621_tempC = DS1621_Read_Temp();
+    //     DS1621_tempF = (DS1621_tempC * 9 / 5) + 32;
+    //     rpm = get_RPM();
+    //     printf ("%02x:%02x:%02x %02x/%02x/%02x",hour,minute,second,month,day,year);
+    //     printf (" Temp = %d C = %d F ", DS1621_tempC, DS1621_tempF);
+    //     printf ("RPM = %d  dc = %d\r\n", rpm, duty_cycle);
+    // }    
     
 //    FAN_EN = 1;
 //    duty_cycle = 50;    
