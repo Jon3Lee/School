@@ -68,6 +68,7 @@ char setup_date[]       = "01/01/00";
 char setup_alarm_time[] = "00:00:00"; 
 char setup_fan_text[]   = "075F";
 
+char array1[21]={0xa2, 0x62, 0xe2, 0x22, 0x02, 0xc2, 0xe0, 0xa8, 0x90, 0x68, 0x98, 0xb0, 0x30, 0x18, 0x7a, 0x10, 0x38, 0x5a, 0x42, 0x4a, 0x52};
 
 void putch (char c)
 {   
@@ -108,25 +109,25 @@ void main()
    Do_Init();                                                  // Initialization  
    Initialize_Screen();  
 
-   FAN_EN = 1;
-   FAN_PWM = 1;
-   duty_cycle = 100;
-   while (1)
-   {
-       DS3231_Read_Time();
+//    FAN_EN = 1;
+//    FAN_PWM = 1;
+//    duty_cycle = 100;
+//    while (1)
+//    {
+//        DS3231_Read_Time();
 
-       if(tempSecond != second)
-       {
-           rpm = get_RPM();
-           tempSecond = second;
-           DS1621_tempC = DS1621_Read_Temp();
-           DS1621_tempF = (DS1621_tempC * 9 / 5) + 32;
+//        if(tempSecond != second)
+//        {
+//            rpm = get_RPM();
+//            tempSecond = second;
+//            DS1621_tempC = DS1621_Read_Temp();
+//            DS1621_tempF = (DS1621_tempC * 9 / 5) + 32;
 
-           printf ("%02x:%02x:%02x %02x/%02x/%02x",hour,minute,second,month,day,year);
-           printf (" Temp = %d C = %d F ", DS1621_tempC, DS1621_tempF);
-           printf ("RPM = %d  dc = %d\r\n", rpm, duty_cycle);
-       }
-   }
+//            printf ("%02x:%02x:%02x %02x/%02x/%02x",hour,minute,second,month,day,year);
+//            printf (" Temp = %d C = %d F ", DS1621_tempC, DS1621_tempF);
+//            printf ("RPM = %d  dc = %d\r\n", rpm, duty_cycle);
+//        }
+//    }
     
     // FAN_EN = 1;
     // duty_cycle = 50;
@@ -144,13 +145,13 @@ void main()
     //     printf ("RPM = %d  dc = %d\r\n", rpm, duty_cycle);
     // }    
     
-//    FAN_EN = 1;
-//    duty_cycle = 50;    
-//    do_update_pwm(duty_cycle);
+   FAN_EN = 1;
+   duty_cycle = 50;    
+   do_update_pwm(duty_cycle);
 //    while (1)
 //    {
 //        DS3231_Read_Time();
-//
+
 //        if(tempSecond != second)
 //        {
 //            tempSecond = second;
@@ -163,54 +164,54 @@ void main()
 //        }
 //    }
     
-    // while (1)
-    // {
+    while (1)
+    {
 
-    //     DS3231_Read_Time();
+        DS3231_Read_Time();
 
-    //     if(tempSecond != second)
-    //     {
-    //         tempSecond = second;
-    //         DS1621_tempC = DS1621_Read_Temp();
-    //         DS1621_tempF = (DS1621_tempC * 9 / 5) + 32;
-    //         rpm = get_RPM();
-    //         printf ("%02x:%02x:%02x %02x/%02x/%02x",hour,minute,second,month,day,year);
-    //         printf (" Temp = %d C = %d F ", DS1621_tempC, DS1621_tempF);
-    //         printf ("RPM = %d  dc = %d\r\n", rpm, duty_cycle);
-    //         Update_Screen();
-    //     }
+        if(tempSecond != second)
+        {
+            tempSecond = second;
+            DS1621_tempC = DS1621_Read_Temp();
+            DS1621_tempF = (DS1621_tempC * 9 / 5) + 32;
+            rpm = get_RPM();
+            printf ("%02x:%02x:%02x %02x/%02x/%02x",hour,minute,second,month,day,year);
+            printf (" Temp = %d C = %d F ", DS1621_tempC, DS1621_tempF);
+            printf ("RPM = %d  dc = %d\r\n", rpm, duty_cycle);
+            Update_Screen();
+        }
         
-    //    if (nec_ok == 1)
-    //     {
-    //         nec_ok = 0;
+       if (nec_ok == 1)
+        {
+            nec_ok = 0;
 
-    //         printf ("NEC_Code = %x\r\n", Nec_code1);       // make sure to use Nec_code1
+            printf ("NEC_Code = %x\r\n", Nec_code1);       // make sure to use Nec_code1
 
-    //         INTCONbits.INT0IE = 1;          // Enable external interrupt
-    //         INTCON2bits.INTEDG0 = 0;        // Edge programming for INT0 falling edge
+            INTCONbits.INT0IE = 1;          // Enable external interrupt
+            INTCON2bits.INTEDG0 = 0;        // Edge programming for INT0 falling edge
 
-    //         found = 0xff;
-    //         for (int j=0; j< 21; j++)
-    //         {
-    //             if (Nec_code1 == array1[j]) 
-    //             {
-    //                 found = j;
-    //                 j = 21;
-    //             }
-    //         }
+            found = 0xff;
+            for (int j=0; j< 21; j++)
+            {
+                if (Nec_code1 == array1[j]) 
+                {
+                    found = j;
+                    j = 21;
+                }
+            }
             
-    //         if (found == 0xff) 
-    //         {
-    //             printf ("Cannot find button \r\n");
-    //         }
-    //         else
-    //         {
-    //             Do_Beep();
-    //             printf ("button = %d \r\n", found);
-    //             // add code to process buttons
-    //         }            
-    //     }
-    // }
+            if (found == 0xff) 
+            {
+                printf ("Cannot find button \r\n");
+            }
+            else
+            {
+                Do_Beep();
+                printf ("button = %d \r\n", found);
+                // add code to process buttons
+            }            
+        }
+    }
 }
 
 
