@@ -17,7 +17,7 @@ int get_RPM()
 
 void Toggle_Fan()
 {
-    if (FAN == 1)
+    if (FAN == 0)
     {
         Turn_On_Fan();
     }
