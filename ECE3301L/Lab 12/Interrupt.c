@@ -128,6 +128,7 @@ INTCONbits.INT0IF = 0;                      // Clear external interrupt
                 if (bit_count > 31)
                 {
                     nec_ok = 1;
+                    Nec_code1 = (char) ((Nec_code >> 8));
                     INTCONbits.INT0IE = 0;
                     Nec_state = 0;
                 }
