@@ -208,13 +208,13 @@ void main()
                 printf ("button = %d \r\n", found);
                 Decrease_Speed();
             }
-            else if (found == 7)
+            else if (found == 0xa8)
             {
                 Do_Beep();
                 printf ("button = %d \r\n", found);
                 Increase_Speed();
             }
-            else if (found == 5)
+            else if (found == 0xc2)
             {
                 Do_Beep();
                 printf ("button = %d \r\n", found);
