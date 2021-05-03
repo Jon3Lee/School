@@ -97,12 +97,11 @@ void Update_Screen(void)
     time[0]  = (hour>>4)  + '0';                    // Hour MSD
     time[1]  = (hour & 0x0f)+ '0';                  // Hour LSD
     
-    // modify the lines below
     time[3]  = (minute>>4) + '0';                                 // Minute MSD
     time[4]  = (minute & 0x0f)+'0';                                 // Minute LSD
     
     time[6]  = (second>>4)+'0';                                 // Second MSD
-    time[7]  = (minute & 0x0f)+'0';                                 // Second LSD
+    time[7]  = (second & 0x0f)+'0';                                 // Second LSD
     
     date[0]  = (month>>4)+'0';                                 // Month MSD
     date[1]  = (month & 0x0f)+'0';                                 // Month LSD
@@ -117,13 +116,11 @@ void Update_Screen(void)
    
     
     DC_Txt[0] = duty_cycle/100  + '0';
-    // modify the lines below    
     DC_Txt[1] = (duty_cycle%100)/10 + '0';
     DC_Txt[2] = (duty_cycle%10) + '0';  
 
     
     RPM_Txt[0] = rpm/1000  + '0';
-    // modify the lines below        
     RPM_Txt[1] = (rpm%1000)/100 + '0';  
     RPM_Txt[2] = (rpm%100)/10 +'0';
     RPM_Txt[3] = rpm%10 + '0';         
