@@ -202,19 +202,19 @@ void main()
             {
                 printf ("Cannot find button \r\n");
             }
-            else if (found == 0xe0)
+            else if (found == 6)
             {
                 Do_Beep();
                 printf ("button = %d \r\n", found);
                 Decrease_Speed();
             }
-            else if (found == 0xa8)
+            else if (found == 7)
             {
                 Do_Beep();
                 printf ("button = %d \r\n", found);
                 Increase_Speed();
             }
-            else if (found == 0xc2)
+            else if (found == 5)
             {
                 Do_Beep();
                 printf ("button = %d \r\n", found);
