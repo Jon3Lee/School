@@ -50,7 +50,7 @@ char Data_Ret;
   I2C_Write(Address);               // Send register address
   I2C_ReStart();                    // Restart I2C
   I2C_Write((Device << 1) | 1);     // Initialize data read
-  second = I2C_Read(ACK);         //
+  second = I2C_Read(ACK);           //
   minute = I2C_Read(ACK);
   hour = I2C_Read(ACK);
   dow = I2C_Read(ACK);
