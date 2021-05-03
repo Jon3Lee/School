@@ -161,7 +161,9 @@ void main()
 //            printf ("RPM = %d  dc = %d\r\n", rpm, duty_cycle);
 //        }
 //    }
-    
+    FAN_EN = 0;
+    duty_cycle = 50;
+    do_update_pwm(duty_cycle);
     while (1)
     {
 
