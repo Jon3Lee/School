@@ -204,12 +204,25 @@ void main()
             {
                 printf ("Cannot find button \r\n");
             }
-            else
+            else if (found == 6)
             {
                 Do_Beep();
                 printf ("button = %d \r\n", found);
-                // add code to process buttons
-            }            
+                Decrease_Speed();
+            }
+            else if (found == 7)
+            {
+                Do_Beep();
+                printf ("button = %d \r\n", found);
+                Increase_Speed();
+            }
+            else if (found == 5)
+            {
+                Do_Beep();
+                printf ("button = %d \r\n", found);
+                Toggle_Fan();
+            }
+
         }
     }
 }
