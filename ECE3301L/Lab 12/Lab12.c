@@ -90,6 +90,7 @@ void Do_Init()                      // Initialize the ports
     TRISB = 0x01;
     TRISC = 0x01;
     TRISD = 0x00;
+    TRISE = 0x00;
 
 
     RBPU=0;
@@ -223,6 +224,12 @@ void main()
                 Do_Beep();
                 printf ("button = %d \r\n", found);
                 Toggle_Fan();
+            }
+            else if (found == 8)
+            {
+                Do_Beep();
+                printf ("button = %d \r\n", found);
+                DS3231_Setup_Time();
             }
 
         }
