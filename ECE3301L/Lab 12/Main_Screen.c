@@ -98,18 +98,18 @@ void Update_Screen(void)
     time[1]  = (hour & 0x0f)+ '0';                  // Hour LSD
     
     // modify the lines below
-    time[3]  = '0';                                 // Minute MSD
-    time[4]  = '0';                                 // Minute LSD
+    time[3]  = (minute>>4) + '0';                                 // Minute MSD
+    time[4]  = (minute & 0x0f)+'0';                                 // Minute LSD
     
-    time[6]  = '0';                                 // Second MSD
-    time[7]  = '0';                                 // Second LSD
+    time[6]  = (second>>4)+'0';                                 // Second MSD
+    time[7]  = (minute & 0x0f)+'0';                                 // Second LSD
     
-    date[0]  = '0';                                 // Month MSD
-    date[1]  = '0';                                 // Month LSD
-    date[3]  =  '0';                                // Day MSD
-    date[4]  = '0';                                 // Day LSD
-    date[6]  = '0';                                 // Year MSD
-    date[7]  = '0';                                 // Year LSD
+    date[0]  = (month>>4)+'0';                                 // Month MSD
+    date[1]  = (month & 0x0f)+'0';                                 // Month LSD
+    date[3]  = (day>>4)+'0';                                // Day MSD
+    date[4]  = (day & 0x0f)+'0';                                 // Day LSD
+    date[6]  = (year>>4)+'0';                                 // Year MSD
+    date[7]  = (year & 0x0f)+'0';                                 // Year LSD
 
  
     if (FAN == 1) strcpy(Fan_SW_Txt, "ON ");
@@ -118,15 +118,15 @@ void Update_Screen(void)
     
     DC_Txt[0] = duty_cycle/100  + '0';
     // modify the lines below    
-    DC_Txt[1] = '0';
-    DC_Txt[2] = '0';  
+    DC_Txt[1] = (duty_cycle%100)/10 + '0';
+    DC_Txt[2] = (duty_cycle%10) + '0';  
 
     
     RPM_Txt[0] = rpm/1000  + '0';
     // modify the lines below        
-    RPM_Txt[1] = '0';  
-    RPM_Txt[2] = '0';
-    RPM_Txt[3] = '0';         
+    RPM_Txt[1] = (rpm%1000)/100 + '0';  
+    RPM_Txt[2] = (rpm%100)/10 +'0';
+    RPM_Txt[3] = rpm%10 + '0';         
     
     drawtext(data_tempc_x, data_tempc_y, tempC , ST7735_YELLOW , ST7735_BLACK , TS_2);       
     drawtext(data_tempf_x, data_tempf_y, tempF , ST7735_YELLOW , ST7735_BLACK , TS_2);

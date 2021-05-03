@@ -56,8 +56,6 @@ char alarm_time[]   = "00:00:00";
 char Alarm_SW_Txt[] = "OFF";
 char Fan_SW_Txt[]   = "OFF";                // text storage for Heater Mode
 
-char array1[21]={};
-
     
 char DC_Txt[]       = "000";                // text storage for Duty Cycle value
 char RTC_ALARM_Txt[]= "0";                  //
@@ -204,7 +202,7 @@ void main()
             {
                 printf ("Cannot find button \r\n");
             }
-            else if (found == 6)
+            else if (found == 0xe0)
             {
                 Do_Beep();
                 printf ("button = %d \r\n", found);
