@@ -26,7 +26,6 @@ void Wait_Half_Second();
 unsigned char Nec_state = 0;
 unsigned char i,bit_count;
 short nec_ok = 0;
-unsigned long long Nec_code;
 char Nec_code1;
 unsigned int Time_Elapsed;
 

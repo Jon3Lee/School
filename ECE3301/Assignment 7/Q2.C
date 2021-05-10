@@ -12,7 +12,7 @@ void main()
     PIE1bits.TMR2IE = 0;
     PIR1bits.TMR2IF = 0;
     INTCONbits.PEIE = 1;
-    INTCONbits.DIe = 1;
+    INTCONbits.GIE = 1;
     T2CON = 0x00;
     TMR2 = 0x00;
     PR2 = 0x11;
@@ -25,7 +25,7 @@ void main()
         while (ADCON0bits.DONE == 1);
         while (PIR1bits.TMR2IF == 0);
         T2CONbits.TMR2ON = 0;
-        ASCONRESULT = ADRESH;
+        ADCONRESULT = ADRESH;
         x = ADCONRESULT/51;
         product = x*x;
     }
