@@ -82,7 +82,77 @@ void INT0_isr()
             return;
         }
         
- 	// add old code
+ 	case 1 :
+        {
+            if (Time_Elapsed > 8499 && Time_Elapsed < 9501)
+            {
+                Nec_state = 2;
+            }
+            else
+            {
+                force_nec_state0();
+            }
+            INTCON2bits.INTEDG0 = 0;
+            return;
+        }
+        
+        case 2 :                            
+        {
+            if (Time_Elapsed > 3499 && Time_Elapsed < 5001)
+            {
+                Nec_state = 3;
+            }
+            else
+            {
+                force_nec_state0();
+            }
+            INTCON2bits.INTEDG0 = 1;
+            return;
+        }
+        
+        case 3 :                            
+        {
+            if (Time_Elapsed > 399 && Time_Elapsed < 701)
+            {
+                Nec_state = 4;
+            }
+            else
+            {
+                force_nec_state0();
+            }
+            INTCON2bits.INTEDG0 = 0;
+            return;
+        }
+        
+        case 4 :
+        {
+            if (Time_Elapsed > 399 && Time_Elapsed < 1801)
+            {
+                Nec_code = Nec_code*2;
+                if (Time_Elapsed > 1000)
+                {
+                    Nec_code = Nec_code + 1;
+                }
+                bit_count = bit_count + 1;
+                if (bit_count > 31)
+                {
+                    nec_ok = 1;
+                    Nec_code1 = (char) ((Nec_code >> 8));
+                    INTCONbits.INT0IE = 0;
+                    Nec_state = 0;
+                }
+                else 
+                {
+                Nec_state = 3;
+                }
+            }
+            else
+            {
+                force_nec_state0();
+            }
+            INTCON2bits.INTEDG0 = 1;
+            return;
+        }
 }
 
 
