@@ -69,13 +69,20 @@ void Do_Beep()
 
 void Do_Beep_Good()
 {
-// add code here using Activate_Buzzer_2KHz()
+    Activate_Buzzer_2KHz();
+    Wait_One_Sec();
+    Deactivate_Buzzer();
+    Wait_One_Sec();
+    do_update_pwm();
 }
 
 void Do_Beep_Bad()
 {
-// add code here using Activate_Buzzer_500Hz()
-
+    Activate_Buzzer_500Hz();
+    Wait_One_Sec();
+    Deactivate_Buzzer();
+    Wait_One_Sec();
+    do_update_pwm();
 }
 
 void Wait_One_Sec()
@@ -93,17 +100,26 @@ void Activate_Buzzer()
 
 void Activate_Buzzer_500Hz()
 {
-    // add code here
+    PR2 = 0b11111001 ;
+    T2CON = 0b00000111 ;
+    CCPR1L = 0b01111100 ;
+    CCP1CON = 0b00111100 ;
 }
 
 void Activate_Buzzer_2KHz()
 {
-    // add code here
+    PR2 = 0b11111001 ;
+    T2CON = 0b00000101 ;
+    CCPR1L = 0b01111100 ;
+    CCP1CON = 0b00111100 ;
 }
 
 void Activate_Buzzer_4KHz()
 {
-    // add code here
+    PR2 = 0b01111100 ;
+    T2CON = 0b00000101 ;
+    CCPR1L = 0b00111110 ;
+    CCP1CON = 0b00011100 ;
 }
 
 void Deactivate_Buzzer()
@@ -137,12 +153,19 @@ float read_volt()
 
 unsigned int get_full_ADC()
 {
-    // add code here
+unsigned int result;
+   ADCON0bits.GO=1;                     // Start Conversion
+   while(ADCON0bits.DONE==1);           // wait for conversion to be completed
+   result = (ADRESH * 0x100) + ADRESL;  // combine result of upper byte and
+                                        // lower byte into result
+   return result;                       // return the result.
 }
 
 void Init_ADC()
 {
-    // add code here
+    ADCON0 = 0x05;
+    ADCON1 = 0x0D;
+    ADCON2 = 0xA9;
 }
 
 

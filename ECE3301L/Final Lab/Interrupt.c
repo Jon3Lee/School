@@ -153,6 +153,7 @@ void INT0_isr()
             INTCON2bits.INTEDG0 = 1;
             return;
         }
+    }
 }
 
 
@@ -160,11 +161,4 @@ void INT0_isr()
 void INT2_isr() 
 {  
 	// add code here to clear INTCON3bits.INT2IF and set INT2_Flag
- 
 } 
-
-
-
-
-
-
