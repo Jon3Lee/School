@@ -189,6 +189,37 @@ void main()
 
 void test_alarm()
 {
-    
+    if (INT2_flag == 1)
+    {
+        if (ALARMEN == 0)
+        {
+            ALARMEN = 1;
+        }
+        else
+        {
+            ALARMEN = 0;
+        }
+        INT2_flag = 0;
+    }
+
+    if (alarm_mode == 0 && ALARMEN == 1)
+    {
+        DS3231_Turn_On_Alarm();
+        alarm_mode = 1;
+    }
+    else if (alarm_mode == 1 && ALARMEN == 0)
+    {
+        DS3231_Turn_Off_Alarm();
+        alarm_mode = 0;
+        Deactivate_Buzzer();
+    }
+    else if (alarm_mode == 1 && ALARMEN == 1)
+    {
+        if (RTC_ALARM_NOT == 0)
+        {
+            Activate_Buzzer();
+            Set_RGB_Color();
+        }
+    }
 }
 
