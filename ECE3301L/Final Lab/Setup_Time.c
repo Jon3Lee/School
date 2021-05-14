@@ -218,17 +218,17 @@ void Initialize_Setup_Time_Screen(void)
 void Update_Setup_Time_Screen(void)
 {
     setup_time[0]  = (setup_hour/10)  + '0';
-    setup_time[1]  = 0;                     // add code here  
-    setup_time[3]  = 0;                     // add code here 
-    setup_time[4]  = 0;                     // add code here 
-    setup_time[6]  = 0;                     // add code here 
-    setup_time[7]  = 0;                     // add code here 
-    setup_date[0]  = 0;                     // add code here 
-    setup_date[1]  = 0;                     // add code here 
-    setup_date[3]  = 0;                     // add code here 
-    setup_date[4]  = 0;                     // add code here 
-    setup_date[6]  = 0;                     // add code here 
-    setup_date[7]  = v;
+    setup_time[1]  = (setup_hour % 10) + '0';                  
+    setup_time[3]  = (setup_minute/10) + '0';                  
+    setup_time[4]  = (setup_minute % 10) + '0';                
+    setup_time[6]  = (setup_second/10) + '0';                  
+    setup_time[7]  = (setup_second % 10) + '0';                
+    setup_date[0]  = (setup_month/10) + '0';                   
+    setup_date[1]  = (setup_month % 10) + '0';                 
+    setup_date[3]  = (setup_day/10) + '0';                     
+    setup_date[4]  = (setup_day % 10) + '0';                   
+    setup_date[6]  = (setup_year/10) + '0';                    
+    setup_date[7]  = (setup_year % 10) + '0';
 
     drawtext(data_time_x, data_time_y, setup_time, ST7735_CYAN, ST7735_BLACK, TS_2);
     drawtext(data_date_x, data_date_y, setup_date, ST7735_GREEN, ST7735_BLACK, TS_2);
