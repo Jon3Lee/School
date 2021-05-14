@@ -35,9 +35,12 @@ void Init_Interrupt(void)
 
 }
 
-void interrupt  high_priority chkisr() 
+void interrupt high_priority chkisr() 
 {    
 	// add code here to handle TIMER1_isr(), INT0_isr() and INT2_isr()
+    if (PIR1bits.TMR1IF == 1) TIMER1_isr();
+    if (INTCONbits.INT0IF == 1) INT0_ISR();
+    if (INTCON3bits.INT2IF == 1) INT2_ISR();
 
 }
 
@@ -161,4 +164,7 @@ void INT0_isr()
 void INT2_isr() 
 {  
 	// add code here to clear INTCON3bits.INT2IF and set INT2_Flag
+    INTCON3bits.INT2IF=0; // Clear the interrupt flag
+    INT2_flag = 1; // set software INT2_flag
+
 } 

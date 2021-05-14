@@ -37,7 +37,10 @@ void Setup_Temp_Fan(void)
              if (found >= Play_Pause && found <= EQ)
              {
                 Do_Beep_Good(); 
-		// add code to handle 'Play/Pause', 'Minus', 'Plus' and 'EQ'
+                if (found == Play_Pause) Do_Save_New_Fan_Temp();
+                else if (found == Minus) Decrease_Fan_Temp();
+                else if (found == Plus) Increase_Fan_Temp();
+                else if (found == EQ) Exit_Setup_Fan_Temp();
  
 
                 found = 0xff;
@@ -54,7 +57,8 @@ void  Increase_Fan_Temp()
 {
 	// add code to increase setup_fan_set_temp by 1
 	// then check if it is greater than 110. If so, limit to 110
-
+        setup_fan_set_temp++;
+        if (setup_fan_set_temp == 111) setup_fan_set_temp = 110;
     	Update_Setup_Fan_Screen();              // Update screen with latest info
 
 }
@@ -63,7 +67,8 @@ void  Decrease_Fan_Temp()
 {
 	// add code to decrease setup_fan_set_temp by 1
 	// then check if it is less than 50. If so, limit to 50
-
+        if (setup_fan_set_temp == 49) setup_fan_set_temp = 50;
+        else --setup_fan_set_temp;
     	Update_Setup_Fan_Screen();                      // Update screen with latest info
 
         
@@ -101,8 +106,8 @@ void Initialize_Setup_Fan_Screen(void)
 void Update_Setup_Fan_Screen(void)
 {
     char dc_char1 = setup_fan_set_temp/100;
-    char dc_char2 = 0; // add code here
-    char dc_char3 = 0; // add code here    
+    char dc_char2 = (setup_fan_set_temp%100)/10; // add code here
+    char dc_char3 = (setup_fan_set_temp%10); // add code here    
     setup_fan_set_text[0] = dc_char1 + '0';
     setup_fan_set_text[1] = dc_char2 + '0';
     setup_fan_set_text[2] = dc_char3 + '0';

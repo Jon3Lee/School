@@ -102,24 +102,24 @@ void Activate_Buzzer_500Hz()
 {
     PR2 = 0b11111001 ;
     T2CON = 0b00000111 ;
-    CCPR1L = 0b01111100 ;
-    CCP1CON = 0b00111100 ;
+    CCPR2L = 0b01111100 ;
+    CCP2CON = 0b00111100 ;
 }
 
 void Activate_Buzzer_2KHz()
 {
     PR2 = 0b11111001 ;
     T2CON = 0b00000101 ;
-    CCPR1L = 0b01111100 ;
-    CCP1CON = 0b00111100 ;
+    CCPR2L = 0b01111100 ;
+    CCP2CON = 0b00111100 ;
 }
 
 void Activate_Buzzer_4KHz()
 {
     PR2 = 0b01111100 ;
     T2CON = 0b00000101 ;
-    CCPR1L = 0b00111110 ;
-    CCP1CON = 0b00011100 ;
+    CCPR2L = 0b00111110 ;
+    CCP2CON = 0b00011100 ;
 }
 
 void Deactivate_Buzzer()

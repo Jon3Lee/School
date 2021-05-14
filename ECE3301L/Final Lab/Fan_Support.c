@@ -13,6 +13,20 @@ int get_duty_cycle(int temp, int set_temp)
 // add code to check if temp is greater than set_temp. If so, dc = 0. Else dc = 2 times of difference of set_temp and temp
 // check if dc is greater than 100. If so, set it to 100
 // return dc
+    if (temp > set_temp)
+    {
+        dc = 0;
+    }
+    else 
+    {
+        dc = 2*(set_temp - temp)
+    }
+
+    if (dc > 100)
+    {
+        dc = 100;
+    }
+    return dc;
 
 }
 
@@ -29,7 +43,11 @@ void Monitor_Fan()
 
 void Toggle_Fan_Monitor()
 {
-// add code just to flip the variable FAN
+    if (FAN == 1)
+    {
+        FAN == 0;
+    }
+    else FAN == 1;
 
 }
 

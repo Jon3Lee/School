@@ -15,7 +15,7 @@
 //#define FANEN_LED       PORTAbits.RA6
 #define FAN_EN          PORTAbits.RA5
 #define FAN_PWM         PORTCbits.RC2
-#define RTC_ALARM_NOT   PORTAbits.RA4
+#define RTC_ALARM_NOT   PORTAbits.RA2
 
 #define Ch_Minus        0
 #define Channel         1

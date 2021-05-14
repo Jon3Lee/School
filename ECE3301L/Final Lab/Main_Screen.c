@@ -103,22 +103,22 @@ void Update_Screen(void)
     }    
     time[0]  = (hour>>4)  + '0';                    // Hour MSD
     time[1]  = (hour & 0x0f)+ '0';                  // Hour LSD
-    time[3]  = 0; // add code                   // Minute MSD
-    time[4]  = 0; // add code               // Minute LSD
-    time[6]  = 0; // add code                   // Second MSD
-    time[7]  = 0; // add code               // Second LSD
-    date[0]  = 0; // add code                   // Month MSD
-    date[1]  = 0; // add code                // Month LSD
-    date[3]  = 0; // add code                      // Day MSD
-    date[4]  = 0; // add code                   // Day LSD
-    date[6]  = 0; // add code                     // Year MSD
-    date[7]  = 0; // add code                  // Year LSD
+    time[3]  = (minute>>4) + '0';                   // Minute MSD
+    time[4]  = (minute & 0x0f)+'0';                 // Minute LSD
+    time[6]  = (second>>4)+'0';                     // Second MSD
+    time[7]  = (second & 0x0f)+'0';                 // Second LSD
+    date[0]  = (month>>4)+'0';                      // Month MSD
+    date[1]  = (month & 0x0f)+'0';                  // Month LSD
+    date[3]  = (day>>4)+'0';                        // Day MSD
+    date[4]  = (day & 0x0f)+'0';                    // Day LSD
+    date[6]  = (year>>4)+'0';                       // Year MSD
+    date[7]  = (year & 0x0f)+'0';                   // Year LSD
     alarm_time[0]  = (alarm_hour>>4)  + '0';        // Alarm Hour MSD
     alarm_time[1]  = (alarm_hour & 0x0f)+ '0';      // Alarm Hour LSD
-    alarm_time[3]  = 0; // add code       // Alarm Minute MSD
-    alarm_time[4]  = 0; // add code   // Alarm Minute LSD
-    alarm_time[6]  = 0; // add code       // Alarm Second MSD
-    alarm_time[7]  = 0; // add code    // Alarm Second LSD
+    alarm_time[3]  = (alarm_minute>>4) + '0'; // add code       // Alarm Minute MSD
+    alarm_time[4]  = (alarm_minute & 0x0f) + '0'; // add code   // Alarm Minute LSD
+    alarm_time[6]  = (alarm_second>>4) + '0'; // add code       // Alarm Second MSD
+    alarm_time[7]  = (alarm_second & 0x0f) + '0'; // add code    // Alarm Second LSD
     
     if (ALARMEN == 1) 
     {   
@@ -130,8 +130,8 @@ void Update_Screen(void)
     }
  
     Fan_Set_Temp_Txt[0] = fan_set_temp/100 + '0';
-    Fan_Set_Temp_Txt[1] = 0; // add code 
-    Fan_Set_Temp_Txt[2] = 0; // add code 
+    Fan_Set_Temp_Txt[1] = (fan_set_temp%100)/10 + '0'; // add code 
+    Fan_Set_Temp_Txt[2] = (fan_set_temp%10) + '0'; // add code 
     
     if (FAN == 1)
     {
@@ -147,17 +147,18 @@ void Update_Screen(void)
        
     
     DC_Txt[0] = duty_cycle/100  + '0';
-    DC_Txt[1] = 0; // add code 
-    DC_Txt[2] = 0; // add code     
+    DC_Txt[1] = (duty_cycle%100)/10 + '0';
+    DC_Txt[2] = (duty_cycle%10) + '0';  
+     
     
-    Volt_Txt[0] = ((int)  volt        ) + '0';
-    Volt_Txt[2] = 0; // add code 
-    Volt_Txt[3] = 0; // add code 
+    Volt_Txt[0] = ((int)  volt/100) + '0';
+    Volt_Txt[2] = ((int) (volt%100)/10) + '0'; // add code 
+    Volt_Txt[3] = ((int) (volt%10)) + '0'; // add code 
     
     RPM_Txt[0] = rpm/1000  + '0';
-    RPM_Txt[1] = 0; // add code   
-    RPM_Txt[2] = 0; // add code 
-    RPM_Txt[3] = 0; // add code          
+    RPM_Txt[1] = (rpm%1000)/100 + '0';  
+    RPM_Txt[2] = (rpm%100)/10 +'0';
+    RPM_Txt[3] = rpm%10 + '0';           
     
     drawtext(data_tempc_x, data_tempc_y, tempC , ST7735_YELLOW , ST7735_BLACK , TS_2);       
     drawtext(data_tempf_x, data_tempf_y, tempF , ST7735_YELLOW , ST7735_BLACK , TS_2);

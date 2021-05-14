@@ -63,10 +63,14 @@ void Increase_Alarm_Time()
                     break;
 
                 case 1:
-                    // add code for alarm_minute increment
+                    setup_alarm_minute++;
+                    if (setup_alarm_minute == 60) setup__alarm_minute = 0;
+                    break;
 
                 case 2:
-                    // add code for alarm_second increment 
+                    setup_alarm_second++;
+                    if (setup_alarm_second == 60) setup_alarm_second = 0;
+                    break;
 
                 default:
                     break;
@@ -85,10 +89,14 @@ void Decrease_Alarm_Time()
                     break;
 
                 case 1:
-                    // add code for alarm_minute decrement
+                    if (setup_alarm_minute == 0) setup_alarm_minute = 59;
+                    else --setup_alarm_minute;
+                    break;
 
                 case 2:
-                    // add code for alarm_second decrement    
+                    if (setup_alarm_second == 0) setup_alarm_second = 59;
+                    else --setup_alarm_second;
+                    break;    
 
                 default:
                 break;
@@ -149,11 +157,11 @@ void Update_Setup_Alarm_Time_Screen(void)
 {
     printf ("%x:%x:%x\r\n", setup_alarm_hour,setup_alarm_minute,setup_alarm_second);
     setup_alarm_time[0]  = (setup_alarm_hour/10)  + '0';
-    setup_alarm_time[1]  = // add code here 
-    setup_alarm_time[3]  = // add code here
-    setup_alarm_time[4]  = // add code here
-    setup_alarm_time[6]  = // add code here
-    setup_alarm_time[7]  = // add code here   // Put your code here
+    setup_alarm_time[1]  = (setup_alarm_hour%10) + '0';
+    setup_alarm_time[3]  = (setup_alarm_minute/10) + '0';
+    setup_alarm_time[4]  = (setup_alarm_minute%10) + '0';
+    setup_alarm_time[6]  = (setup_alarm_second/10) + '0';
+    setup_alarm_time[7]  = (setup_alarm_second%10) + '0'; 
     drawtext(data_time_x, data_time_y, setup_alarm_time, ST7735_CYAN, ST7735_BLACK, TS_2);
 }
  
