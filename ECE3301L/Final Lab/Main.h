@@ -11,8 +11,8 @@
 
 
 
-#define SEC_LED         PORTCbits.RC4
-#define FANEN_LED       PORTAbits.RA6
+//#define SEC_LED         PORTCbits.RC4
+//#define FANEN_LED       PORTAbits.RA6
 #define FAN_EN          PORTAbits.RA5
 #define FAN_PWM         PORTCbits.RC2
 #define RTC_ALARM_NOT   PORTAbits.RA4
