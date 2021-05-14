@@ -148,7 +148,10 @@ void Set_RGB_Color(char color)
 
 float read_volt()
 {
-    // add code here
+    int num_step = get_full_ADC();
+    double multi = 5.0 / 1.024;
+    float voltage = num_step * multi / 1000;
+    return voltage;
 }
 
 unsigned int get_full_ADC()
@@ -167,5 +170,4 @@ void Init_ADC()
     ADCON1 = 0x0D;
     ADCON2 = 0xA9;
 }
-
 

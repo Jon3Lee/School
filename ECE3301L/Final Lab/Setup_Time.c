@@ -37,11 +37,11 @@ void Do_Setup_Time(void)
 
     DS3231_Read_Time();                         // Read actual time
     setup_second = bcd_2_dec(second);           // Set setup time as current time
-    setup_minute = 0; // add code here          // convert all the bcd to real integer
-    setup_hour = 0; // add code here               //
-    setup_day = 0; // add code here 
-    setup_month = 0; // add code here 
-    setup_year = 0; // add code here 
+    setup_minute = bcd_2_dec(minute);          // convert all the bcd to real integer
+    setup_hour = bcd_2_dec(hour);   
+    setup_day = bcd_2_dec(day); 
+    setup_month = bcd_2_dec(month);  
+    setup_year = bcd_2_dec(year);
     
     Initialize_Setup_Time_Screen();             // Initialize setup screen
     Update_Setup_Time_Screen();                 // Update screen with latest information
@@ -56,11 +56,11 @@ void Do_Setup_Time(void)
              {
                 Do_Beep_Good(); 
                 if (found == Prev) Go_Prev_Field();
-// add code here to check if 'Next' then use Go_Next_Field();       
-// add code here to check if 'Play/Pause' then use Do_Save_New_Time();                
-// add code here to check if 'Minus' then use Decrease_Time();
-// add code here to check if 'Plus' then use Increase_Time();
-// add code here to check if 'EQ' Exit_Time_Setup();
+                else if (found == Next) Go_Next_Field();
+                else if (found == Play_Pause) Do_Save_New_Time();
+                else if (found == Minus) Decrease_Time();
+                else if (found == Plus) Increase_Time();
+                else if (found == EQ) Exit_Time_Setup();
                 found = 0xff;
              }
              else
@@ -81,19 +81,36 @@ void Increase_Time()
                     break;
 
                 case 1:
-                    // add code here to handle minute increment
+                    setup_minute++;
+                    if (setup_minute == 60) setup_minute = 0;
+                    break;
 
                 case 2:
-                    // add code here to handle second increment
+                    setup_second++;
+                    if (setup_second == 60) setup_second = 0;
+                    break;
 
                 case 3:
-                    // add code here to handle month increment
+                    setup_month++;
+                    if (setup_month == 13) setup_month = 1;
+                    break;
 
                 case 4:
-                    // add code here to handle day increment   
+                    setup_day++;
+                    if (setup_month % 2 == 0)
+                    {
+                        if (setup_day == 31) setup_day = 1;
+                    }
+                    else 
+                    {
+                        if (setup_day == 32) setup_day = 1;
+                    }
+                    break;
 
                 case 5:
-                    // add code here to handle year increment
+                    setup_year++;
+                    if (setup_year == 100) setup_year = 0;
+                    break;
 
                 default:
                     break;
@@ -110,6 +127,38 @@ void Decrease_Time()
                     else --setup_hour;
                     break;
 
+                case 1:
+                    if (setup_minute == 0) setup_minute = 59;
+                    else --setup_minute;
+                    break;
+
+                case 2:
+                    if (setup_second == 0) setup_second = 59;
+                    else --setup_second;
+                    break;
+                
+                case 3:
+                    if (setup_month == 1) setup_month = 12;
+                    else --setup_month;
+                    break;
+
+                case 4:
+                    if (setup_month % 2 == 0)
+                    {
+                        if (setup_day == 0) setup_day = 30;
+                        else --setup_day;
+                    }
+                    else
+                    {
+                        if(setup_day == 0) setup_day = 31;
+                        else --setup_day;
+                    }
+                    break;
+
+                case 5:
+                    if (setup_year == 0) setup_year = 99;
+                    else --setup_year;
+                    break;
 
                 default:
                     break;
@@ -179,7 +228,7 @@ void Update_Setup_Time_Screen(void)
     setup_date[3]  = 0;                     // add code here 
     setup_date[4]  = 0;                     // add code here 
     setup_date[6]  = 0;                     // add code here 
-    setup_date[7]  = v
+    setup_date[7]  = v;
 
     drawtext(data_time_x, data_time_y, setup_time, ST7735_CYAN, ST7735_BLACK, TS_2);
     drawtext(data_date_x, data_date_y, setup_date, ST7735_GREEN, ST7735_BLACK, TS_2);

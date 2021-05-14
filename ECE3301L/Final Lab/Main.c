@@ -95,7 +95,7 @@ void Do_Init()                      // Initialize the ports
     Init_ADC();
     OSCCON=0x70;                    // Set oscillator to 8 MHz 
     
-    ADCON1=0x0E;
+    ADCON1 =0x0E;
     TRISA = 0x11;
     TRISB = 0x07;
     TRISC = 0x01;
@@ -139,7 +139,7 @@ void main()
 
             printf ("%02x:%02x:%02x %02x/%02x/%02x",hour,minute,second,month,day,year);
             printf (" Temp = %d C = %d F ", DS1621_tempC, DS1621_tempF);
-            printf ("alarm = %d match = %d", RTC_ALARM_NOT, MATCHED);
+//            printf ("alarm = %d match = %d", RTC_ALARM_NOT, MATCHED);
             printf ("RPM = %d  dc = %d\r\n", rpm, duty_cycle);
             Monitor_Fan();
             test_alarm();
