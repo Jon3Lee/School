@@ -73,7 +73,7 @@ void Do_Beep_Good()
     Wait_One_Sec();
     Deactivate_Buzzer();
     Wait_One_Sec();
-    do_update_pwm();
+    do_update_pwm(duty_cycle);
 }
 
 void Do_Beep_Bad()
@@ -82,7 +82,7 @@ void Do_Beep_Bad()
     Wait_One_Sec();
     Deactivate_Buzzer();
     Wait_One_Sec();
-    do_update_pwm();
+    do_update_pwm(duty_cycle);
 }
 
 void Wait_One_Sec()
