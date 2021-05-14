@@ -143,7 +143,11 @@ void do_update_pwm(char duty_cycle)
 
 void Set_RGB_Color(char color)
 {
-    // add code here
+char mask = PORTD & 0xF8;
+char d = mask + color;
+    PORTD = d;
+
+    //check code again
 }
 
 float read_volt()

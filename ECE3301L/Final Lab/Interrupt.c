@@ -39,8 +39,8 @@ void interrupt high_priority chkisr()
 {    
 	// add code here to handle TIMER1_isr(), INT0_isr() and INT2_isr()
     if (PIR1bits.TMR1IF == 1) TIMER1_isr();
-    if (INTCONbits.INT0IF == 1) INT0_ISR();
-    if (INTCON3bits.INT2IF == 1) INT2_ISR();
+    if (INTCONbits.INT0IF == 1) INT0_isr();
+    if (INTCON3bits.INT2IF == 1) INT2_isr();
 
 }
 

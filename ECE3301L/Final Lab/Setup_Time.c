@@ -171,7 +171,7 @@ void Go_Next_Field()
         
     Select_Field++;                                     // Move to next field
     if (Select_Field == 6) Select_Field = 0;            // Wrap around if necessary
-    Update_Setup_Screen_Cursor_Forward(Select_Field);           // Update cursor
+    Update_Setup_Screen_Cursor_Forward(Select_Field);   // Update cursor
 
 }  
 
