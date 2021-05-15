@@ -218,7 +218,7 @@ void test_alarm()
         if (RTC_ALARM_NOT == 0)
         {
             Activate_Buzzer();
-            Set_RGB_Color();
+            //Set_RGB_Color();
         }
     }
 }
