@@ -45,9 +45,9 @@ void Toggle_Fan_Monitor()
 {
     if (FAN == 1)
     {
-        FAN == 0;
+        FAN = 0;
     }
-    else FAN == 1;
+    else FAN = 1;
 
 }
 
