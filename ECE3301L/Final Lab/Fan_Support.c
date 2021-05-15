@@ -15,18 +15,18 @@ int get_duty_cycle(int temp, int set_temp)
 // return dc
     if (temp > set_temp)
     {
-        dc = 0;
+        duty_cycle = 0;
     }
     else 
     {
-        dc = 2*(set_temp - temp)
+        duty_cycle = 2*(set_temp - temp);
     }
 
-    if (dc > 100)
+    if (duty_cycle > 100)
     {
-        dc = 100;
+        duty_cycle = 100;
     }
-    return dc;
+    return duty_cycle;
 
 }
 
@@ -75,7 +75,7 @@ void Turn_Off_Fan()
 {
     FAN = 0;
     FAN_EN = 0;
-    FANEN_LED = 0; 
+   // FANEN_LED = 0; 
 }
 
 void Turn_On_Fan()
@@ -83,7 +83,7 @@ void Turn_On_Fan()
     FAN = 1;
     do_update_pwm(duty_cycle);
     FAN_EN = 1;
-    FANEN_LED = 1; 
+    //FANEN_LED = 1; 
 }
 
 void Increase_Speed()
