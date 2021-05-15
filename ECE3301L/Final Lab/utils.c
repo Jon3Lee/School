@@ -153,7 +153,6 @@ float read_volt()
     // double multi = 5.0 / 1.024;
     // float voltage = num_step * multi / 1000;
     // return voltage;
-    Select_ADC_Channel(1);                               //Set ADCON0 to 1 since the photoresistor is on AN1
     int num_step = get_full_ADC();                  
     float voltage = 4.0 * num_step;                    //multiply num_step by 4.0 to obtain the voltage in millivolts
     return voltage;
