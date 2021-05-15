@@ -69,7 +69,7 @@ void Increase_Alarm_Time()
 
                 case 1:
                     setup_alarm_minute++;
-                    if (setup_alarm_minute == 60) setup__alarm_minute = 0;
+                    if (setup_alarm_minute == 60) setup_alarm_minute = 0;
                     break;
 
                 case 2:
