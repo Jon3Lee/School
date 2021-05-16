@@ -115,6 +115,9 @@ void Do_Init()                      // Initialize the ports
     fan_set_temp = 75;
     Set_RGB_Color(0);
     Deactivate_Buzzer();
+    alarm_mode = 0;
+    MATCHED = 0;
+    color = 0;
 }
 
 
@@ -124,9 +127,6 @@ void main()
     Initialize_Screen();  
     DS3231_Turn_Off_Alarm();                                    
     DS3231_Read_Alarm_Time();                                   // Read alarm time for the first time
-    alarm_mode = 0;
-    MATCHED = 0;
-    color = 0;
 
     tempSecond = 0xff;
     while (1)
