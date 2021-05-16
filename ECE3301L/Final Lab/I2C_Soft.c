@@ -19,7 +19,7 @@ void I2C_Init(unsigned long c)
 
 unsigned char I2C_Read(char ack)
 {
-   unsigned char inByte, n;
+unsigned char inByte, n;
    i2cHighSda();
    for (n=0; n<8; n++)
    {
@@ -40,7 +40,7 @@ unsigned char I2C_Read(char ack)
 
 void I2C_Write(unsigned char outByte )
 {
-   unsigned char n;
+unsigned char n;
    for(n=0; n<8; n++)
    {
       if(outByte&0x80) i2cHighSda();

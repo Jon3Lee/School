@@ -21,7 +21,7 @@ extern unsigned char setup_alarm_second, setup_alarm_minute, setup_alarm_hour;
 
 void DS1621_Init()
 {
-    char Device = 0x48;                                         // Device ID
+char Device = 0x48;                                         // Device ID
     I2C_Write_Cmd_Write_Data (Device, ACCESS_CFG, CONT_CONV);   
     I2C_Write_Cmd_Only(Device, START_CONV);                    
 }
@@ -29,9 +29,9 @@ void DS1621_Init()
 int DS1621_Read_Temp()
 {
 
-    char Device = 0x48;                                         // Device ID
-    char Cmd = READ_TEMP;                                       // As Given
-    char Data_Ret;
+char Device = 0x48;                                         // Device ID
+char Cmd = READ_TEMP;                                       // As Given
+char Data_Ret;
     I2C_Start();                                                // Start I2C protocol
     I2C_Write((Device << 1) | 0);                               // Device address
     I2C_Write(Cmd);                                             // Send register address
@@ -44,8 +44,8 @@ int DS1621_Read_Temp()
 
 void DS3231_Read_Time()
 {
-    char Device = 0x68;                                         // Device ID
-    char Address = 0x00;                                        // Beginning Address 0
+char Device = 0x68;                                         // Device ID
+char Address = 0x00;                                        // Beginning Address 0
  
     I2C_Start();                                                // Start I2C protocol
     I2C_Write((Device << 1) | 0);                               // Device address
@@ -65,8 +65,8 @@ void DS3231_Read_Time()
 
 void DS3231_Setup_Time()
 {
-    char Device = 0x68;                                         // Device ID
-    char Address = 0x00;                                        // Beginning Address 0
+char Device = 0x68;                                         // Device ID
+char Address = 0x00;                                        // Beginning Address 0
     second = 0x06;                                              // Set seconds to :06
     minute = 0x28;                                              // Set minutes to :28
     hour = 0x13;                                                // Set hours to 0700
@@ -89,8 +89,8 @@ void DS3231_Setup_Time()
 
 void DS3231_Write_Time()
 {
-    char Device = 0x68;                                         // Device ID
-    char Address = 0x00;                                        // Beginning Address 0
+char Device = 0x68;                                         // Device ID
+char Address = 0x00;                                        // Beginning Address 0
     second = dec_2_bcd(setup_second);                           // 
     minute = dec_2_bcd(setup_minute);                           // 
     hour = dec_2_bcd(setup_hour);                               // 
@@ -115,8 +115,8 @@ void DS3231_Write_Initial_Alarm_Time()
 {
     DS3231_Read_Time();                             // Read current time
     alarm_date = day;                               // Set alarm to today
-    char Device = 0x68;                             // Device ID given
-    char Address = 0x07;                            // Write to register 07
+char Device = 0x68;                             // Device ID given
+char Address = 0x07;                            // Write to register 07
     alarm_hour = dec_2_bcd(0x01);               // Convert info to BCD
     alarm_minute = dec_2_bcd(0x01);
     alarm_second = dec_2_bcd(0x01);   

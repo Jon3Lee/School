@@ -46,14 +46,14 @@ char check_for_button_input()
 
 char bcd_2_dec (char bcd)
 {
-    int dec;
+int dec;
     dec = ((bcd>> 4) * 10) + (bcd & 0x0f);
     return dec;
 }
 
 int dec_2_bcd (char dec)
 {
-    int bcd;
+int bcd;
     bcd = ((dec / 10) << 4) + (dec % 10);
     return bcd;
 }
@@ -130,8 +130,8 @@ void Deactivate_Buzzer()
 
 void do_update_pwm(char duty_cycle) 
 { 
-	float dc_f;
-	int dc_I;
+float dc_f;
+int dc_I;
 	PR2 = 0b00000100 ;                      // Set the frequency for 25 Khz 
 	T2CON = 0b00000111 ;                    // As given in website
 	dc_f = ( 4.0 * duty_cycle / 20.0) ;     // calculate factor of duty cycle versus a 25 Khz signal
@@ -153,9 +153,9 @@ float read_volt()
     // double multi = 5.0 / 1.024;
     // float voltage = num_step * multi / 1000;
     // return voltage;
-    int num_step = get_full_ADC();                  
-    float mvoltage = 4.0 * num_step;                    //multiply num_step by 4.0 to obtain the voltage in millivolts
-    float voltage = mvoltage / 1000;
+int num_step = get_full_ADC();                  
+float mvoltage = 4.0 * num_step;                    //multiply num_step by 4.0 to obtain the voltage in millivolts
+float voltage = mvoltage / 1000;
     return voltage;
 }
 

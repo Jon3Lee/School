@@ -91,7 +91,7 @@ void Update_Screen(void)
     if (DS1621_tempF < 0) 
     {
         tempF[0] = '-';
-        int neg_tempF = -DS1621_tempF;
+    int neg_tempF = -DS1621_tempF;
         tempF[1]  = neg_tempF/10  + '0';            // Tens digit of C
         tempF[2]  = neg_tempF%10  + '0';            // Ones digit of C
     }
@@ -115,8 +115,8 @@ void Update_Screen(void)
     date[7]  = (year & 0x0f)+'0';                   // Year LSD
     alarm_time[0]  = (alarm_hour>>4)  + '0';        // Alarm Hour MSD
     alarm_time[1]  = (alarm_hour & 0x0f)+ '0';      // Alarm Hour LSD
-    alarm_time[3]  = (alarm_minute>>4) + '0'; // add code       // Alarm Minute MSD
-    alarm_time[4]  = (alarm_minute & 0x0f) + '0'; // add code   // Alarm Minute LSD
+    alarm_time[3]  = (alarm_minute>>4) + '0';       // Alarm Minute MSD
+    alarm_time[4]  = (alarm_minute & 0x0f) + '0';   // Alarm Minute LSD
     alarm_time[6]  = (alarm_second>>4) + '0'; // add code       // Alarm Second MSD
     alarm_time[7]  = (alarm_second & 0x0f) + '0'; // add code    // Alarm Second LSD
     
@@ -151,9 +151,11 @@ void Update_Screen(void)
     DC_Txt[2] = (duty_cycle%10) + '0';  
      
     
-    Volt_Txt[0] = ((int)  (volt/100)) + '0';
-    Volt_Txt[2] = ((((int)(volt))%100)/10) + '0';
-    Volt_Txt[3] = (((int)(volt)%10)) + '0'; 
+    Volt_Txt[0] = (int) volt + '0';
+    Volt_Txt[2] = (((int)(volt*100))%100)/10 + '0';
+    Volt_Txt[3] = ((int)(volt*100))%10 + '0'; 
+    // Volt_Txt[2] = ((((int)(volt))%100)/10) + '0';
+    // Volt_Txt[3] = (((int)(volt)%10)) + '0'; 
     
 
     RPM_Txt[0] = rpm/1000  + '0';

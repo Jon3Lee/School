@@ -105,9 +105,9 @@ void Initialize_Setup_Fan_Screen(void)
     
 void Update_Setup_Fan_Screen(void)
 {
-    char dc_char1 = setup_fan_set_temp/100;
-    char dc_char2 = (setup_fan_set_temp%100)/10; // add code here
-    char dc_char3 = (setup_fan_set_temp%10); // add code here    
+char dc_char1 = setup_fan_set_temp/100;
+char dc_char2 = (setup_fan_set_temp%100)/10; // add code here
+char dc_char3 = (setup_fan_set_temp%10); // add code here    
     setup_fan_set_text[0] = dc_char1 + '0';
     setup_fan_set_text[1] = dc_char2 + '0';
     setup_fan_set_text[2] = dc_char3 + '0';

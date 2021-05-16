@@ -236,8 +236,8 @@ void Update_Setup_Time_Screen(void)
 
 void Update_Setup_Screen_Cursor_Forward(char field)
 {
-    char xinc = 36;
-    char yinc = 30;   
+char xinc = 36;
+char yinc = 30;   
     switch (field)
     {
         case 0:
@@ -275,8 +275,8 @@ void Update_Setup_Screen_Cursor_Forward(char field)
 
 void Update_Setup_Screen_Cursor_Backward(char field)
 {
-    char xinc = 36;
-    char yinc = 30;   
+char xinc = 36;
+char yinc = 30;   
     switch (field)
     {
         case 0:
