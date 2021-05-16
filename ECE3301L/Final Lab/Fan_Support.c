@@ -116,8 +116,3 @@ void Decrease_Speed()
         duty_cycle = duty_cycle - 5;
     }
 }
-
-
-
-
-
