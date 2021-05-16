@@ -197,6 +197,7 @@ void test_alarm()
     {
         DS3231_Turn_On_Alarm();
         alarm_mode = 1;
+        Set_RGB_Color(0);
     }
     if (alarm_mode == 1 && ALARMEN == 0)
     {

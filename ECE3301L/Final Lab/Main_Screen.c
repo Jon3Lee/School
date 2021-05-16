@@ -117,8 +117,8 @@ void Update_Screen(void)
     alarm_time[1]  = (alarm_hour & 0x0f)+ '0';      // Alarm Hour LSD
     alarm_time[3]  = (alarm_minute>>4) + '0';       // Alarm Minute MSD
     alarm_time[4]  = (alarm_minute & 0x0f) + '0';   // Alarm Minute LSD
-    alarm_time[6]  = (alarm_second>>4) + '0'; // add code       // Alarm Second MSD
-    alarm_time[7]  = (alarm_second & 0x0f) + '0'; // add code    // Alarm Second LSD
+    alarm_time[6]  = (alarm_second>>4) + '0';       // Alarm Second MSD
+    alarm_time[7]  = (alarm_second & 0x0f) + '0';   // Alarm Second LSD
     
     if (ALARMEN == 1) 
     {   

@@ -42,11 +42,11 @@ void Do_Setup_Alarm_Time(void)
              {
                 Do_Beep_Good();
                 if (found == Prev) Go_Prev_Alarm_Field();
-                if (found == Next) Go_Next_Alarm_Field();
-                if (found == Play_Pause) Do_Save_New_Alarm_Time();
-                if (found == Minus) Decrease_Alarm_Time();
-                if (found == Plus) Increase_Alarm_Time();
-                if (found == EQ) Exit_Setup_Alarm_Time();
+                else if (found == Next) Go_Next_Alarm_Field();
+                else if (found == Play_Pause) Do_Save_New_Alarm_Time();
+                else if (found == Minus) Decrease_Alarm_Time();
+                else if (found == Plus) Increase_Alarm_Time();
+                else if (found == EQ) Exit_Setup_Alarm_Time();
                 // add code here for the remaining buttons like in Setup_Time())
                 found = 0xff;
              }
