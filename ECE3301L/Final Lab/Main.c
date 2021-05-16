@@ -202,8 +202,8 @@ void test_alarm()
     if (alarm_mode == 1 && ALARMEN == 0)
     {
         DS3231_Turn_Off_Alarm();
-        Deactivate_Buzzer();
         Set_RGB_Color(0);
+        Deactivate_Buzzer();
         alarm_mode = 0;
     }
     if (alarm_mode == 1 && ALARMEN == 1)
