@@ -215,7 +215,14 @@ void test_alarm()
         }
         if (MATCHED == 1)
         {   
-            cycle_RGB();
+            Wait_One_Sec();
+            Set_RGB_Color(color);
+            color++;
+
+            if (color == 8)
+            {
+                color = 0;
+            }
 
             if (volt > 3)
             {
@@ -226,16 +233,4 @@ void test_alarm()
             }
         }
     }
-}
-
-void cycle_RGB()
-{
-            Wait_One_Sec();
-            Set_RGB_Color(color);
-            color++;
-
-            if (color == 8)
-            {
-                color = 0;
-            }
 }
