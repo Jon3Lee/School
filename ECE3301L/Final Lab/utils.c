@@ -146,7 +146,49 @@ void Set_RGB_Color(char color)
 {
     // PORTD = PORTD & 0xF8;
     // PORTD = PORTD | (color << 5);
-    
+    switch(color)
+    {
+        case 0:
+            PORTDbits.RD0 = 0;
+            PORTDbits.RD1 = 0;
+            PORTDbits.RD2 = 0;
+            break;
+        case 1:                         //Red
+            PORTDbits.RD0 = 1;
+            PORTDbits.RD1 = 0;
+            PORTDbits.RD2 = 0;
+            break;
+        case 2:                         //Green
+            PORTDbits.RD0 = 0;
+            PORTDbits.RD1 = 1;
+            PORTDbits.RD2 = 0;
+            break;
+        case 3:                         //Yellow
+            PORTDbits.RD0 = 1;
+            PORTDbits.RD1 = 1;
+            PORTDbits.RD2 = 0;
+            break;
+        case 4:                         //Blue
+            PORTDbits.RD0 = 0;
+            PORTDbits.RD1 = 0;
+            PORTDbits.RD2 = 1;
+            break;
+        case 5:                         //Purple
+            PORTDbits.RD0 = 1;
+            PORTDbits.RD1 = 0;
+            PORTDbits.RD2 = 1;
+            break;
+        case 6:                         //Cyan
+            PORTDbits.RD0 = 0;
+            PORTDbits.RD1 = 1;
+            PORTDbits.RD2 = 1;
+            break;
+        case 7:                         //White
+            PORTDbits.RD0 = 1;
+            PORTDbits.RD1 = 1;
+            PORTDbits.RD2 = 1;
+            break;
+    }
 }
 
 float read_volt()
