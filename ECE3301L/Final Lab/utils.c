@@ -144,8 +144,9 @@ int dc_I;
 
 void Set_RGB_Color(char color)
 {
-    PORTD = PORTD & 0x1f;
-    PORTD = PORTD | (color << 5);
+    // PORTD = PORTD & 0x1f;
+    // PORTD = PORTD | (color << 5);
+    
 }
 
 float read_volt()
