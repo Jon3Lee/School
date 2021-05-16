@@ -226,7 +226,6 @@ void test_alarm()
 
             if (volt > 3)
             {
-                RTC_ALARM_NOT = 1;
                 MATCHED = 0;
                 Deactivate_Buzzer();
                 Set_RGB_Color(0);

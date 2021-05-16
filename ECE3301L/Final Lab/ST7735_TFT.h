@@ -1,7 +1,7 @@
 #define _XTAL_FREQ  8000000             // Set operation for 8 Mhz
-#define TFT_DC      PORTDbits.RD0       // Location of TFT D/C
-#define TFT_CS      PORTDbits.RD1       // Location of TFT Chip Select
-#define TFT_RST     PORTDbits.RD2       // Location of TFT Reset
+#define TFT_DC      PORTDbits.RD3       // Location of TFT D/C
+#define TFT_CS      PORTDbits.RD4       // Location of TFT Chip Select
+#define TFT_RST     PORTDbits.RD5       // Location of TFT Reset
 
 #define RD               ST7735_RED
 #define BU               ST7735_BLUE
