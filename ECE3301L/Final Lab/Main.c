@@ -95,8 +95,8 @@ void Do_Init()                      // Initialize the ports
     Init_ADC();
     OSCCON=0x70;                    // Set oscillator to 8 MHz 
     
-    TRISA = 0x11; //11
-    TRISB = 0x07; //07
+    TRISA = 0x12; //11
+    TRISB = 0x27; //07
     TRISC = 0x01;
     TRISD = 0x00;
     TRISE = 0x00;
