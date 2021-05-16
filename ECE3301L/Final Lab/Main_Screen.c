@@ -154,8 +154,6 @@ void Update_Screen(void)
     Volt_Txt[0] = (int) volt + '0';
     Volt_Txt[2] = (((int)(volt*100))%100)/10 + '0';
     Volt_Txt[3] = ((int)(volt*100))%10 + '0'; 
-    // Volt_Txt[2] = ((((int)(volt))%100)/10) + '0';
-    // Volt_Txt[3] = (((int)(volt)%10)) + '0'; 
     
 
     RPM_Txt[0] = rpm/1000  + '0';
