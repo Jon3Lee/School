@@ -95,9 +95,8 @@ void Do_Init()                      // Initialize the ports
     Init_ADC();
     OSCCON=0x70;                    // Set oscillator to 8 MHz 
     
-    ADCON1 =0x0E;
-    TRISA = 0x11;
-    TRISB = 0x07;
+    TRISA = 0x12; //11
+    TRISB = 0x27; //07
     TRISC = 0x01;
     TRISD = 0x00;
     TRISE = 0x00;
@@ -114,6 +113,8 @@ void Do_Init()                      // Initialize the ports
     Init_Interrupt();
     Turn_Off_Fan();
     fan_set_temp = 75;
+    Set_RGB_Color(0);
+    Deactivate_Buzzer();
 }
 
 
@@ -139,7 +140,7 @@ void main()
 
             printf ("%02x:%02x:%02x %02x/%02x/%02x",hour,minute,second,month,day,year);
             printf (" Temp = %d C = %d F ", DS1621_tempC, DS1621_tempF);
-//            printf ("alarm = %d match = %d", RTC_ALARM_NOT, MATCHED);
+            printf ("alarm = %d match = %d", RTC_ALARM_NOT, MATCHED);
             printf ("RPM = %d  dc = %d\r\n", rpm, duty_cycle);
             Monitor_Fan();
             test_alarm();
@@ -189,37 +190,44 @@ void main()
 
 void test_alarm()
 {
-    if (INT2_flag == 1)
-    {
-        if (ALARMEN == 0)
-        {
-            ALARMEN = 1;
-        }
-        else
-        {
-            ALARMEN = 0;
-        }
-        INT2_flag = 0;
-    }
-
     if (alarm_mode == 0 && ALARMEN == 1)
     {
         DS3231_Turn_On_Alarm();
         alarm_mode = 1;
     }
-    else if (alarm_mode == 1 && ALARMEN == 0)
+    if (alarm_mode == 1 && ALARMEN == 0)
     {
         DS3231_Turn_Off_Alarm();
         alarm_mode = 0;
         Deactivate_Buzzer();
+        Set_RGB_Color(0);
     }
-    else if (alarm_mode == 1 && ALARMEN == 1)
+    if (alarm_mode == 1 && ALARMEN == 1)
     {
         if (RTC_ALARM_NOT == 0)
         {
-            Activate_Buzzer();
-            //Set_RGB_Color();
+            MATCHED = 1;
+            Activate_Buzzer_4KHz();
         }
+    if (MATCHED == 1)
+    {
+        Wait_One_Sec();
+        Set_RGB_Color(color);
+        color++;
+
+        if (color ==8)
+        {
+            color = 0;
+        }
+        
+        if (volt > 3.0)
+        {
+            MATCHED = 0;
+            alarm_mode = 0;
+            Deactivate_Buzzer();
+            Set_RGB_Color(0);
+        }
+    }
     }
 }
 

@@ -10,6 +10,7 @@ extern char Nec_code1;
 extern short nec_ok;
 extern char array1[21];
 extern char duty_cycle;
+float volt;
 
 char check_for_button_input()
 {       
@@ -149,14 +150,10 @@ void Set_RGB_Color(char color)
 
 float read_volt()
 {
-    // int num_step = get_full_ADC();
-    // double multi = 5.0 / 1.024;
-    // float voltage = num_step * multi / 1000;
-    // return voltage;
 int num_step = get_full_ADC();                  
-float mvoltage = 4.0 * num_step;                    //multiply num_step by 4.0 to obtain the voltage in millivolts
-float voltage = mvoltage / 1000;
-    return voltage;
+    volt = num_step * 5 / 1024.0;  
+
+    return volt;
 }
 
 unsigned int get_full_ADC()
@@ -171,7 +168,7 @@ unsigned int result;
 
 void Init_ADC()
 {
-    ADCON0 = 0x0D;
+    ADCON0 = 0x05;
     ADCON1 = 0x0D;
     ADCON2 = 0xA9;
 }

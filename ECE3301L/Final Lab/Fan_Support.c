@@ -13,20 +13,21 @@ int get_duty_cycle(int temp, int set_temp)
 // add code to check if temp is greater than set_temp. If so, dc = 0. Else dc = 2 times of difference of set_temp and temp
 // check if dc is greater than 100. If so, set it to 100
 // return dc
+int dc;
     if (temp > set_temp)
     {
-        duty_cycle = 0;
+        dc = 0;
     }
     else 
     {
-        duty_cycle = 2*(set_temp - temp);
+        dc = 2*(set_temp - temp);
     }
 
-    if (duty_cycle > 100)
+    if (dc > 100)
     {
-        duty_cycle = 100;
+        dc = 100;
     }
-    return duty_cycle;
+    return dc;
 
 }
 
@@ -47,7 +48,10 @@ void Toggle_Fan_Monitor()
     {
         FAN = 0;
     }
-    else FAN = 1;
+    else if (FAN == 0)
+    {
+        FAN = 1;
+    } 
 
 }
 
@@ -75,7 +79,8 @@ void Turn_Off_Fan()
 {
     FAN = 0;
     FAN_EN = 0;
-   // FANEN_LED = 0; 
+    FANEN_LED = 0;
+    duty_cycle = 0;
 }
 
 void Turn_On_Fan()
@@ -83,7 +88,7 @@ void Turn_On_Fan()
     FAN = 1;
     do_update_pwm(duty_cycle);
     FAN_EN = 1;
-    //FANEN_LED = 1; 
+    FANEN_LED = 1; 
 }
 
 void Increase_Speed()
