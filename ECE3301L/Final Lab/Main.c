@@ -124,6 +124,9 @@ void main()
     Initialize_Screen();  
     DS3231_Turn_Off_Alarm();                                    
     DS3231_Read_Alarm_Time();                                   // Read alarm time for the first time
+    alarm_mode = 0;
+    MATCHED = 0;
+    color = 0;
 
     tempSecond = 0xff;
     while (1)
@@ -198,9 +201,9 @@ void test_alarm()
     if (alarm_mode == 1 && ALARMEN == 0)
     {
         DS3231_Turn_Off_Alarm();
-        alarm_mode = 0;
         Deactivate_Buzzer();
         Set_RGB_Color(0);
+        alarm_mode = 0;
     }
     if (alarm_mode == 1 && ALARMEN == 1)
     {
