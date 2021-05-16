@@ -154,7 +154,8 @@ float read_volt()
     // float voltage = num_step * multi / 1000;
     // return voltage;
     int num_step = get_full_ADC();                  
-    float voltage = 4.0 * num_step;                    //multiply num_step by 4.0 to obtain the voltage in millivolts
+    float mvoltage = 4.0 * num_step;                    //multiply num_step by 4.0 to obtain the voltage in millivolts
+    float voltage = mvoltage / 1000;
     return voltage;
 }
 
@@ -170,7 +171,7 @@ unsigned int result;
 
 void Init_ADC()
 {
-    ADCON0 = 0x05;
+    ADCON0 = 0x0D;
     ADCON1 = 0x0D;
     ADCON2 = 0xA9;
 }
