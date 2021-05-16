@@ -144,7 +144,7 @@ int dc_I;
 
 void Set_RGB_Color(char color)
 {
-    // PORTD = PORTD & 0x1f;
+    // PORTD = PORTD & 0xF8;
     // PORTD = PORTD | (color << 5);
     
 }
