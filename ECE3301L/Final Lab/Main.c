@@ -95,7 +95,7 @@ void Do_Init()                      // Initialize the ports
     Init_ADC();
     OSCCON=0x70;                    // Set oscillator to 8 MHz 
     
-    TRISA = 0x12; //11
+    TRISA = 0x06; //11
     TRISB = 0x27; //07
     TRISC = 0x01;
     TRISD = 0x00;
@@ -218,7 +218,7 @@ void test_alarm()
             Set_RGB_Color(color);
             color++;
 
-            if (color ==8)
+            if (color == 8)
             {
                 color = 0;
             }
@@ -226,7 +226,6 @@ void test_alarm()
             if (volt > 3.0)
             {
                 MATCHED = 0;
-                alarm_mode = 0;
                 Deactivate_Buzzer();
                 Set_RGB_Color(0);
             }
