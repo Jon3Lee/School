@@ -80,6 +80,7 @@ void Turn_Off_Fan()
     FAN = 0;
     FAN_EN = 0;
     FANEN_LED = 0;
+    //duty_cycle = 0;
 }
 
 void Turn_On_Fan()
