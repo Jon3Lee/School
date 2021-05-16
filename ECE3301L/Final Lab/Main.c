@@ -214,7 +214,22 @@ void test_alarm()
             Activate_Buzzer_4KHz();
         }
         if (MATCHED == 1)
-        {
+        {   
+            cycle_RGB();
+
+            if (volt > 3)
+            {
+                RTC_ALARM_NOT = 1;
+                MATCHED = 0;
+                Deactivate_Buzzer();
+                Set_RGB_Color(0);
+            }
+        }
+    }
+}
+
+void cycle_RGB()
+{
             Wait_One_Sec();
             Set_RGB_Color(color);
             color++;
@@ -223,13 +238,4 @@ void test_alarm()
             {
                 color = 0;
             }
-            
-            if (volt > 3.0)
-            {
-                MATCHED = 0;
-                Deactivate_Buzzer();
-                Set_RGB_Color(0);
-            }
-        }
-    }
 }
