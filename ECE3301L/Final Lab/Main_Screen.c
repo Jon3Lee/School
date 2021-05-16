@@ -159,7 +159,7 @@ void Update_Screen(void)
     
 
     RPM_Txt[0] = rpm/1000  + '0';
-    RPM_Txt[1] = (rpm%1000)/100 + '0';  
+    RPM_Txt[1] = (rpm%1000)/100 + '0'; 
     RPM_Txt[2] = (rpm%100)/10 +'0';
     RPM_Txt[3] = rpm%10 + '0';           
     
