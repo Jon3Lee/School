@@ -170,7 +170,7 @@ unsigned int result;
 
 void Init_ADC()
 {
-    ADCON0 = 0x0D;
+    ADCON0 = 0x05;
     ADCON1 = 0x0D;
     ADCON2 = 0xA9;
 }
