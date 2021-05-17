@@ -24,7 +24,7 @@ void Init_Interrupt(void)
           
     INTCON3bits.INT2IE = 1;           
     INTCON2bits.INTEDG0 = 0;         
-        
+    INTCON2bits.INTEDG1 = 0;    
     INTCON2bits.INTEDG2 = 0;  
     TMR1H = 0;                              // Reset Timer1
     TMR1L = 0;                              //
