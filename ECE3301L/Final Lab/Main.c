@@ -260,8 +260,8 @@ void test_alarm()
                         color = 0;
                     }
                 }
-                
-                if (volt > 3.0)
+
+                else if (volt > 3.0)
                 {
                     MATCHED = 1;
                     RTC_ALARM_NOT = 1;
