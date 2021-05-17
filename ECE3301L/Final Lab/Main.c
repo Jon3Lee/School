@@ -193,46 +193,6 @@ void main()
 
 void test_alarm()
 {
-    // if (alarm_mode == 0 && ALARMEN == 1)
-    // {
-    //     DS3231_Turn_On_Alarm();
-    //     alarm_mode = 1;
-    // }
-    // if (alarm_mode == 1 && ALARMEN == 0)
-    // {
-    //     DS3231_Turn_Off_Alarm();
-    //     Deactivate_Buzzer();
-    //     Set_RGB_Color(0);
-    //     alarm_mode = 0;
-    // }
-    // if (alarm_mode == 1 && ALARMEN == 1)
-    // {
-    //     if (RTC_ALARM_NOT == 0)
-    //     {
-    //         MATCHED = 1;
-    //         Activate_Buzzer_4KHz();
-    //     }
-    //     if (MATCHED == 1)
-    //     {   
-    //         Wait_One_Sec();
-    //         Set_RGB_Color(color);
-    //         color++;
-
-    //         if (color == 8)
-    //         {
-    //             color = 0;
-    //         }
-
-    //         if (volt > 3.0)
-    //         {
-    //             MATCHED = 0;
-    //             alarm_mode = 0;
-    //             Deactivate_Buzzer();
-    //             Set_RGB_Color(0);
-    //             RTC_ALARM_NOT = 1;
-    //         }
-    //     }
-    // }
     if (ALARMEN == 1)
     {
         if (alarm_mode ==  0)
