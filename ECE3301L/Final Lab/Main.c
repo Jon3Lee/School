@@ -277,5 +277,6 @@ void test_alarm()
         Deactivate_Buzzer();
         Set_RGB_Color(0);
         alarm_mode = 0;
+        MATCHED = 1;
     }
 }
