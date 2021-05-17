@@ -224,7 +224,7 @@ void test_alarm()
                 color = 0;
             }
 
-            if (volt > 3)
+            if (volt > 3.0)
             {
                 MATCHED = 0;
                 Deactivate_Buzzer();
