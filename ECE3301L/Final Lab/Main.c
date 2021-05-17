@@ -116,7 +116,7 @@ void Do_Init()                      // Initialize the ports
     Set_RGB_Color(0);
     Deactivate_Buzzer();
     alarm_mode = 0;
-    MATCHED = 0;
+    MATCHED = 1;
     color = 0;
 }
 
@@ -238,7 +238,6 @@ void test_alarm()
         if (alarm_mode ==  0)
         {
             alarm_mode = 1;
-            Set_RGB_Color(0);
             DS3231_Turn_On_Alarm();
         }
         else if (alarm_mode == 1)
@@ -269,8 +268,7 @@ void test_alarm()
                     Deactivate_Buzzer();
                     Set_RGB_Color(0);
                 }
-            }   
-
+            }
         }
     }
     else if (ALARMEN == 0)
