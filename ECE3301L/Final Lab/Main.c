@@ -60,14 +60,14 @@ char date[]         = "00/00/00";
 char alarm_time[]   = "00:00:00";
 char Alarm_SW_Txt[] = "OFF";
 char Fan_Set_Temp_Txt[] = "075F";
-char Fan_SW_Txt[]   = "OFF";                // text storage for Heater Mode
+char Fan_SW_Txt[]   = "OFF";                                    // text storage for Heater Mode
 char array1[21]={0xa2,0x62,0xe2,0x22,0x02,0xc2,0xe0,0xa8,0x90,0x68,0x98,0xb0,0x30,0x18,0x7a,0x10,0x38,0x5a,0x42,0x4a,0x52};
 
     
-char DC_Txt[]       = "000";                // text storage for Duty Cycle value
+char DC_Txt[]       = "000";                                    // text storage for Duty Cycle value
 char Volt_Txt[]     = "0.00V";
-char RTC_ALARM_Txt[]= "0";                      //
-char RPM_Txt[]      = "0000";               // text storage for RPM
+char RTC_ALARM_Txt[]= "0";                      
+char RPM_Txt[]      = "0000";                                   // text storage for RPM
 
 char setup_time[]       = "00:00:00";
 char setup_date[]       = "01/01/00";
@@ -89,11 +89,11 @@ void init_UART()
 
 
 
-void Do_Init()                      // Initialize the ports 
+void Do_Init()                                                  // Initialize the ports 
 { 
-    init_UART();                    // Initialize the uart
+    init_UART();                                                // Initialize the uart
     Init_ADC();
-    OSCCON=0x70;                    // Set oscillator to 8 MHz 
+    OSCCON=0x70;                                                // Set oscillator to 8 MHz 
     
     TRISA = 0x06; //11
     TRISB = 0x27; //07
@@ -193,50 +193,50 @@ void main()
 
 void test_alarm()
 {
-    if (ALARMEN == 1)
+    if (ALARMEN == 1)                                           //If the button is pressed
     {
-        if (alarm_mode ==  0)
+        if (alarm_mode ==  0)                                   //and the alarm mode is not on
         {
-            alarm_mode = 1;
-            DS3231_Turn_On_Alarm();
+            alarm_mode = 1;                                     //turn alarm mode to on
+            DS3231_Turn_On_Alarm();                             //And turn on the alarm
         }
-        else if (alarm_mode == 1)
+        else if (alarm_mode == 1)                               //If the alarm mode is on already 
         {
-            if (RTC_ALARM_NOT == 0)
+            if (RTC_ALARM_NOT == 0)                             //And time matches the alarm
             {
-                MATCHED = RTC_ALARM_NOT;
-                Activate_Buzzer_4KHz();
+                MATCHED = RTC_ALARM_NOT;                        //set MATCHED to 0
+                Activate_Buzzer_4KHz();                         //Turn on buzzed
             }
 
-            if (MATCHED == 0)
+            if (MATCHED == 0)                                   //If MATCHED is 0
             {
                 
                 Wait_One_Sec();
-                Set_RGB_Color(color);
+                Set_RGB_Color(color);                           //Cycle through RCB LED once a second
                 color++;
                 
-                if (color == 8)
+                if (color == 8)                                 //When color becomes white, reset cycle
                 {
                     color = 0;
                 }
 
-                if (volt > 3.0)
+                if (volt > 3.0)                                 //When voltage is 3 volts
                 {
-                    MATCHED = 1;
-                    RTC_ALARM_NOT = 1;
-                    alarm_mode = 0;
-                    Deactivate_Buzzer();
-                    Set_RGB_Color(0);
+                    MATCHED = 1;                                //Reset MATCHED value
+                    RTC_ALARM_NOT = 1;                          //Reset RTC_ALARM_NOT value
+                    alarm_mode = 0;                             //turn alarm mode to off
+                    Deactivate_Buzzer();                        //turn off the buzzer
+                    Set_RGB_Color(0);                           //turn off the RGB LED
                 }
             }
         }
     }
-    else if (ALARMEN == 0)
+    else if (ALARMEN == 0)                                      //if alarm enable is toggled off
     {
-        DS3231_Turn_Off_Alarm();
-        Deactivate_Buzzer();
-        Set_RGB_Color(0);
-        alarm_mode = 0;
-        MATCHED = 1;
+        DS3231_Turn_Off_Alarm();                                //turn off alarm
+        Deactivate_Buzzer();                                    //turn off buzzer
+        Set_RGB_Color(0);                                       //turn off RGB LED
+        alarm_mode = 0;                                         //alarm mode should be set to 0
+        MATCHED = 1;                                            //reset MATCHED
     }
 }
