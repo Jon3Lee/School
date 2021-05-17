@@ -229,6 +229,7 @@ void test_alarm()
     //             alarm_mode = 0;
     //             Deactivate_Buzzer();
     //             Set_RGB_Color(0);
+    //             RTC_ALARM_NOT = 1;
     //         }
     //     }
     // }
@@ -239,7 +240,7 @@ void test_alarm()
             alarm_mode = 1;
             DS3231_Turn_On_Alarm();
         }
-        else
+        else if (alarm_mode == 1)
         {
             if (RTC_ALARM_NOT == 0)
             {
