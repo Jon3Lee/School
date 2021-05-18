@@ -95,12 +95,12 @@ void Do_Init()                                                  // Initialize th
     Init_ADC();
     OSCCON=0x70;                                                // Set oscillator to 8 MHz 
     
-    TRISA = 0x06; //11
-    TRISB = 0x27; //07
-    TRISC = 0x01;
-    TRISD = 0x00;
-    TRISE = 0x00;
-    PORTE = 0x00;
+    TRISA = 0x06;                                               //Set to 0x06 so RA1 and RA2 are inputs.
+    TRISB = 0x27;                                               //Set RB0 and RB2 to be inputs, and RB3 to be outputs.
+    TRISC = 0x01;                                               //Set RC0 to be input and everything else to output.
+    TRISD = 0x00;                                               //Set TRISD to be all outputs
+    TRISE = 0x00;                                               //Set TRISE to be all outputs
+    PORTE = 0x00;                                               //Set PORTE to 0.
 
     FAN = 0;
     RBPU=0;
